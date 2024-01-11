@@ -1,0 +1,61 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.8.34330.188
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NovaFinds.DAL", "NovaFinds.DAL\NovaFinds.DAL.csproj", "{AB007749-E351-4965-8FA8-CF64B2C1FE15}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NovaFinds.CORE", "NovaFinds.CORE\NovaFinds.CORE.csproj", "{F022CB5B-0F13-48CA-8C4F-378130F73391}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NovaFinds.IFR", "NovaFinds.IFR\NovaFinds.IFR.csproj", "{F8978BFA-6B22-4027-BCBC-830AF3C7E961}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NovaFinds.DTOs", "NovaFinds.DTOs\NovaFinds.DTOs.csproj", "{E68964D7-7CCF-4F8D-A830-6E4F3A762B0F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NovaFinds.MVC", "NovaFinds.MVC\NovaFinds.MVC.csproj", "{2E70E541-EEFF-48C3-8E72-3F5160F5844E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NovaFinds.Application", "NovaFinds.Application\NovaFinds.Application.csproj", "{B99F9401-1A51-4992-8A6D-771ED508D218}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NovaFinds.API", "NovaFinds.API\NovaFinds.API.csproj", "{9C688BBF-1207-4581-9DBB-F6ABA1754D9A}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{AB007749-E351-4965-8FA8-CF64B2C1FE15}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AB007749-E351-4965-8FA8-CF64B2C1FE15}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AB007749-E351-4965-8FA8-CF64B2C1FE15}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AB007749-E351-4965-8FA8-CF64B2C1FE15}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F022CB5B-0F13-48CA-8C4F-378130F73391}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F022CB5B-0F13-48CA-8C4F-378130F73391}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F022CB5B-0F13-48CA-8C4F-378130F73391}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F022CB5B-0F13-48CA-8C4F-378130F73391}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F8978BFA-6B22-4027-BCBC-830AF3C7E961}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F8978BFA-6B22-4027-BCBC-830AF3C7E961}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F8978BFA-6B22-4027-BCBC-830AF3C7E961}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F8978BFA-6B22-4027-BCBC-830AF3C7E961}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E68964D7-7CCF-4F8D-A830-6E4F3A762B0F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E68964D7-7CCF-4F8D-A830-6E4F3A762B0F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E68964D7-7CCF-4F8D-A830-6E4F3A762B0F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E68964D7-7CCF-4F8D-A830-6E4F3A762B0F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2E70E541-EEFF-48C3-8E72-3F5160F5844E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2E70E541-EEFF-48C3-8E72-3F5160F5844E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2E70E541-EEFF-48C3-8E72-3F5160F5844E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2E70E541-EEFF-48C3-8E72-3F5160F5844E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B99F9401-1A51-4992-8A6D-771ED508D218}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B99F9401-1A51-4992-8A6D-771ED508D218}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B99F9401-1A51-4992-8A6D-771ED508D218}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B99F9401-1A51-4992-8A6D-771ED508D218}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9C688BBF-1207-4581-9DBB-F6ABA1754D9A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9C688BBF-1207-4581-9DBB-F6ABA1754D9A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9C688BBF-1207-4581-9DBB-F6ABA1754D9A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9C688BBF-1207-4581-9DBB-F6ABA1754D9A}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {0092171C-F2D6-4305-9964-6361E92450D4}
+	EndGlobalSection
+EndGlobal
