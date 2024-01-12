@@ -22,6 +22,7 @@
     <ItemGroup>
       <ProjectReference Include="..\NovaFinds.CORE\NovaFinds.CORE.csproj" />
       <ProjectReference Include="..\NovaFinds.DAL\NovaFinds.DAL.csproj" />
+      <ProjectReference Include="..\NovaFinds.IFR\NovaFinds.IFR.csproj" />
     </ItemGroup>
 
 </Project>
