@@ -14,7 +14,6 @@ using NovaFinds.Application.Services;
 using NovaFinds.CORE.Contracts;
 using NovaFinds.CORE.Domain;
 using NovaFinds.DAL.Context;
-using SmartBreadcrumbs.Extensions;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -107,7 +106,7 @@ builder.Services.AddRazorPages();
 builder.Services.AddScoped<IDbContext, ApplicationDbContext>();
 builder.Services.AddScoped<ICartRepository, CartService>();
 builder.Services.AddScoped<IOrderRepository, OrderService>();
-//builder.Services.AddScoped<IOrderProductRepository, OrderProductService>();
+builder.Services.AddScoped<IOrderProductRepository, OrderProductService>();
 builder.Services.AddScoped<IProductRepository, ProductService>();
 builder.Services.AddScoped<ICategoryRepository, CategoryService>();
 builder.Services.AddScoped<IProductImageRepository, ProductImageService>();
