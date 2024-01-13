@@ -14,6 +14,7 @@ using NovaFinds.Application.Services;
 using NovaFinds.CORE.Contracts;
 using NovaFinds.CORE.Domain;
 using NovaFinds.DAL.Context;
+using SmartBreadcrumbs.Extensions;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -93,15 +94,15 @@ builder.Services.AddSingleton(builder.Configuration);
 builder.Services.AddRazorPages();
 
 // Add own Services
-/*builder.Services.AddBreadcrumbs(
-    builder.GetType().Assembly,
+builder.Services.AddBreadcrumbs(
+    typeof(Program).Assembly,
     options => {
         options.TagName = "div";
         options.TagClasses = "container";
         options.OlClasses = "breadcrumb breadcrumb-padding-left";
         options.LiClasses = "breadcrumb-item";
         options.ActiveLiClasses = "breadcrumb-item active";
-    });*/
+    });
 
 builder.Services.AddScoped<IDbContext, ApplicationDbContext>();
 builder.Services.AddScoped<ICartRepository, CartService>();

@@ -24,6 +24,23 @@
   <ItemGroup>
     <ProjectReference Include="..\NovaFinds.Application\NovaFinds.Application.csproj" />
     <ProjectReference Include="..\NovaFinds.DAL\NovaFinds.DAL.csproj" />
+    <ProjectReference Include="..\NovaFinds.IFR\NovaFinds.IFR.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Areas\Admin\Pages\CRUD\Category\" />
+    <Folder Include="Areas\Admin\Pages\CRUD\Images\" />
+    <Folder Include="Areas\Admin\Pages\CRUD\Order\" />
+    <Folder Include="Areas\Admin\Pages\CRUD\Product\" />
+    <Folder Include="Areas\Admin\Pages\CRUD\User\" />
+    <Folder Include="Areas\Identity\Pages\Account\Manage\" />
+    <Folder Include="Models\Areas\Identity\Account\Manage\" />
+    <Folder Include="Views\Cart\" />
+    <Folder Include="Views\Category\" />
+    <Folder Include="Views\Help\" />
+    <Folder Include="Views\Product\" />
+    <Folder Include="Views\Tpv\" />
+    <Folder Include="wwwroot\fonts\" />
   </ItemGroup>
 
 </Project>

@@ -26,5 +26,27 @@ namespace NovaFinds.CORE.Contracts
         /// The <see cref="IQueryable"/>.
         /// </returns>
         IQueryable<Product> GetByCategoryIdWithImages(int id);
+
+        /// <summary>
+        /// The get with category image size.
+        /// </summary>
+        /// <param name="size">
+        /// The size.
+        /// </param>
+        /// <returns>
+        /// The <see cref="IQueryable"/>.
+        /// </returns>
+        IQueryable<Product> GetWithCategoryImageSize(int size);
+        
+        /// <summary>
+        /// The sort by media order.
+        /// </summary>
+        /// <param name="products">
+        /// The products.
+        /// </param>
+        /// <returns>
+        /// The <see cref="ICollection"/>.
+        /// </returns>
+        ICollection<Product> SortByImageOrder(ICollection<Product> products);
     }
 }
