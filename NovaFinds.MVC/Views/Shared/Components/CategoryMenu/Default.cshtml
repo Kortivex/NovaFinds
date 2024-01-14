@@ -1,0 +1,3 @@
+﻿@foreach (var category in Model){
+    <a class="dropdown-item" asp-controller="Category" asp-action="Show" asp-route-categoryId="@category.Id">@category.Name</a>
+}
