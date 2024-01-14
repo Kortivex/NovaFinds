@@ -1,0 +1,40 @@
+﻿@inject IConfiguration Configuration
+@{
+    ViewData["Title"] = "Refund Policy";
+    ViewData["ShopName"] = Configuration.GetSection("Config").GetSection("General").GetSection("Shop").GetSection("Name").Value;
+    var street = ViewData["ShopStreetRefunds"] as Dictionary<string, string>;
+}
+<section class="padding-y">
+    <div class="container">
+
+        <header class="section-heading">
+            <h2 class="section-title">@ViewData["Title"]</h2>
+        </header>
+
+        <article>
+
+            <p>Last updated @ViewData["ShopLegalDate"]</p>
+
+            <p> Thank you for your purchase. We hope you are happy with your purchase. However, if you are not completely satisfied with your purchase for any reason, you may return it to us for a full refund, store credit, or an exchange. Please see below for more information on our return policy.</p>
+
+            <h3 class="title">Returns</h3>
+            <p>All returns must be postmarked within ten (10) days of the purchase date. All returned items must be in new and unused condition, with all original tags and labels attached.</p>
+
+            <h3 class="title">Return Process</h3>
+            <p>To return an item, place the item securely in its original packaging, and mail your return to the following address:</p>
+
+            <p>@ViewData["ShopName"]<br>Attn: Returns<br>@street!["Root"]<br>@street["City"], @street["State"] @street["Postal"]<br>@street["Country"]</p>
+            <p>Please note, you will be responsible for all return shipping charges. We strongly recommend that you use a trackable method to mail your return.</p>
+
+            <h3 class="title">Refunds</h3>
+            <p>After receiving your return and inspecting the condition of your item, we will process your return or exchange. Please allow at least fifteen (15) days from the receipt of your item to process your return or exchange.Refunds may take 1-2 billing cycles to appear on your credit card statement, depending on your credit card company. We will notify you by email when your return has been processed.</p>
+
+            <h3 class="title">Exceptions</h3>
+            <p>For defective or damaged products, please contact us at the customer service number below to arrange a refund or exchange.</p>
+
+            <h3 class="title">Questions</h3>
+            <p>If you have any questions concerning our return policy, please contact us at:</p>
+            <p>347-200-7953<br>support&#64;@ViewData["ShopUrl"]</p>
+        </article>
+    </div>
+</section>

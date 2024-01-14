@@ -1,0 +1,22 @@
+﻿@{
+    var consentFeature = Context.Features.Get<ITrackingConsentFeature>();
+    var showBanner = !consentFeature?.CanTrack ?? false;
+    var cookieString = consentFeature?.CreateConsentCookie();
+}
+
+@if (showBanner){
+    <div id="cookieConsent" class="alert alert-warning alert-dismissible fade show text-center" role="alert">
+        This site uses cookies to personalize content and adverts, to provide user customizations. <a asp-controller="Privacy" asp-action="Index">Learn More</a>.
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close" data-cookie-string="@cookieString">
+            <span aria-hidden="true">Accept</span>
+        </button>
+    </div>
+    <script>
+        (function () {
+            const button = document.querySelector("#cookieConsent button[data-cookie-string]");
+            button.addEventListener("click", function (event) {
+                document.cookie = button.dataset.cookieString;
+            }, false);
+        })();
+    </script>
+}

@@ -1,0 +1,35 @@
+﻿@inject IConfiguration Configuration
+@{
+    ViewData["Title"] = "Shipping Policy";
+    ViewData["ShopName"] = Configuration.GetSection("Config").GetSection("General").GetSection("Shop").GetSection("Name").Value;
+}
+<section class="padding-y">
+    <div class="container">
+
+        <header class="section-heading">
+            <h2 class="section-title">@ViewData["Title"]</h2>
+        </header>
+
+        <article>
+
+            <p>Last updated @ViewData["ShopLegalDate"]</p>
+
+            <p><strong>Please note:</strong> Delivery by or before a specific date cannot be guaranteed given possible weather conditions or other circumstances impacting our partnered couriers. We apologize for the inconvenience.</p>
+
+            <h3 class="title">Shipping</h3>
+            <p><strong>Global:</strong> DHL Globalmail Parcel Direct (7-14 business days)</p>
+
+            <h3 class="title">Shipping Policy</h3>
+            <p>100% of orders are shipped within one business day. Orders placed over the weekend are dispatched on Mondays.</p>
+
+            <h3 class="title">Customs Clearance</h3>
+            <p>Please be aware that delays may be imposed by your country’s customs clearance. @ViewData["ShopName"] is not responsible for paying any fees or rates charged by customs. These charges are the responsibility of the customer.</p>
+
+            <h3 class="title">Delayed or Lost Orders</h3>
+            <p>A parcel is considered lost after it has been in the postal system for a period of 15 business days for US orders and 21 business days for international orders. We cannot take responsibility for delays caused by the courier. Although orders normally take much less than that we are unable to dispatch a replacement until this period of time has elapsed.</p>
+
+            <h3 class="title">Wrong or Incomplete Address</h3>
+            <p>If your package is returned to us due to an incorrect or incomplete address, you must pay all delivery cost to re-deliver your order to a corrected address. We are not responsible for the loss of your order if the address provided at checkout is incomplete or incorrect.</p>
+        </article>
+    </div>
+</section>
