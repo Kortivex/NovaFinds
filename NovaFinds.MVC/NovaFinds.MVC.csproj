@@ -33,11 +33,9 @@
     <Folder Include="Areas\Admin\Pages\CRUD\Order\" />
     <Folder Include="Areas\Admin\Pages\CRUD\Product\" />
     <Folder Include="Areas\Admin\Pages\CRUD\User\" />
-    <Folder Include="Areas\Identity\Pages\Account\Manage\" />
     <Folder Include="Models\Areas\Identity\Account\Manage\" />
     <Folder Include="Views\Cart\" />
     <Folder Include="Views\Category\" />
-    <Folder Include="Views\Help\" />
     <Folder Include="Views\Product\" />
     <Folder Include="Views\Tpv\" />
     <Folder Include="wwwroot\fonts\" />
