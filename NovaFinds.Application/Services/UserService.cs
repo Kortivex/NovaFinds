@@ -11,7 +11,7 @@ namespace NovaFinds.Application.Services
 {
     using CORE.Contracts;
     using CORE.Domain;
-    
+
     /// <summary>
     /// The user service.
     /// </summary>
