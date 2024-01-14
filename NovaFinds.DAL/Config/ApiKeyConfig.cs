@@ -9,9 +9,9 @@
 
 namespace NovaFinds.DAL.Config
 {
+    using CORE.Domain;
     using Microsoft.EntityFrameworkCore;
     using Microsoft.EntityFrameworkCore.Metadata.Builders;
-    using CORE.Domain;
 
     /// <summary>
     /// The apikey config.
