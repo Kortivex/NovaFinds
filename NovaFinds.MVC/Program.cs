@@ -7,14 +7,14 @@
 #region SERVICES
 
 using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Http.Json;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc.Razor;
 using Microsoft.EntityFrameworkCore;
-using NovaFinds.Application.Services;
-using NovaFinds.CORE.Contracts;
 using NovaFinds.CORE.Domain;
 using NovaFinds.DAL.Context;
 using SmartBreadcrumbs.Extensions;
+using System.Text.Json.Serialization;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -104,15 +104,10 @@ builder.Services.AddBreadcrumbs(
         options.ActiveLiClasses = "breadcrumb-item active";
     });
 
-builder.Services.AddScoped<IDbContext, ApplicationDbContext>();
-builder.Services.AddScoped<ICartRepository, CartService>();
-builder.Services.AddScoped<IOrderRepository, OrderService>();
-builder.Services.AddScoped<IOrderProductRepository, OrderProductService>();
-builder.Services.AddScoped<IProductRepository, ProductService>();
-builder.Services.AddScoped<ICategoryRepository, CategoryService>();
-builder.Services.AddScoped<IProductImageRepository, ProductImageService>();
-builder.Services.AddScoped<IUserRepository, UserService>();
-builder.Services.AddScoped<IRoleRepository, RoleService>();
+// Ignore References in Json Deserializer
+builder.Services.Configure<JsonOptions>(options => {
+    options.SerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles;
+});
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
