@@ -11,13 +11,12 @@ namespace NovaFinds.MVC.Controllers
 {
     using IFR.Logger;
     using Microsoft.AspNetCore.Mvc;
-    using Microsoft.Extensions.Configuration;
     using SmartBreadcrumbs.Attributes;
 
     /// <summary>
     /// The privacy controller.
     /// </summary>
-    public class PrivacyController : Controller
+    public class PrivacyController : MainController
     {
         /// <summary>
         /// The configuration.
@@ -30,7 +29,7 @@ namespace NovaFinds.MVC.Controllers
         /// <param name="configuration">
         /// The configuration.
         /// </param>
-        public PrivacyController(IConfiguration configuration)
+        public PrivacyController(IConfiguration configuration) : base(configuration)
         {
             _configuration = configuration;
         }

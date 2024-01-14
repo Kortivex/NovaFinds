@@ -10,15 +10,13 @@
 namespace NovaFinds.MVC.Controllers.Help
 {
     using IFR.Logger;
-    using System.Collections.Generic;
     using Microsoft.AspNetCore.Mvc;
-    using Microsoft.Extensions.Configuration;
     using SmartBreadcrumbs.Attributes;
 
     /// <summary>
     /// The refund controller.
     /// </summary>
-    public class RefundController : Controller
+    public class RefundController : MainController
     {
         /// <summary>
         /// The configuration.
@@ -31,7 +29,7 @@ namespace NovaFinds.MVC.Controllers.Help
         /// <param name="configuration">
         /// The configuration.
         /// </param>
-        public RefundController(IConfiguration configuration)
+        public RefundController(IConfiguration configuration) : base(configuration)
         {
             _configuration = configuration;
         }

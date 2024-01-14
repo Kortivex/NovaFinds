@@ -16,7 +16,7 @@ namespace NovaFinds.MVC.Controllers.Company
     /// <summary>
     /// The about shop controller.
     /// </summary>
-    public class AboutController : Controller
+    public class AboutController(IConfiguration config) : MainController(config)
     {
         /// <summary>
         /// The index.

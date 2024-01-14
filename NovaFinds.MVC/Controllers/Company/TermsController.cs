@@ -11,13 +11,12 @@ namespace NovaFinds.MVC.Controllers.Company
 {
     using IFR.Logger;
     using Microsoft.AspNetCore.Mvc;
-    using Microsoft.Extensions.Configuration;
     using SmartBreadcrumbs.Attributes;
 
     /// <summary>
     /// The terms controller.
     /// </summary>
-    public class TermsController : Controller
+    public class TermsController : MainController
     {
         /// <summary>
         /// The configuration.
@@ -30,7 +29,7 @@ namespace NovaFinds.MVC.Controllers.Company
         /// <param name="configuration">
         /// The configuration.
         /// </param>
-        public TermsController(IConfiguration configuration)
+        public TermsController(IConfiguration configuration) : base(configuration)
         {
             _configuration = configuration;
         }

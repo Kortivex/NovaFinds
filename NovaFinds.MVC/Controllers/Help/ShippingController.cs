@@ -11,13 +11,12 @@ namespace NovaFinds.MVC.Controllers.Help
 {
     using IFR.Logger;
     using Microsoft.AspNetCore.Mvc;
-    using Microsoft.Extensions.Configuration;
     using SmartBreadcrumbs.Attributes;
 
     /// <summary>
     /// The shipping controller.
     /// </summary>
-    public class ShippingController : Controller
+    public class ShippingController : MainController
     {
         /// <summary>
         /// The configuration.
@@ -30,7 +29,7 @@ namespace NovaFinds.MVC.Controllers.Help
         /// <param name="configuration">
         /// The configuration.
         /// </param>
-        public ShippingController(IConfiguration configuration)
+        public ShippingController(IConfiguration configuration) : base(configuration)
         {
             _configuration = configuration;
         }
