@@ -9,8 +9,8 @@
 
 namespace NovaFinds.CORE.Domain
 {
-    using Microsoft.AspNetCore.Identity;
     using Contracts;
+    using Microsoft.AspNetCore.Identity;
     using System.ComponentModel.DataAnnotations;
 
     /// <summary>

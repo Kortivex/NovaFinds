@@ -10,11 +10,9 @@
 
 namespace NovaFinds.CORE.Domain
 {
-    using System;
-    using System.Collections.Generic;
-    using System.ComponentModel.DataAnnotations;
-    using Microsoft.AspNetCore.Identity;
     using Contracts;
+    using Microsoft.AspNetCore.Identity;
+    using System.ComponentModel.DataAnnotations;
 
     public sealed class User : IdentityUser<int>, IEntity
     {

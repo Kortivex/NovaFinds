@@ -10,7 +10,6 @@
 namespace NovaFinds.CORE.Domain
 {
     using Contracts;
-    using System;
     using System.ComponentModel.DataAnnotations;
 
     /// <summary>

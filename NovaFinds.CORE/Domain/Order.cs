@@ -11,8 +11,6 @@ namespace NovaFinds.CORE.Domain
 {
     using Contracts;
     using Enums;
-    using System;
-    using System.Collections.Generic;
 
     /// <summary>
     ///     Order table

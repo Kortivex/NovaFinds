@@ -9,7 +9,6 @@
 
 namespace NovaFinds.CORE.Domain
 {
-
     using Contracts;
 
     /// <summary>
