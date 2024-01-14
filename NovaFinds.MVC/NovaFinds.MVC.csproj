@@ -28,15 +28,11 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Areas\Admin\Pages\CRUD\Category\" />
-    <Folder Include="Areas\Admin\Pages\CRUD\Images\" />
-    <Folder Include="Areas\Admin\Pages\CRUD\Order\" />
-    <Folder Include="Areas\Admin\Pages\CRUD\Product\" />
-    <Folder Include="Areas\Admin\Pages\CRUD\User\" />
+    <Folder Include="Areas\" />
     <Folder Include="Models\Areas\Identity\Account\Manage\" />
     <Folder Include="Views\Cart\" />
-    <Folder Include="Views\Category\" />
     <Folder Include="Views\Product\" />
+    <Folder Include="Views\Shared\Components\" />
     <Folder Include="Views\Tpv\" />
     <Folder Include="wwwroot\fonts\" />
   </ItemGroup>
