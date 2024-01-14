@@ -12,7 +12,6 @@ namespace NovaFinds.IFR.Logger
     using NLog;
     using NLog.Config;
     using NLog.Targets;
-    using System;
 
     /// <summary>
     /// NLog class.
