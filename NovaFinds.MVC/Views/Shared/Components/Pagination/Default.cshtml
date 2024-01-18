@@ -1,0 +1,50 @@
+﻿@using NovaFinds.API.Filters
+@using NovaFinds.MVC.Utils
+@{
+    Paginator paginator = Model["Paginator"];
+    Dictionary<string, string> paginationText = Model["Text"];
+
+    var queryString = Context.Request.QueryString.Value;
+    var displayUrl = NovaFinds.MVC.Utils.Url.CheckLastSlash(Context.Request.Path);
+    const string queryElement = "page";
+    const string patternElement = "([0-9])*";
+    const string defaultValueElement = "1";
+
+    if (queryString == ""){ queryString = $"?{queryElement}={defaultValueElement}"; }
+}
+
+<nav class="mb-4" aria-label="Navigation Menu">
+    <ul class="pagination pagination-lg center-x">
+
+        @if (paginator.CurrentPage > 1){
+            var queryWithPage = NovaFinds.MVC.Utils.Url.CheckElementInQueryString(queryString!, queryElement, $"{queryElement}={patternElement}", defaultValueElement);
+            <li class="page-item">
+                <a class="page-link" href="@($"{displayUrl}/{queryWithPage}")">@paginationText["First"]</a>
+            </li>
+
+            queryWithPage = NovaFinds.MVC.Utils.Url.CheckElementInQueryString(queryString!, queryElement, $"{queryElement}={patternElement}", (paginator.CurrentPage - 1).ToString());
+            <li class="page-item">
+                <a class="page-link" href="@($"{displayUrl}/{queryWithPage}")">@paginationText["Previous"]</a>
+            </li>
+        }
+
+        @foreach (var pge in paginator.Pages){
+            var queryWithPage = NovaFinds.MVC.Utils.Url.CheckElementInQueryString(queryString!, queryElement, $"{queryElement}={patternElement}", pge.ToString());
+            <li class="page-item @(pge == paginator.CurrentPage ? "active" : "")">
+                <a class="page-link" href="@($"{displayUrl}/{queryWithPage}")">@pge</a>
+            </li>
+        }
+
+        @if (paginator.CurrentPage < paginator.TotalPages){
+            var queryWithPage = NovaFinds.MVC.Utils.Url.CheckElementInQueryString(queryString!, queryElement, $"{queryElement}={patternElement}", (paginator.CurrentPage + 1).ToString());
+            <li class="page-item">
+                <a class="page-link" href="@($"{displayUrl}/{queryWithPage}")">@paginationText["Next"]</a>
+            </li>
+
+            queryWithPage = NovaFinds.MVC.Utils.Url.CheckElementInQueryString(queryString!, queryElement, $"{queryElement}={patternElement}", paginator.TotalPages.ToString());
+            <li class="page-item">
+                <a class="page-link" href="@($"{displayUrl}/{queryWithPage}")">@paginationText["Last"]</a>
+            </li>
+        }
+    </ul>
+</nav>
