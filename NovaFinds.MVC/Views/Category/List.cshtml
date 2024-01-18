@@ -1,0 +1,26 @@
+﻿@using NovaFinds.DTOs
+@{
+    ViewData["Title"] = "All Categories";
+    var categories = ViewData["CategoriesPaginated"] as List<CategoryDto>;
+}
+<section class="section-content padding-y">
+    <div class="container">
+        <nav class="row">
+            @foreach (var category in categories!){
+                <div class="col-md-3">
+                    <div class="card card-category">
+                        <div class="img-wrap" style="background: lightgray">
+                            <img src="/images/misc/category.png" alt="" title="@category.Name">
+                        </div>
+                        <div class="card-body">
+                            <h4 class="card-title">
+                                <a asp-controller="Category" asp-action="Show" asp-route-categoryId="@category.Id">@category.Name</a>
+                            </h4>
+                        </div>
+                    </div>
+                </div>
+            }
+        </nav>
+    </div>
+    @await Component.InvokeAsync("Pagination", new { paginator = ViewData["Pagination"], text = ViewData["PaginationListText"] })
+</section>
