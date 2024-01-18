@@ -1,6 +1,0 @@
-@NovaFinds.API_HostAddress = http://localhost:5246
-
-GET {{NovaFinds.API_HostAddress}}/weatherforecast/
-Accept: application/json
-
-###
