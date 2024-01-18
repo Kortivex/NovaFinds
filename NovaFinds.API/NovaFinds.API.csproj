@@ -18,12 +18,6 @@
     </ItemGroup>
 
     <ItemGroup>
-      <Content Include="..\.dockerignore">
-        <Link>.dockerignore</Link>
-      </Content>
-    </ItemGroup>
-
-    <ItemGroup>
       <ProjectReference Include="..\NovaFinds.Application\NovaFinds.Application.csproj" />
       <ProjectReference Include="..\NovaFinds.CORE\NovaFinds.CORE.csproj" />
       <ProjectReference Include="..\NovaFinds.DAL\NovaFinds.DAL.csproj" />

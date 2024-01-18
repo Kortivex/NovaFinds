@@ -61,6 +61,10 @@ app.MapGet("/categories", (CategoryHandler handler, HttpRequest request) => hand
     .WithName("GetCategories")
     .RequireAuthorization();
 
+app.MapGet("/categories/{id}", (CategoryHandler handler, HttpRequest request, string id) => handler.GetCategory(request, id))
+    .WithName("GetCategory")
+    .RequireAuthorization();
+
 Logger.Debug("REST API app configured!");
 
 app.Run();

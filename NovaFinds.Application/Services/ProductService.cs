@@ -37,7 +37,7 @@ namespace NovaFinds.Application.Services
         /// </returns>
         public IQueryable<Product> GetByCategoryIdWithImages(int id)
         {
-            return IncludeMedia(this.Find(product => product.CategoryId == id));
+            return IncludeImage(Find(product => product.CategoryId == id));
         }
 
         /// <summary>
@@ -82,7 +82,7 @@ namespace NovaFinds.Application.Services
         /// <returns>
         /// The <see cref="IQueryable"/>.
         /// </returns>
-        private static IQueryable<Product> IncludeMedia(IQueryable<Product> products)
+        private static IQueryable<Product> IncludeImage(IQueryable<Product> products)
         {
             return products
                 .Include(product => product.ProductImages)
