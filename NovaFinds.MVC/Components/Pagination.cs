@@ -1,39 +1,41 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
-// <copyright file="CategoryMenu.cs" company="">
+// <copyright file="Pagination.cs" company="">
 //
 // </copyright>
 // <summary>
-//   Defines the CategoryMenu type.
+//   Defines the Pagination type.
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
 
 namespace NovaFinds.MVC.Components
 {
-    using API;
-    using DTOs;
     using IFR.Logger;
+    using System.Collections.Generic;
     using System.Threading.Tasks;
-
     using Microsoft.AspNetCore.Mvc;
+    using NovaFinds.API.Filters;
 
     /// <summary>
-    /// The category menu.
+    /// The pagination.
     /// </summary>
-    public class CategoryMenu(IConfiguration configuration) : ViewComponent
+    public class Pagination : ViewComponent
     {
-        private readonly ApiClient _apiClient = new(configuration);
-
         /// <summary>
         /// The invoke async.
         /// </summary>
+        /// <param name="paginator">
+        /// The paginator.
+        /// </param>
+        /// <param name="text">
+        /// The text.
+        /// </param>
         /// <returns>
         /// The <see cref="Task"/>.
         /// </returns>
-        public async Task<IViewComponentResult> InvokeAsync()
+        public Task<IViewComponentResult> InvokeAsync(Paginator paginator, Dictionary<string, string> text)
         {
             Logger.Debug("Init Component");
-            var categories = await _apiClient.Get<IEnumerable<CategoryDto>>(ApiEndPoints.GetCategories);
-            return View(categories);
+            return Task.FromResult<IViewComponentResult>(View(new Dictionary<string, object> { { "Paginator", paginator }, { "Text", text } }));
         }
     }
 }
