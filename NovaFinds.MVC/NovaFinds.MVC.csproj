@@ -22,6 +22,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\NovaFinds.API\NovaFinds.API.csproj" />
     <ProjectReference Include="..\NovaFinds.Application\NovaFinds.Application.csproj" />
     <ProjectReference Include="..\NovaFinds.DAL\NovaFinds.DAL.csproj" />
     <ProjectReference Include="..\NovaFinds.IFR\NovaFinds.IFR.csproj" />
@@ -32,7 +33,6 @@
     <Folder Include="Models\Areas\Identity\Account\Manage\" />
     <Folder Include="Views\Cart\" />
     <Folder Include="Views\Product\" />
-    <Folder Include="Views\Shared\Components\" />
     <Folder Include="Views\Tpv\" />
     <Folder Include="wwwroot\fonts\" />
   </ItemGroup>
