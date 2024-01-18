@@ -22,13 +22,6 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddDbContext<ApplicationDbContext>(
     options => options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
-// Cookies configuration
-builder.Services.Configure<CookiePolicyOptions>(
-    options => {
-        options.CheckConsentNeeded = _ => true;
-        options.MinimumSameSitePolicy = SameSiteMode.Strict;
-    });
-
 // Identity Settings
 builder.Services.AddIdentity<User, Role>(
         options => {
@@ -51,19 +44,30 @@ builder.Services.AddIdentity<User, Role>(
     .AddEntityFrameworkStores<ApplicationDbContext>()
     .AddDefaultTokenProviders();
 
+// Cookies configuration
+builder.Services.Configure<CookiePolicyOptions>(
+    options => {
+        options.CheckConsentNeeded = _ => true;
+        options.MinimumSameSitePolicy = SameSiteMode.Strict;
+    });
+
+// Config Token Provider
 builder.Services.Configure<DataProtectionTokenProviderOptions>(o => o.TokenLifespan = TimeSpan.FromHours(3));
 builder.Services.AddDistributedMemoryCache();
 
+// Config Razor View Engine
 builder.Services.Configure<RazorViewEngineOptions>(
     o => {
         o.ViewLocationFormats.Add("/Views/Company/{0}" + RazorViewEngine.ViewExtension);
         o.ViewLocationFormats.Add("/Views/Help/{0}" + RazorViewEngine.ViewExtension);
     });
 
+// Config Authentication
 builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme).AddCookie(
     CookieAuthenticationDefaults.AuthenticationScheme,
     options => builder.Configuration.Bind("CookieSettings", options));
 
+// Config Session
 builder.Services.AddSession(
     options => {
         // Set a timeout for session.
@@ -75,7 +79,7 @@ builder.Services.AddSession(
         options.Cookie.IsEssential = true;
     });
 
-// Cookie session config
+// Config Cookie Session 
 builder.Services.ConfigureApplicationCookie(
     options => {
         options.LoginPath = "/Identity/Account/Login";
