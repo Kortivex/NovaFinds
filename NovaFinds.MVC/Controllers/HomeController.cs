@@ -64,9 +64,9 @@ namespace NovaFinds.MVC.Controllers
 
             var homeSectionsSize = int.Parse(_shopHomeSections.GetSection("Size").Value!, CultureInfo.InvariantCulture);
             Logger.Debug("Doing request to /products");
-            var productsSorted = await ApiClient.Get<IEnumerable<ProductDto>>(string.Format(ApiEndPoints.GetProducts, homeSectionsSize, "image"));
+            var productsSorted = await ApiClient.Get<IEnumerable<ProductDto>>(string.Format(ApiEndPoints.GetProductsSortFilters, homeSectionsSize, "image"));
 
-            ViewData["ProductsLatest"] = productsSorted.OrderByDescending(product => product.Id).ToList();
+            ViewData["ProductsLatest"] = productsSorted!.OrderByDescending(product => product.Id).ToList();
             ViewData["ProductsCheapest"] = productsSorted.OrderBy(product => product.Price).ToList();
 
             return View("Home");
