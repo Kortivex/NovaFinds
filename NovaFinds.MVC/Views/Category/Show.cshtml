@@ -1,0 +1,52 @@
+﻿@using NovaFinds.DTOs
+@{
+    ViewData["Title"] = ViewData["Name"];
+    var products = ViewData["ProductsPaginated"] as ICollection<ProductDto>;
+    var productsTotal = int.Parse(ViewData["ProductsCount"]!.ToString()!);
+}
+<section class="padding-y">
+    <div class="container">
+        <header class="mb-3">
+            <div class="form-inline">
+                <strong class="mr-md-auto">@productsTotal Item(s) found </strong>
+            </div>
+        </header>
+
+        <div class="row">
+            @foreach (var product in products!)
+            {
+                <div class="col-md-3">
+                    <figure class="card card-product-grid">
+                        <div class="img-wrap">
+                            <img src="@product.ProductImages!.First()!.Image" alt="">
+                        </div>
+                        <figcaption class="info-wrap">
+                            <a class="title mb-2" asp-controller="Product" asp-action="Show" asp-route-productId="@product.Id">@product.Name</a>
+                            <div class="price-wrap">
+                                <span class="price">@product.Price.ToString("0.##€")</span>
+                                <small class="text-muted">/per item</small>
+                            </div>
+                            <p class="text-info">
+                                @if (product.Stock > 0)
+                                {
+                                    <span>
+                                        <strong>Available</strong>
+                                    </span>
+                                }
+                                else
+                                {
+                                    <span>
+                                        <em>Not Available</em>
+                                    </span>
+                                }
+                            </p>
+                            <hr>
+                            <p class="text-muted">@product.Brand</p>
+                        </figcaption>
+                    </figure>
+                </div>
+            }
+        </div>
+        @await Component.InvokeAsync("Pagination", new {paginator = ViewData["Pagination"], text = ViewData["PaginationShowText"]})
+    </div>
+</section>
