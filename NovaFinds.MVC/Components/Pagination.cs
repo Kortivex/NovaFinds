@@ -34,7 +34,7 @@ namespace NovaFinds.MVC.Components
         /// </returns>
         public Task<IViewComponentResult> InvokeAsync(Paginator paginator, Dictionary<string, string> text)
         {
-            Logger.Debug("Init Component");
+            Logger.Debug("Init Pagination Component");
             return Task.FromResult<IViewComponentResult>(View(new Dictionary<string, object> { { "Paginator", paginator }, { "Text", text } }));
         }
     }

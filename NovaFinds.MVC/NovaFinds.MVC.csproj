@@ -32,7 +32,6 @@
     <Folder Include="Areas\" />
     <Folder Include="Models\Areas\Identity\Account\Manage\" />
     <Folder Include="Views\Cart\" />
-    <Folder Include="Views\Product\" />
     <Folder Include="Views\Tpv\" />
     <Folder Include="wwwroot\fonts\" />
   </ItemGroup>

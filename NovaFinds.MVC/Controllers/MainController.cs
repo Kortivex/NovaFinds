@@ -5,6 +5,6 @@
 
     public class MainController(IConfiguration config) : Controller
     {
-        public ApiClient ApiClient { get; private set; } = new(config);
+        protected ApiClient ApiClient { get; private set; } = new(config);
     }
 }

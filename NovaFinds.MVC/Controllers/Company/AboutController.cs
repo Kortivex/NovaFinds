@@ -27,7 +27,7 @@ namespace NovaFinds.MVC.Controllers.Company
         [Breadcrumb("ViewData.Title")]
         public IActionResult Index()
         {
-            Logger.Debug("Init Controller");
+            Logger.Debug("Init AboutController Controller");
             return View("About");
         }
     }

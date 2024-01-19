@@ -31,7 +31,8 @@ namespace NovaFinds.MVC.Components
         /// </returns>
         public async Task<IViewComponentResult> InvokeAsync()
         {
-            Logger.Debug("Init Component");
+            Logger.Debug("Init CategoryMenu Component");
+            Logger.Debug($"Doing request to: {ApiEndPoints.GetCategories}");
             var categories = await _apiClient.Get<IEnumerable<CategoryDto>>(ApiEndPoints.GetCategories);
             return View(categories);
         }

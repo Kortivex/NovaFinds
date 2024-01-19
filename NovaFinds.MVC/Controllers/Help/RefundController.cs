@@ -43,7 +43,7 @@ namespace NovaFinds.MVC.Controllers.Help
         [Breadcrumb("ViewData.Title")]
         public IActionResult Index()
         {
-            Logger.Debug("Init Controller");
+            Logger.Debug("Init RefundController Controller");
             var shopConfig = _configuration.GetSection("Config").GetSection("General").GetSection("Shop");
             var streetRefund = shopConfig.GetSection("Streets").GetSection("Refunds");
             ViewData["ShopLegalDate"] = shopConfig.GetSection("Documents").GetSection("Legal").GetSection("Refund")

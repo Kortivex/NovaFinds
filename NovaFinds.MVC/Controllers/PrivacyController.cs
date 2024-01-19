@@ -43,7 +43,7 @@ namespace NovaFinds.MVC.Controllers
         [Breadcrumb("ViewData.Title")]
         public IActionResult Index()
         {
-            Logger.Debug("Init Controller");
+            Logger.Debug("Init PrivacyController Controller");
             var shopConfig = _configuration.GetSection("Config").GetSection("General").GetSection("Shop");
             ViewData["ShopLegalDate"] = shopConfig.GetSection("Documents").GetSection("Legal")
                 .GetSection("Privacy").GetSection("Date").Value;
