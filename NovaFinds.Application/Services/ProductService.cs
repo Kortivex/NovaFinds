@@ -53,6 +53,20 @@ namespace NovaFinds.Application.Services
         {
             return IncludeCategoryImages(GetAll()).Take(size);
         }
+        
+        /// <summary>
+        /// The get product by id with image.
+        /// </summary>
+        /// <param name="id">
+        /// The product id.
+        /// </param>
+        /// <returns>
+        /// The <see cref="IQueryable"/>.
+        /// </returns>
+        public IQueryable<Product> GetByIdWithImage(int id)
+        {
+            return IncludeImage(Find(product => product.Id == id));
+        }
 
         /// <summary>
         /// The sort by image order.
