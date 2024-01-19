@@ -1,0 +1,92 @@
+﻿@using NovaFinds.DTOs
+@{
+    var product = ViewData["Product"] as ProductDto;
+    ViewData["Title"] = product!.Name;
+    var productTax = (double)ViewData["ProductTax"]!;
+    var productImageFirst = product.ProductImages!.ElementAt(0);
+    var productStock = (product.Stock == 0) ? "disabled" : "";
+}
+<section class="padding-y">
+    <div class="container">
+        <div class="row">
+            <aside class="col-md-6">
+                <div class="card">
+                    <article class="gallery-wrap">
+                        <div class="img-big-wrap">
+                            <div>
+                                <a href="@productImageFirst!.Image">
+                                    <img class="xzoom" id="main_image" src="@productImageFirst.Image" xoriginal="@productImageFirst.Image" alt="">
+                                </a>
+                            </div>
+                        </div>
+                        <div class="thumbs-wrap">
+                            @foreach (var media in product.ProductImages!){
+                                <a href="@media!.Image">
+                                    <img class="xzoom-gallery item-thumb" width="80" src="@media.Image" alt="">
+                                </a>
+                            }
+                        </div>
+                    </article>
+                </div>
+            </aside>
+            <main class="col-md-6">
+                <article>
+
+                    <h2 class="title mt-3">@product.Name</h2>
+                    <div class="mb-3">
+                        <var class="price h4">@product.Price.ToString("0.##€")</var>
+                        <span class="text-muted">@(productTax.ToString("0.##€")) incl. TAX</span>
+                    </div>
+
+                    <h5 class="title-description">Description</h5>
+                    <p>
+                        @product.Description
+                    </p>
+
+                    <dl class="row">
+                        <dt class="col-sm-3">Manufacturer</dt>
+                        <dd class="col-sm-9">@product.Brand</dd>
+
+                        <dt class="col-sm-3">Guarantee</dt>
+                        <dd class="col-sm-9">2 year</dd>
+
+                        <dt class="col-sm-3">Availability</dt>
+                        <dd class="col-sm-9">
+                            @if (product.Stock > 0){
+                                <span>
+                                    <strong>Available</strong>
+                                </span>
+                            }
+                            else{
+                                <span>
+                                    <em>Not Available</em>
+                                </span>
+                            }
+                        </dd>
+                    </dl>
+
+                    <div class="form-row  mt-4">
+                        <div class="form-group col-md flex-grow-0">
+                            <div class="input-group mb-3 input-spinner" style="z-index: 0;">
+                                <div class="input-group-prepend">
+                                    <button class="btn btn-light @productStock" type="button" id="button-plus"> + </button>
+                                </div>
+                                <input id="quantity" type="text" disabled="disabled" class="form-control bg-white" min="1" value="0">
+                                <div class="input-group-append">
+                                    <button class="btn btn-light @productStock" type="button" id="button-minus"> &minus; </button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group col-md">
+                            <button id="addItem" class="btn btn-primary @productStock">
+                                <input id="productId" type="hidden" disabled="disabled" value="@product.Id"/>
+                                <input id="productAvailability" type="hidden" disabled="disabled" value="@product.Stock"/>
+                                <i class="fas fa-shopping-cart"></i><span class="text">Add to cart</span>
+                            </button>
+                        </div>
+                    </div>
+                </article>
+            </main>
+        </div>
+    </div>
+</section>
