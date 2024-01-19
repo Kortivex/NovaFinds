@@ -43,5 +43,13 @@
 
             return ProductMapper.ToListDomain(products);
         }
+
+        public async Task<ProductDto?> GetProduct(HttpRequest request, string id)
+        {
+            Logger.Debug("Get Product Handler");
+            var product = _productService.GetByIdWithImage(int.Parse(id)).FirstOrDefault();
+
+            return ProductMapper.ToDomain(product!);
+        }
     }
 }

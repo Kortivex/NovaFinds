@@ -57,6 +57,10 @@ app.MapGet("/products", (ProductHandler handler, HttpRequest request) => handler
     .WithName("GetProducts")
     .RequireAuthorization();
 
+app.MapGet("/products/{id}", (ProductHandler handler, HttpRequest request, string id) => handler.GetProduct(request, id))
+    .WithName("GetProduct")
+    .RequireAuthorization();
+
 app.MapGet("/categories", (CategoryHandler handler, HttpRequest request) => handler.GetCategories(request))
     .WithName("GetCategories")
     .RequireAuthorization();

@@ -6,7 +6,6 @@
     using DTOs;
     using Filters;
     using IFR.Logger;
-    using Microsoft.EntityFrameworkCore;
 
     public class CategoryHandler(IDbContext context)
     {
