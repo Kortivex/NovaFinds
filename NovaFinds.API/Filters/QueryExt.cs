@@ -9,7 +9,6 @@
 
 namespace NovaFinds.API.Filters
 {
-    using System.Linq;
 
     /// <summary>
     /// The generic queryable extensions.

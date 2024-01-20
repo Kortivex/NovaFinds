@@ -10,8 +10,6 @@
 namespace NovaFinds.MVC.Components
 {
     using IFR.Logger;
-    using System.Collections.Generic;
-    using System.Threading.Tasks;
     using Microsoft.AspNetCore.Mvc;
     using NovaFinds.API.Filters;
 

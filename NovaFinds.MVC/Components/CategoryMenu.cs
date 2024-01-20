@@ -12,8 +12,6 @@ namespace NovaFinds.MVC.Components
     using API;
     using DTOs;
     using IFR.Logger;
-    using System.Threading.Tasks;
-
     using Microsoft.AspNetCore.Mvc;
 
     /// <summary>

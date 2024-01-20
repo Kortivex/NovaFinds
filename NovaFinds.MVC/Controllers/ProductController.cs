@@ -12,7 +12,6 @@ namespace NovaFinds.MVC.Controllers
     using API;
     using DTOs;
     using IFR.Logger;
-    using System.Threading.Tasks;
     using Microsoft.AspNetCore.Mvc;
     using SmartBreadcrumbs.Attributes;
 

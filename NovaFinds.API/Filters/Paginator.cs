@@ -9,9 +9,6 @@
 
 namespace NovaFinds.API.Filters
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Linq;
 
     /// <summary>
     /// The paginator for different zones of page.

@@ -9,7 +9,6 @@
 
 namespace NovaFinds.MVC.Utils
 {
-    using System;
     using System.Text.RegularExpressions;
 
     /// <summary>
