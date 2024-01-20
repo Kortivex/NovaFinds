@@ -63,8 +63,8 @@ namespace NovaFinds.MVC.Controllers
                 HttpContext.Session.SetString("Date", DateTime.Now.ToLongDateString());
 
             var homeSectionsSize = int.Parse(_shopHomeSections.GetSection("Size").Value!, CultureInfo.InvariantCulture);
-            Logger.Debug($"Doing request to: {ApiEndPoints.GetProductsSortFilters}");
-            var productsSorted = await ApiClient.Get<IEnumerable<ProductDto>>(string.Format(ApiEndPoints.GetProductsSortFilters, homeSectionsSize, "image"));
+            var url = string.Format(ApiEndPoints.GetProductsSortFilters, homeSectionsSize, "image");
+            var productsSorted = await ApiClient.Get<IEnumerable<ProductDto>>(url);
 
             ViewData["ProductsLatest"] = productsSorted!.OrderByDescending(product => product.Id).ToList();
             ViewData["ProductsCheapest"] = productsSorted.OrderBy(product => product.Price).ToList();

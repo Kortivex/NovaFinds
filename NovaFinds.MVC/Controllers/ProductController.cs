@@ -52,8 +52,8 @@ namespace NovaFinds.MVC.Controllers
         [HttpGet("{productId:int}/Show")]
         public async Task<IActionResult> Show(int productId)
         {
-            Logger.Debug($"Doing request to: {ApiEndPoints.GetProduct}");
-            var product = await ApiClient.Get<ProductDto>(string.Format(ApiEndPoints.GetProduct, productId));
+            var url = string.Format(ApiEndPoints.GetProduct, productId);
+            var product = await ApiClient.Get<ProductDto>(url);
 
             ViewData["Product"] = product;
             ViewData["ProductTax"] = product!.Price + product.Price * (21.0 / 100.0);

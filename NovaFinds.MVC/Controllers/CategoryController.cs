@@ -86,11 +86,10 @@ namespace NovaFinds.MVC.Controllers
             ViewData["PaginationListText"] = _shopCategoriesConfig.GetSection("SortFilter").GetChildren()
                 .ToDictionary(x => x.Key, x => x.Value);
 
-            Logger.Debug($"Doing request to: {ApiEndPoints.GetCategories}");
             var categories = await ApiClient.Get<IEnumerable<CategoryDto>>(ApiEndPoints.GetCategories);
 
-            Logger.Debug($"Doing request to: {ApiEndPoints.GetCategoriesSortFilters}");
-            ViewData["CategoriesPaginated"] = await ApiClient.Get<IEnumerable<CategoryDto>>(string.Format(ApiEndPoints.GetCategoriesSortFilters, _listPagination, page));
+            var url = string.Format(ApiEndPoints.GetCategoriesSortFilters, _listPagination, page);
+            ViewData["CategoriesPaginated"] = await ApiClient.Get<IEnumerable<CategoryDto>>(url);
             ViewData["Pagination"] = new Paginator(categories!.Count(), page, _listPagination, _maxListMenuPagination);
 
             return View("List");
@@ -120,19 +119,20 @@ namespace NovaFinds.MVC.Controllers
                 .ToDictionary(x => x.Key, x => x.Value);
 
             // CATEGORY
-            Logger.Debug($"Doing request to: {ApiEndPoints.GetCategory}");
-            var category = await ApiClient.Get<CategoryDto>(string.Format(ApiEndPoints.GetCategory, categoryId));
+            var url = string.Format(ApiEndPoints.GetCategory, categoryId);
+            var category = await ApiClient.Get<CategoryDto>(url);
             ViewData["Name"] = category!.Name;
             ViewData["Id"] = categoryId.ToString(CultureInfo.InvariantCulture);
 
             // PRODUCTS
-            Logger.Debug($"Doing request to: {ApiEndPoints.GetProducts}");
             var products = await ApiClient.Get<IEnumerable<CategoryDto>>(ApiEndPoints.GetProducts);
-            Logger.Debug($"Doing request to: {ApiEndPoints.GetProductsCategorySortFilter}");
-            ViewData["ProductsPaginated"] = await ApiClient.Get<IEnumerable<ProductDto>>(string.Format(ApiEndPoints.GetProductsCategorySortFilter, categoryId, _showPagination, page));
+
+            url = string.Format(ApiEndPoints.GetProductsCategorySortFilter, categoryId, _showPagination, page);
+            var productPag = await ApiClient.Get<IEnumerable<ProductDto>>(url);
+            ViewData["ProductsPaginated"] = productPag;
 
             // PRODUCTS TOTAL
-            ViewData["ProductsCount"] = products!.Count().ToString(CultureInfo.InvariantCulture);
+            ViewData["ProductsCount"] = productPag!.Count().ToString();
 
             // PAGINATION COMPONENT
             ViewData["Pagination"] = new Paginator(products!.Count(), page, _showPagination, _maxShowMenuPagination);
