@@ -58,8 +58,10 @@ builder.Services.AddDistributedMemoryCache();
 // Config Razor View Engine
 builder.Services.Configure<RazorViewEngineOptions>(
     o => {
-        o.ViewLocationFormats.Add("/Views/Company/{0}" + RazorViewEngine.ViewExtension);
-        o.ViewLocationFormats.Add("/Views/Help/{0}" + RazorViewEngine.ViewExtension);
+        o.ViewLocationFormats.Add($"/Views/Company/About{RazorViewEngine.ViewExtension}");
+        o.ViewLocationFormats.Add($"/Views/Company/Terms{RazorViewEngine.ViewExtension}");
+        o.ViewLocationFormats.Add($"/Views/Help/Refund{RazorViewEngine.ViewExtension}");
+        o.ViewLocationFormats.Add($"/Views/Help/Shipping{RazorViewEngine.ViewExtension}");
     });
 
 // Config Authentication
@@ -109,9 +111,7 @@ builder.Services.AddBreadcrumbs(
     });
 
 // Ignore References in Json Deserializer
-builder.Services.Configure<JsonOptions>(options => {
-    options.SerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles;
-});
+builder.Services.Configure<JsonOptions>(options => { options.SerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles; });
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
