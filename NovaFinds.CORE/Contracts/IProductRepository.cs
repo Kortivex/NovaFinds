@@ -17,6 +17,20 @@ namespace NovaFinds.CORE.Contracts
     public interface IProductRepository : IRepository<Product>
     {
         /// <summary>
+        /// The find by name size.
+        /// </summary>
+        /// <param name="name">
+        /// The name.
+        /// </param>
+        /// <param name="size">
+        /// The size.
+        /// </param>
+        /// <returns>
+        /// The <see cref="IQueryable"/>.
+        /// </returns>
+        IQueryable<Product> FindByNameSize(string name, int size);
+        
+        /// <summary>
         /// The get by category id and with image.
         /// </summary>
         /// <param name="id">
