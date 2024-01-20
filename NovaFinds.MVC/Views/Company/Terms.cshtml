@@ -1,5 +1,4 @@
-﻿@inject IConfiguration Configuration
-@{
+﻿@{
     ViewData["Title"] = "Terms and Conditions";
     ViewData["ShopName"] = Configuration.GetSection("Config").GetSection("General").GetSection("Shop").GetSection("Name").Value;
 }

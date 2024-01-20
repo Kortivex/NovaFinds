@@ -1,5 +1,4 @@
-﻿@using NovaFinds.DTOs
-@{
+﻿@{
     ViewData["Title"] = ViewData["Name"];
     var products = ViewData["ProductsPaginated"] as ICollection<ProductDto>;
     var productsTotal = int.Parse(ViewData["ProductsCount"]!.ToString()!);

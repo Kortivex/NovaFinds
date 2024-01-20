@@ -1,5 +1,4 @@
-﻿@inject IConfiguration Configuration
-@{
+﻿@{
     ViewData["Title"] = "Refund Policy";
     ViewData["ShopName"] = Configuration.GetSection("Config").GetSection("General").GetSection("Shop").GetSection("Name").Value;
     var street = ViewData["ShopStreetRefunds"] as Dictionary<string, string>;

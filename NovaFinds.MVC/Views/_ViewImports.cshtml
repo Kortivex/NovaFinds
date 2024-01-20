@@ -2,6 +2,8 @@
 @using NovaFinds.MVC.Models
 @using NovaFinds.CORE
 @using NovaFinds.CORE.Domain
+@using NovaFinds.DTOs
+@using NovaFinds.API.Filters
 @using NovaFinds.Application
 @using NovaFinds.Application.Services
 @using NovaFinds.MVC.Controllers
@@ -10,3 +12,4 @@
 @using Microsoft.Extensions.Configuration
 @addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
 @addTagHelper *, SmartBreadcrumbs
+@inject IConfiguration Configuration
