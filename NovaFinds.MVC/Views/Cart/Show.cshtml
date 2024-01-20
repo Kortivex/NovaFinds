@@ -1,0 +1,105 @@
+﻿@inject SignInManager<User> SignInManager
+@{
+    ViewData["Title"] = "Shopping Cart";
+
+    var products = ViewData["Products"] as Dictionary<ProductDto, int>;
+    var totalWithTax = 0D;
+    var totalWithoutTax = 0D;
+
+    if (products is { Count: > 0 }){
+        totalWithTax = (double)ViewData["TotalTax"]!;
+        totalWithoutTax = (double)ViewData["TotalWithOutTax"]!;
+    }
+}
+<section class="padding-y">
+    <div class="container">
+        <div class="row">
+            <main class="col-md-9">
+                <div class="card">
+                    <table class="table table-borderless table-shopping-cart">
+                        <thead class="text-muted">
+                        <tr class="small text-uppercase">
+                            <th scope="col">Product</th>
+                            <th scope="col" width="120">Quantity</th>
+                            <th scope="col" width="120">Price</th>
+                            <th scope="col" class="text-right" width="200"></th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        @if (products is { Count: > 0 }){
+                            @foreach (var product in products){
+                                var totalProductTax = ((product.Key.Price + (product.Key.Price * 21) / 100) * product.Value);
+                                var totalProductWithoutTax = product.Key.Price;
+                                <tr>
+                                    <td>
+                                        <figure class="itemside">
+                                            <div class="aside">
+                                                <img src="@product.Key.ProductImages!.ElementAt(0)!.Image" class="img-sm" alt="">
+                                            </div>
+                                            <figcaption class="info">
+                                                <a href="/Product/@product.Key.Id/Show" class="title text-dark">@product.Key.Name</a>
+                                                <p class="text-muted small">@product.Key.Brand</p>
+                                            </figcaption>
+                                        </figure>
+                                    </td>
+                                    <td>
+                                        <input type="text" disabled="disabled" class="form-control bg-white" value="@product.Value">
+                                    </td>
+                                    <td>
+                                        <div class="price-wrap">
+                                            <var class="price">@(totalProductTax.ToString("0.##€")) </var>
+                                            <small class="text-muted">@totalProductWithoutTax.ToString("0.##€") each (Not Tax) </small>
+                                        </div>
+                                    </td>
+                                    <td class="text-center">
+                                        <a id="@(product.Key.Id + "_" + product.Value)" class="btn btn-light removed"> Remove</a>
+                                    </td>
+                                </tr>
+                            }
+                        }
+                        else{
+                            <tr>
+                                <td>
+                                    No items in shopping cart!
+                                </td>
+                            </tr>
+                        }
+                        </tbody>
+                    </table>
+
+                    <div class="card-body border-top">
+                        <a href="/Tpv" class="btn btn-primary float-md-right @if (!SignInManager.IsSignedIn(User) || products == null || products.Count == 0){ @("disabled") }">
+                            Make Purchase <i class="fa fa-chevron-right"></i>
+                        </a>
+
+                        <a href="/" class="btn btn-light"> <i class="fa fa-chevron-left"></i> Continue shopping </a>
+                    </div>
+                </div>
+
+                <div class="alert alert-success mt-3">
+                    <p class="icontext"><i class="icon text-success fa fa-truck"></i> Free Delivery within 1-2 weeks</p>
+                </div>
+            </main>
+            <aside class="col-md-3">
+                <div class="card">
+                    <div class="card-body">
+                        <dl class="dlist-align">
+                            <dt>Total (N.Tax):</dt>
+                            <dd class="text-right">@totalWithoutTax.ToString("0.##€")</dd>
+                        </dl>
+                        <dl class="dlist-align">
+                            <dt>Total:</dt>
+                            <dd class="text-right  h5">
+                                <strong>@totalWithTax.ToString("0.##€")</strong>
+                            </dd>
+                        </dl>
+                        <hr>
+                        <p class="text-center mb-3">
+                            <img src="images/misc/payments.png" height="26" alt="">
+                        </p>
+                    </div>
+                </div>
+            </aside>
+        </div>
+    </div>
+</section>
