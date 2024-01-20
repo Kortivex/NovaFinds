@@ -1,5 +1,6 @@
 ﻿namespace NovaFinds.MVC.API
 {
+    using IFR.Logger;
     using System.Net.Http.Headers;
     using System.Text.Json;
 
@@ -20,6 +21,7 @@
 
         public async Task<T?> Get<T>(string action)
         {
+            Logger.Debug($"Doing request to: {action}");
             var httpClient = GenerateHttpClient();
             var result = await httpClient.GetAsync(this.Url + action);
             result.EnsureSuccessStatusCode();
