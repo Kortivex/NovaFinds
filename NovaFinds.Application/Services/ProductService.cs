@@ -25,6 +25,23 @@ namespace NovaFinds.Application.Services
         /// The context.
         /// </param>
         public ProductService(IDbContext context) : base(context) {}
+        
+        /// <summary>
+        /// The find by name size.
+        /// </summary>
+        /// <param name="name">
+        /// The name.
+        /// </param>
+        /// <param name="size">
+        /// The size.
+        /// </param>
+        /// <returns>
+        /// The <see cref="IQueryable"/>.
+        /// </returns>
+        public IQueryable<Product> FindByNameSize(string name, int size)
+        {
+            return Find(pd => pd.Name.Contains(name)).Take(size);
+        }
 
         /// <summary>
         /// The get by category id with media and brand.
