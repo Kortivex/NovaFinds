@@ -31,6 +31,11 @@
                 var sortBy = request.Query["sortBy"];
                 if (sortBy == "image"){ _productService.SortByImageOrder(products); }
             }
+            else if (request.Query.ContainsKey("name")){
+                var name = request.Query["name"];
+                var size = request.Query["size"];
+                products = _productService.FindByNameSize(name!, int.Parse(size!)).ToList();
+            }
             else if (request.Query.ContainsKey("category")){
                 var category = int.Parse(request.Query["category"]!);
                 if (request.Query.ContainsKey("size") && request.Query.ContainsKey("page")){
@@ -44,12 +49,11 @@
             return ProductMapper.ToListDomain(products);
         }
 
-        public async Task<ProductDto?> GetProduct(HttpRequest request, string id)
+        public Task<ProductDto?> GetProduct(HttpRequest request, string id)
         {
             Logger.Debug("Get Product Handler");
             var product = _productService.GetByIdWithImage(int.Parse(id)).FirstOrDefault();
-
-            return ProductMapper.ToDomain(product!);
+            return Task.FromResult(ProductMapper.ToDomain(product!));
         }
     }
 }
