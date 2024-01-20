@@ -16,6 +16,7 @@ namespace NovaFinds.MVC.Controllers.Help
     /// <summary>
     /// The refund controller.
     /// </summary>
+    [Route("Refund")]
     public class RefundController : MainController
     {
         /// <summary>

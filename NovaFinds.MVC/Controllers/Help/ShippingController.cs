@@ -16,6 +16,7 @@ namespace NovaFinds.MVC.Controllers.Help
     /// <summary>
     /// The shipping controller.
     /// </summary>
+    [Route("Shipping")]
     public class ShippingController : MainController
     {
         /// <summary>

@@ -16,6 +16,7 @@ namespace NovaFinds.MVC.Controllers.Company
     /// <summary>
     /// The terms controller.
     /// </summary>
+    [Route("Terms")]
     public class TermsController : MainController
     {
         /// <summary>

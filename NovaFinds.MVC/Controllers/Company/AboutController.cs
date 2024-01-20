@@ -16,6 +16,7 @@ namespace NovaFinds.MVC.Controllers.Company
     /// <summary>
     /// The about shop controller.
     /// </summary>
+    [Route("About")]
     public class AboutController(IConfiguration config) : MainController(config)
     {
         /// <summary>
