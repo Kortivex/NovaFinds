@@ -12,6 +12,7 @@ namespace NovaFinds.IFR.Logger
     using NLog;
     using NLog.Config;
     using NLog.Targets;
+    using System.Text;
 
     /// <summary>
     /// NLog class.
@@ -25,11 +26,34 @@ namespace NovaFinds.IFR.Logger
             get
             {
                 if (_log != null) return _log;
-
-                var consoleTarget = new ConsoleTarget();
                 var config = new LoggingConfiguration();
+
+                // File output.
+                var fileTarget = new FileTarget
+                {
+                    Name = "DefaultFileTarget",
+                    FileName = "${basedir}/logs/logfile.log",
+                    Layout = "${longdate}|${level}|${message}|${exception}",
+                    ConcurrentWrites = true,
+                    Encoding = Encoding.UTF8
+                };
+                config.AddTarget("file", fileTarget);
+                config.AddRuleForOneLevel(LogLevel.Error, fileTarget);
+
+                // Console output.
+                var consoleTarget = new ConsoleTarget
+                {
+                    Name = "DefaultConsole",
+                    Layout = "${longdate}|${level}|${message}|${exception}",
+                    DetectConsoleAvailable = true,
+                    Encoding = Encoding.UTF8
+                };
                 config.AddTarget("console", consoleTarget);
-                config.LoggingRules.Add(new LoggingRule("*", LogLevel.Debug, consoleTarget));
+                config.AddRuleForOneLevel(LogLevel.Debug, consoleTarget);
+                config.AddRuleForOneLevel(LogLevel.Info, consoleTarget);
+                config.AddRuleForOneLevel(LogLevel.Warn, consoleTarget);
+                config.AddRuleForOneLevel(LogLevel.Fatal, consoleTarget);
+                config.AddRuleForOneLevel(LogLevel.Trace, consoleTarget);
 
                 LogManager.Configuration = config;
                 _log = LogManager.GetCurrentClassLogger();
