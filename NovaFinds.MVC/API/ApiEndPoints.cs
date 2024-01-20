@@ -21,6 +21,11 @@ namespace NovaFinds.MVC.API
         public const string GetProducts = "/products";
         
         /// <summary>
+        /// GET /products with search sort filters.
+        /// </summary>
+        public const string GetProductsNameSortFilters = "/products/?name={0}&size={1}";
+        
+        /// <summary>
         /// GET /products with sort filters.
         /// </summary>
         public const string GetProductsSortFilters = "/products/?size={0}&sortBy={1}";
