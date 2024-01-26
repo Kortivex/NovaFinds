@@ -1,11 +1,15 @@
 ﻿namespace NovaFinds.MVC.API
 {
     using IFR.Logger;
+    using System.Net;
     using System.Net.Http.Headers;
+    using System.Text;
     using System.Text.Json;
 
     public class ApiClient(IConfiguration config)
     {
+        private const string ApplicationJson = "application/json";
+        private const string XApiKeyHeader = "X-Api-Key";
         private string? Url { get; set; } = config.GetSection("Config").GetSection("Apis").GetSection("NovaFinds").Value;
 
         private string? ApiKey { get; set; } = config.GetSection("Config").GetSection("ApiKeys").GetSection("NovaFinds").Value;
@@ -14,14 +18,14 @@
         {
             var httpClient = new HttpClient();
             httpClient.DefaultRequestHeaders.Accept.Clear();
-            httpClient.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-            httpClient.DefaultRequestHeaders.Add("X-Api-Key", this.ApiKey);
+            httpClient.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue(ApplicationJson));
+            httpClient.DefaultRequestHeaders.Add(XApiKeyHeader, this.ApiKey);
             return httpClient;
         }
 
         public async Task<T?> Get<T>(string action)
         {
-            Logger.Debug($"Doing request to: {action}");
+            Logger.Debug($"Doing {WebRequestMethods.Http.Get} request to: {action}");
             var httpClient = GenerateHttpClient();
             var result = await httpClient.GetAsync(this.Url + action);
             result.EnsureSuccessStatusCode();
@@ -29,5 +33,15 @@
             return JsonSerializer.Deserialize<T>(resultContent);
         }
 
+        public async Task<T?> Post<T>(string action, object value)
+        {
+            Logger.Debug($"Doing {WebRequestMethods.Http.Post} request to: {action}");
+            var httpClient = GenerateHttpClient();
+            var content = new StringContent(JsonSerializer.Serialize(value), Encoding.UTF8, ApplicationJson);
+            var result = await httpClient.PostAsync(this.Url + action, content);
+            result.EnsureSuccessStatusCode();
+            var resultContent = result.Content.ReadAsStringAsync().Result;
+            return JsonSerializer.Deserialize<T>(resultContent);
+        }
     }
 }
