@@ -13,6 +13,7 @@ namespace NovaFinds.CORE.Domain
     using Contracts;
     using Microsoft.AspNetCore.Identity;
     using System.ComponentModel.DataAnnotations;
+    using System.ComponentModel.DataAnnotations.Schema;
 
     public sealed class User : IdentityUser<int>, IEntity
     {
@@ -67,6 +68,9 @@ namespace NovaFinds.CORE.Domain
         /// </summary>
         public User()
         {
+            this.EmailConfirmed = false;
+            this.PhoneNumberConfirmed = false;
+            this.Password = "";
             this.Nif = "";
             this.FirstName = "";
             this.LastName = "";
@@ -79,6 +83,31 @@ namespace NovaFinds.CORE.Domain
             this.Carts = new HashSet<Cart>();
             this.Orders = new HashSet<Order>();
         }
+        
+        /// <summary>
+        ///     EmailConfirmed of the User
+        /// </summary>
+        /// <remarks>
+        ///     EmailConfirmed of the user
+        /// </remarks>
+        public bool EmailConfirmed { get; set; }
+        
+        /// <summary>
+        ///     PhoneNumberConfirmed of the User
+        /// </summary>
+        /// <remarks>
+        ///     PhoneNumberConfirmed of the user
+        /// </remarks>
+        public bool PhoneNumberConfirmed { get; set; }
+        
+        /// <summary>
+        ///     Password of the User
+        /// </summary>
+        /// <remarks>
+        ///     Password of the User
+        /// </remarks>
+        [NotMapped]
+        public string Password { get; set; }
 
         /// <summary>
         ///     Required, Min length = 9, Max length = 9
