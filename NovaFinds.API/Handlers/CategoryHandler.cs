@@ -1,12 +1,15 @@
 ﻿namespace NovaFinds.API.Handlers
 {
     using Application.Services;
+    using Auth;
     using CORE.Contracts;
     using CORE.Mappers;
     using DTOs;
     using Filters;
     using IFR.Logger;
+    using Microsoft.AspNetCore.Authorization;
 
+    [Authorize(AuthenticationSchemes = ApiKeySchemeOptions.AuthenticateScheme)]
     public class CategoryHandler(IDbContext context)
     {
 
