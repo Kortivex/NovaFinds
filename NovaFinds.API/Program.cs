@@ -1,33 +1,19 @@
 using Microsoft.AspNetCore.Http.Json;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using NovaFinds.API.Handlers;
 using NovaFinds.API.Handlers.Auth;
 using NovaFinds.Application.Services;
 using NovaFinds.CORE.Contracts;
+using NovaFinds.CORE.Domain;
 using NovaFinds.DAL.Context;
 using NovaFinds.IFR.Logger;
 using System.Text.Json.Serialization;
 
 var builder = WebApplication.CreateBuilder(args);
 
-builder.Services.AddDbContext<ApplicationDbContext>(
-    options => options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
-
-builder.Services.AddAuthorization();
-
-builder.Services
-    .AddAuthentication(options => {
-        options.DefaultAuthenticateScheme = ApiKeySchemeOptions.AuthenticateScheme;
-        options.DefaultChallengeScheme = ApiKeySchemeOptions.ChallengeScheme;
-    })
-    .AddScheme<ApiKeySchemeOptions, ApiKeySchemeHandler>(
-        ApiKeySchemeOptions.AuthenticateScheme,
-        options => { options.HeaderName = "X-Api-Key"; });
-
-// DB Context
+// Services.
 builder.Services.AddScoped<IDbContext, ApplicationDbContext>();
-
-// Services
 builder.Services.AddScoped<ICartRepository, CartService>();
 builder.Services.AddScoped<IOrderRepository, OrderService>();
 builder.Services.AddScoped<IOrderProductRepository, OrderProductService>();
@@ -37,12 +23,36 @@ builder.Services.AddScoped<IProductImageRepository, ProductImageService>();
 builder.Services.AddScoped<IUserRepository, UserService>();
 builder.Services.AddScoped<IRoleRepository, RoleService>();
 
-// Handlers
+// Handlers.
 builder.Services.AddScoped<ProductHandler>();
 builder.Services.AddScoped<CategoryHandler>();
+builder.Services.AddScoped<UserHandler>();
 
-// Ignore References in Json Deserializer
+// Identity.
+builder.Services.AddIdentity<User, Role>()
+    .AddEntityFrameworkStores<ApplicationDbContext>()
+    .AddDefaultTokenProviders();
+
+// Ignore References in Json Deserializer.
 builder.Services.Configure<JsonOptions>(options => { options.SerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles; });
+
+// Add DB Context.
+builder.Services.AddDbContext<ApplicationDbContext>(
+    options => options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+
+// Add Authentication.
+builder.Services
+    .AddAuthentication(options => {
+        options.DefaultAuthenticateScheme = ApiKeySchemeOptions.AuthenticateScheme;
+        options.DefaultChallengeScheme = ApiKeySchemeOptions.ChallengeScheme;
+        options.DefaultScheme = ApiKeySchemeOptions.AuthenticateScheme;
+    })
+    .AddScheme<ApiKeySchemeOptions, ApiKeySchemeHandler>(
+        ApiKeySchemeOptions.AuthenticateScheme,
+        options => { options.HeaderName = "X-Api-Key"; });
+
+// Add Authorization.
+builder.Services.AddAuthorization();
 
 Logger.Debug("REST API services configured!");
 
@@ -53,6 +63,10 @@ app.UseAuthentication();
 app.UseAuthorization();
 
 // Handlers
+app.MapPost("/users", (UserHandler handler, HttpRequest request) => handler.PostUser(request))
+    .WithName("PostUser")
+    .RequireAuthorization();
+
 app.MapGet("/products", (ProductHandler handler, HttpRequest request) => handler.GetProducts(request))
     .WithName("GetProducts")
     .RequireAuthorization();
