@@ -11,7 +11,6 @@ namespace NovaFinds.MVC.Controllers
 {
     using API;
     using DTOs;
-    using IFR.Logger;
     using Microsoft.AspNetCore.Mvc;
     using SmartBreadcrumbs.Attributes;
     using System.Globalization;
@@ -39,18 +38,6 @@ namespace NovaFinds.MVC.Controllers
         }
 
         /// <summary>
-        /// The error view generator.
-        /// </summary>
-        /// <returns>
-        /// The <see cref="IActionResult"/>.
-        /// </returns>
-        [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
-        public IActionResult Error()
-        {
-            return View();
-        }
-
-        /// <summary>
         /// The index of page to show.
         /// </summary>
         /// <returns>
@@ -65,11 +52,24 @@ namespace NovaFinds.MVC.Controllers
             var homeSectionsSize = int.Parse(_shopHomeSections.GetSection("Size").Value!, CultureInfo.InvariantCulture);
             var url = string.Format(ApiEndPoints.GetProductsSortFilters, homeSectionsSize, "image");
             var productsSorted = await ApiClient.Get<IEnumerable<ProductDto>>(url);
+            var productsSortedList = productsSorted!.ToList();
 
-            ViewData["ProductsLatest"] = productsSorted!.OrderByDescending(product => product.Id).ToList();
-            ViewData["ProductsCheapest"] = productsSorted.OrderBy(product => product.Price).ToList();
+            ViewData["ProductsLatest"] = productsSortedList.OrderByDescending(product => product.Id).ToList();
+            ViewData["ProductsCheapest"] = productsSortedList.OrderBy(product => product.Price).ToList();
 
             return View("Home");
+        }
+
+        /// <summary>
+        /// The error view generator.
+        /// </summary>
+        /// <returns>
+        /// The <see cref="IActionResult"/>.
+        /// </returns>
+        [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
+        public IActionResult Error()
+        {
+            return View();
         }
     }
 }
