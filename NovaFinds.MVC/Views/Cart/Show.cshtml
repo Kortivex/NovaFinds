@@ -68,7 +68,7 @@
                     </table>
 
                     <div class="card-body border-top">
-                        <a href="/Tpv" class="btn btn-primary float-md-right @if (!SignInManager.IsSignedIn(User) || products == null || products.Count == 0){ @("disabled") }">
+                        <a href="/Tpv" class="btn btn-primary float-md-right @if (products == null || products.Count == 0){ @("disabled") }">
                             Make Purchase <i class="fa fa-chevron-right"></i>
                         </a>
 
