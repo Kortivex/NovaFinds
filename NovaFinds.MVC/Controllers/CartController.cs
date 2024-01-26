@@ -17,7 +17,6 @@ namespace NovaFinds.MVC.Controllers
     using Models;
     using SmartBreadcrumbs.Attributes;
     using System.Globalization;
-    using System.Security.Claims;
 
     /// <summary>
     /// The cart controller.
@@ -53,13 +52,6 @@ namespace NovaFinds.MVC.Controllers
         [Breadcrumb("Cart")]
         public async Task<IActionResult> Index()
         {
-            if (_signInManager.IsSignedIn(User)){
-                // TODO: DELETE CART FROM DB IF USER IS IN SESSION OR NOT
-            }
-            else{
-                
-            }
-
             // We process the items that we have in session
             if (!HttpContext.Session.Keys.Contains("CartItems")) return View("Show");
             var productQuantity = Utils.Session.RetrieveListFromSession(HttpContext.Session, "CartItems");
@@ -125,7 +117,9 @@ namespace NovaFinds.MVC.Controllers
             // The above is added to the session again
             Utils.Session.StoreListInSession(HttpContext.Session, "CartItems", productQuantity);
 
-            // TODO: ADD CART TO DB IF USER IS IN SESSION OR NOT
+            if (_signInManager.IsSignedIn(User)){
+                // TODO: ADD ITEM TO CART
+            }
 
             return Json(new { response = "OK" });
 
@@ -156,11 +150,12 @@ namespace NovaFinds.MVC.Controllers
             }
 
             Utils.Session.StoreListInSession(HttpContext.Session, "CartItems", productQuantity);
-
-            // TODO: DELETE CART FROM DB IF USER IS IN SESSION OR NOT
+            
+            if (_signInManager.IsSignedIn(User)){
+                // TODO: DELETE ITEM FROM CART
+            }
 
             return Json(new { response = "OK" });
-
         }
     }
 }
