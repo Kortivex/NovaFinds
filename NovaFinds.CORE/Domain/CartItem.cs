@@ -99,7 +99,7 @@ namespace NovaFinds.CORE.Domain
         /// <remarks>
         ///     Relation CartItem & Cart
         /// </remarks>
-        public Cart Cart { get; set; }
+        public Cart? Cart { get; set; }
 
         /// <summary>
         ///     Required
@@ -107,7 +107,7 @@ namespace NovaFinds.CORE.Domain
         /// <remarks>
         ///     Relation CartItem & Product
         /// </remarks>
-        public Product Product { get; set; }
+        public Product? Product { get; set; }
 
         /// <summary>
         ///     Static create function (for use in LINQ queries, etc.)

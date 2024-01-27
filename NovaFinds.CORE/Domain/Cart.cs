@@ -10,6 +10,7 @@
 namespace NovaFinds.CORE.Domain
 {
     using Contracts;
+    using System.ComponentModel.DataAnnotations.Schema;
 
     /// <summary>
     ///     Shopping Cart table
@@ -63,6 +64,12 @@ namespace NovaFinds.CORE.Domain
         ///     FK of the related User
         /// </remarks>
         public int UserId { get; set; }
+        
+        /// <summary>
+        ///     External Username Ref.
+        /// </summary>
+        [NotMapped]
+        public string UserName { get; set; }
 
         /// <summary>
         ///     Default value = DateTime.Now
@@ -88,7 +95,7 @@ namespace NovaFinds.CORE.Domain
         /// <remarks>
         ///     Relation Cart & User
         /// </remarks>
-        public User User { get; set; }
+        public User? User { get; set; }
 
         /// <summary>
         ///     Required
@@ -96,7 +103,7 @@ namespace NovaFinds.CORE.Domain
         /// <remarks>
         ///     Relation Cart & CartItems
         /// </remarks>
-        public IEnumerable<CartItem> CartItems { get; }
+        public IEnumerable<CartItem>? CartItems { get; set;}
 
         /// <summary>
         ///     Static create function (for use in LINQ queries, etc.)

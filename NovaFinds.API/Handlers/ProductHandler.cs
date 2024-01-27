@@ -1,4 +1,13 @@
-﻿namespace NovaFinds.API.Handlers
+﻿// --------------------------------------------------------------------------------------------------------------------
+// <copyright file="ProductHandler.cs" company="">
+//
+// </copyright>
+// <summary>
+//   Defines the Product Handler type.
+// </summary>
+// --------------------------------------------------------------------------------------------------------------------
+
+namespace NovaFinds.API.Handlers
 {
     using Application.Services;
     using Auth;

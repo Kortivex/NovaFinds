@@ -1,4 +1,13 @@
-﻿namespace NovaFinds.API.Handlers
+﻿// --------------------------------------------------------------------------------------------------------------------
+// <copyright file="CategoryHandler.cs" company="">
+//
+// </copyright>
+// <summary>
+//   Defines the Category Handler type.
+// </summary>
+// --------------------------------------------------------------------------------------------------------------------
+
+namespace NovaFinds.API.Handlers
 {
     using Application.Services;
     using Auth;
