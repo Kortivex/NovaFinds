@@ -59,5 +59,50 @@ namespace NovaFinds.MVC.API
         /// POST /users.
         /// </summary>
         public const string PostUsers = "/users";
+
+        /// <summary>
+        /// GET /users.
+        /// </summary>
+        public const string GetUsers = "/users";
+
+        /// <summary>
+        /// GET /users with username filter.
+        /// </summary>
+        public const string GetUsersUsernameFilter = "/users/?username={0}";
+
+        /// <summary>
+        /// GET /users with email filter.
+        /// </summary>
+        public const string GetUsersEmailFilter = "/users/?email={0}";
+
+        /// <summary>
+        /// GET /users/:username/carts.
+        /// </summary>
+        public const string GetCart = "/users/{0}/carts";
+
+        /// <summary>
+        /// POST /carts.
+        /// </summary>
+        public const string PostCarts = "/carts";
+        
+        /// <summary>
+        /// DELETE /carts/:cart_id.
+        /// </summary>
+        public const string DeleteCarts = "/carts/{0}";
+
+        /// <summary>
+        /// POST /carts/:cart_id/items.
+        /// </summary>
+        public const string PostCartsItems = "/carts/{0}/items";
+
+        /// <summary>
+        /// PUT /carts/:cart_id/items/:item_id.
+        /// </summary>
+        public const string PutCartsItems = "/carts/{0}/items/{1}";
+
+        /// <summary>
+        /// GET /carts/:cart_id/items.
+        /// </summary>
+        public const string GetCartsItems = "/carts/{0}/items";
     }
 }

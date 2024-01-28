@@ -48,6 +48,15 @@ namespace NovaFinds.DTOs
         /// </remarks>
         [JsonPropertyName("phone_number_confirmed")]
         public bool PhoneNumberConfirmed { get; set; }
+        
+        /// <summary>
+        ///     IsActive state of the User
+        /// </summary>
+        /// <remarks>
+        ///     IsActive state of the user
+        /// </remarks>
+        [JsonPropertyName("is_active")]
+        public bool IsActive { get; set; }
 
         /// <summary>
         ///     Username of the User

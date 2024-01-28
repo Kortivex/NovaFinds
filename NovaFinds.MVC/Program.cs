@@ -22,27 +22,10 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddDbContext<ApplicationDbContext>(
     options => options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
-// Identity Settings
-builder.Services.AddIdentity<User, Role>(
-        options => {
-            options.SignIn.RequireConfirmedAccount = true;
-            options.User.RequireUniqueEmail = true;
-            options.Lockout.AllowedForNewUsers = false;
-            options.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromSeconds(1);
-            options.Lockout.MaxFailedAccessAttempts = 9999;
-
-            // Password requirements
-            options.Password.RequireDigit = true;
-            options.Password.RequireLowercase = true;
-            options.Password.RequireNonAlphanumeric = true;
-            options.Password.RequireUppercase = true;
-            options.Password.RequiredLength = 6;
-            options.Password.RequiredUniqueChars = 1;
-        })
-    .AddRoles<Role>()
-    .AddDefaultUI()
-    .AddEntityFrameworkStores<ApplicationDbContext>()
-    .AddDefaultTokenProviders();
+// Password Hasher configuration
+builder.Services.Configure<PasswordHasherOptions>(options =>
+        options.CompatibilityMode = PasswordHasherCompatibilityMode.IdentityV3
+    );
 
 // Cookies configuration
 builder.Services.Configure<CookiePolicyOptions>(
@@ -54,15 +37,6 @@ builder.Services.Configure<CookiePolicyOptions>(
 // Config Token Provider
 builder.Services.Configure<DataProtectionTokenProviderOptions>(o => o.TokenLifespan = TimeSpan.FromHours(3));
 builder.Services.AddDistributedMemoryCache();
-
-// Config Razor View Engine
-builder.Services.Configure<RazorViewEngineOptions>(
-    o => {
-        o.ViewLocationFormats.Add($"/Views/Company/About{RazorViewEngine.ViewExtension}");
-        o.ViewLocationFormats.Add($"/Views/Company/Terms{RazorViewEngine.ViewExtension}");
-        o.ViewLocationFormats.Add($"/Views/Help/Refund{RazorViewEngine.ViewExtension}");
-        o.ViewLocationFormats.Add($"/Views/Help/Shipping{RazorViewEngine.ViewExtension}");
-    });
 
 // Config Authentication
 builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme).AddCookie(
@@ -89,6 +63,38 @@ builder.Services.ConfigureApplicationCookie(
         options.AccessDeniedPath = "/Identity/Account/AccessDenied";
         options.ExpireTimeSpan = TimeSpan.FromDays(5);
         options.SlidingExpiration = true;
+    });
+
+// Identity Settings
+builder.Services.AddIdentity<User, Role>(
+        options => {
+            options.User.RequireUniqueEmail = true;
+            options.Lockout.AllowedForNewUsers = true;
+            options.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromSeconds(1);
+            options.Lockout.MaxFailedAccessAttempts = 9999;
+            options.SignIn.RequireConfirmedAccount = false;
+            options.SignIn.RequireConfirmedEmail = false;
+            options.SignIn.RequireConfirmedPhoneNumber = false;
+            // Password requirements
+            options.Password.RequireDigit = true;
+            options.Password.RequireLowercase = true;
+            options.Password.RequireNonAlphanumeric = true;
+            options.Password.RequireUppercase = true;
+            options.Password.RequiredLength = 6;
+            options.Password.RequiredUniqueChars = 1;
+        })
+    .AddRoles<Role>()
+    .AddDefaultUI()
+    .AddEntityFrameworkStores<ApplicationDbContext>()
+    .AddDefaultTokenProviders();
+
+// Config Razor View Engine
+builder.Services.Configure<RazorViewEngineOptions>(
+    o => {
+        o.ViewLocationFormats.Add($"/Views/Company/About{RazorViewEngine.ViewExtension}");
+        o.ViewLocationFormats.Add($"/Views/Company/Terms{RazorViewEngine.ViewExtension}");
+        o.ViewLocationFormats.Add($"/Views/Help/Refund{RazorViewEngine.ViewExtension}");
+        o.ViewLocationFormats.Add($"/Views/Help/Shipping{RazorViewEngine.ViewExtension}");
     });
 
 builder.Services.AddSingleton(builder.Configuration);

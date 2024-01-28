@@ -39,5 +39,11 @@ namespace NovaFinds.DTOs
         /// </remarks>
         [JsonPropertyName("user_id")]
         public int UserId { get; set; }
+        
+        /// <summary>
+        ///     Creation Date
+        /// </summary>
+        [JsonPropertyName("date")]
+        public DateTime? Date { get; set; }
     }
 }

@@ -1,0 +1,66 @@
+﻿@inject SignInManager<User> SignInManager
+
+@if (SignInManager.IsSignedIn(User)){
+    <form class="form-inline" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("Index", "Home", new { area = string.Empty })">
+        <div class="widget-header mr-3">
+            <a class="widget-view" asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage">
+                <div class="icon-area">
+                    <i class="fa fa-user"></i>
+                </div>
+                <small class="text">@User.Identity!.Name</small>
+            </a>
+        </div>
+        <div class="widget-header mr-3">
+            <a class="widget-view" asp-area="Identity" asp-page="/Account/Manage/Orders">
+                <div class="icon-area">
+                    <i class="fa fa-store"></i>
+                </div>
+                <small class="text"> Orders </small>
+            </a>
+        </div>
+        <div class="widget-header">
+            <a class="widget-view" asp-controller="Cart" asp-action="Index">
+                <div class="icon-area">
+                    <i class="fa fa-shopping-cart"></i>
+                </div>
+                <small class="text"> Cart </small>
+            </a>
+        </div>
+        @if (User.IsInRole("Admin")){
+            <div class="widget-header">
+                <a class="widget-view" asp-area="Admin" asp-page="/CRUD/Index">
+                    <div class="icon-area">
+                        <i class="fa fa-tools"></i>
+                    </div>
+                    <small class="text"> Admin </small>
+                </a>
+            </div>
+        }
+        <div class="widget-header mr-3">
+            <button class="btn " type="submit">
+                <div class="icon-area">
+                    <i class="fa fa-sign-out-alt"></i>
+                </div>
+                <small class="text"> Logout </small>
+            </button>
+        </div>
+    </form>
+}
+else{
+    <div class="widget-header mr-3">
+        <a class="widget-view" asp-area="Identity" asp-page="/Account/Login">
+            <div class="icon-area">
+                <i class="fa fa-user"></i>
+            </div>
+            <small class="text"> Profile </small>
+        </a>
+    </div>
+    <div class="widget-header">
+        <a class="widget-view" asp-controller="Cart" asp-action="Index">
+            <div class="icon-area">
+                <i class="fa fa-shopping-cart"></i>
+            </div>
+            <small class="text"> Cart </small>
+        </a>
+    </div>
+}

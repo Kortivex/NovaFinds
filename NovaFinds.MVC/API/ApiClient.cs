@@ -43,5 +43,12 @@
             var resultContent = result.Content.ReadAsStringAsync().Result;
             return JsonSerializer.Deserialize<T>(resultContent);
         }
+        
+        public void Delete(string action)
+        {
+            Logger.Debug($"Doing Delete request to: {action}");
+            var httpClient = GenerateHttpClient();
+            _ = httpClient.DeleteAsync(this.Url + action).Result;
+        }
     }
 }

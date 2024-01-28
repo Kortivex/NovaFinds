@@ -1,8 +1,5 @@
 ﻿@inject SignInManager<User> SignInManager
-@inject UserManager<User> UserManager
-
-@if (!SignInManager.IsSignedIn(User))
-{
+@if (!SignInManager.IsSignedIn(User)){
     <li>
         <a asp-area="Identity" asp-page="/Account/Login"> User Login </a>
     </li>
@@ -10,8 +7,7 @@
         <a asp-area="Identity" asp-page="/Account/Register"> User Register </a>
     </li>
 }
-else
-{
+else{
     <li>
         <a asp-area="Identity" asp-page="/Account/Manage/Index"> Account Setting </a>
     </li>
