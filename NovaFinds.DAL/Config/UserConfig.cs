@@ -43,6 +43,12 @@ namespace NovaFinds.DAL.Config
             eb.Property(t => t.Country).HasMaxLength(128).IsRequired();
 
             eb.Property(t => t.Email).HasMaxLength(256).IsRequired();
+            
+            eb.Property(t => t.EmailConfirmed).IsRequired();
+            
+            eb.Property(t => t.PhoneNumberConfirmed).IsRequired();
+            
+            eb.Property(t => t.IsActive).IsRequired();
 
             // External Relation(s).
             eb.HasMany(user => user.Carts)

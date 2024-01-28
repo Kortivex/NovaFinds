@@ -70,6 +70,7 @@ namespace NovaFinds.CORE.Domain
         {
             this.EmailConfirmed = false;
             this.PhoneNumberConfirmed = false;
+            this.IsActive = true;
             this.Password = "";
             this.Nif = "";
             this.FirstName = "";
@@ -99,6 +100,14 @@ namespace NovaFinds.CORE.Domain
         ///     PhoneNumberConfirmed of the user
         /// </remarks>
         public bool PhoneNumberConfirmed { get; set; }
+        
+        /// <summary>
+        ///     IsActive state of the User
+        /// </summary>
+        /// <remarks>
+        ///     IsActive state of the user
+        /// </remarks>
+        public bool IsActive { get; set; }
         
         /// <summary>
         ///     Password of the User

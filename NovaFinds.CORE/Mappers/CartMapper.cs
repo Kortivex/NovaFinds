@@ -22,7 +22,8 @@ namespace NovaFinds.CORE.Mappers
             return new CartDto
             {
                 Id = cart.Id,
-                UserName = cart.UserName
+                UserName = cart.UserName,
+                Date = cart.Date
             };
         }
 

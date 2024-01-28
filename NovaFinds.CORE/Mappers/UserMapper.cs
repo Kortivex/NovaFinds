@@ -33,7 +33,8 @@ namespace NovaFinds.CORE.Mappers
                 State = user.State,
                 StreetAddress = user.StreetAddress,
                 PhoneNumber = user.PhoneNumber!,
-                PhoneNumberConfirmed = user.PhoneNumberConfirmed
+                PhoneNumberConfirmed = user.PhoneNumberConfirmed,
+                IsActive = user.IsActive
             };
         }
 
@@ -67,7 +68,8 @@ namespace NovaFinds.CORE.Mappers
                 State = user.State,
                 StreetAddress = user.StreetAddress,
                 PhoneNumber = user.PhoneNumber,
-                PhoneNumberConfirmed = user.PhoneNumberConfirmed
+                PhoneNumberConfirmed = user.PhoneNumberConfirmed,
+                IsActive = user.IsActive
             };
         }
 
