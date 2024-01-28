@@ -31,7 +31,13 @@ namespace NovaFinds.MVC.Areas.Identity.Pages.Account
         /// <summary>
         /// Initializes a new instance of the <see cref="RegisterConfirmationModel"/> class.
         /// </summary>
-        public RegisterConfirmationModel() {}
+        /// <param name="config">
+        /// The config app.
+        /// </param>
+        public RegisterConfirmationModel(IConfiguration config)
+        {
+            this.ApiClient = new ApiClient(config);
+        }
 
         /// <summary>
         /// Gets or sets the email.
@@ -56,6 +62,7 @@ namespace NovaFinds.MVC.Areas.Identity.Pages.Account
             if (users!.Count != 1){ return NotFound($"Unable to load user with email '{email}'."); }
 
             this.Email = email;
+            ViewData["Email"] = this.Email;
 
             return Page();
         }
