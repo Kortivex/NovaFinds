@@ -35,6 +35,11 @@ builder.Services.AddIdentity<User, Role>()
     .AddEntityFrameworkStores<ApplicationDbContext>()
     .AddDefaultTokenProviders();
 
+// Password Hasher configuration
+builder.Services.Configure<PasswordHasherOptions>(options =>
+        options.CompatibilityMode = PasswordHasherCompatibilityMode.IdentityV3
+    );
+
 // Ignore References in Json Deserializer.
 builder.Services.Configure<JsonOptions>(options => { options.SerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles; });
 
@@ -79,6 +84,10 @@ app.MapGet("/users/{username}/carts", (UserHandler handler, HttpRequest request,
 
 app.MapPost("/carts", (CartHandler handler, HttpRequest request) => handler.PostCarts(request))
     .WithName("PostCarts")
+    .RequireAuthorization();
+
+app.MapDelete("/carts/{cartId:int}", (CartHandler handler, HttpRequest request, int cartId) => handler.DeleteCart(request, cartId))
+    .WithName("DeleteCart")
     .RequireAuthorization();
 
 app.MapPost("/carts/{cartId:int}/items", (CartHandler handler, HttpRequest request, int cartId) => handler.PostCartItems(request, cartId))

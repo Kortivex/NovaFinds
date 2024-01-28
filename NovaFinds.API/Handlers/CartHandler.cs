@@ -17,7 +17,10 @@ namespace NovaFinds.API.Handlers
     using DTOs;
     using IFR.Logger;
     using Microsoft.AspNetCore.Authorization;
+    using Microsoft.AspNetCore.Http.HttpResults;
     using Microsoft.AspNetCore.Identity;
+    using Microsoft.AspNetCore.Mvc;
+    using System.Net;
     using System.Text.Json;
 
     [Authorize(AuthenticationSchemes = ApiKeySchemeOptions.AuthenticateScheme)]
@@ -67,6 +70,15 @@ namespace NovaFinds.API.Handlers
                 cartDto.UserName = username;
                 return TypedResults.Created($"/carts/{resultObtained[0].Id}", cartDto);
             }
+        }
+
+        public async Task<IResult> DeleteCart(HttpRequest request, int cartId)
+        {
+            Logger.Debug("Delete Cart Handler");
+            await _cartService.DeleteByIdAsync(cartId);
+            await _cartItemService.SaveChangesAsync();
+
+            return TypedResults.Empty;
         }
 
         public IEnumerable<CartItemDto?> GetCartItems(HttpRequest request, int cartId)

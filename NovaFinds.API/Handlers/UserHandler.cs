@@ -71,7 +71,7 @@ namespace NovaFinds.API.Handlers
         public IEnumerable<CartDto?> GetUsersCart(HttpRequest request, string username)
         {
             Logger.Debug("List User-Carts Handler");
-            var carts = new List<Cart>();
+            List<Cart> carts;
             var users = _userService.GetAll()
                 .Where(user => user.UserName == username).ToList();
 
@@ -79,7 +79,13 @@ namespace NovaFinds.API.Handlers
                 carts = _cartService.GetAll()
                     .Where(cart => cart.UserId == users[0].Id).ToList();
             }
-            
+            else{
+                users = _userService.GetAll()
+                    .Where(user => user.Email == username).ToList();
+                carts = _cartService.GetAll()
+                    .Where(cart => cart.UserId == users[0].Id).ToList();
+            }
+
             return CartMapper.ToListDomain(carts);
         }
     }
