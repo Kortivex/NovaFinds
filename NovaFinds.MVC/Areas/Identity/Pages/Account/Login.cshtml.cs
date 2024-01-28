@@ -10,17 +10,14 @@
 namespace NovaFinds.MVC.Areas.Identity.Pages.Account
 {
     using API;
-    using System;
-    using System.Collections.Generic;
-    using System.Threading.Tasks;
+    using CORE.Domain;
+    using DTOs;
+    using IFR.Logger;
     using Microsoft.AspNetCore.Authentication;
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Identity;
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.AspNetCore.Mvc.RazorPages;
-    using CORE.Domain;
-    using DTOs;
-    using IFR.Logger;
     using Models.Areas.Identity.Account;
     using SmartBreadcrumbs.Attributes;
 
