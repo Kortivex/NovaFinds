@@ -1,5 +1,6 @@
 ﻿namespace NovaFinds.MVC.API
 {
+    using Errors;
     using IFR.Logger;
     using System.Net;
     using System.Net.Http.Headers;
@@ -9,7 +10,9 @@
     public class ApiClient(IConfiguration config)
     {
         private const string ApplicationJson = "application/json";
+
         private const string XApiKeyHeader = "X-Api-Key";
+
         private string? Url { get; set; } = config.GetSection("Config").GetSection("Apis").GetSection("NovaFinds").Value;
 
         private string? ApiKey { get; set; } = config.GetSection("Config").GetSection("ApiKeys").GetSection("NovaFinds").Value;
@@ -33,17 +36,23 @@
             return JsonSerializer.Deserialize<T>(resultContent);
         }
 
-        public async Task<T?> Post<T>(string action, object value)
+        public async Task<(T? Data, IEnumerable<ApiError>? Errors)> Post<T>(string action, object value)
         {
             Logger.Debug($"Doing {WebRequestMethods.Http.Post} request to: {action}");
             var httpClient = GenerateHttpClient();
             var content = new StringContent(JsonSerializer.Serialize(value), Encoding.UTF8, ApplicationJson);
+
             var result = await httpClient.PostAsync(this.Url + action, content);
-            result.EnsureSuccessStatusCode();
-            var resultContent = result.Content.ReadAsStringAsync().Result;
-            return JsonSerializer.Deserialize<T>(resultContent);
+            if (result.IsSuccessStatusCode){
+                var resultContent = await result.Content.ReadAsStringAsync();
+                var data = JsonSerializer.Deserialize<T>(resultContent);
+                return (data, null);
+            }
+            var errorContent = await result.Content.ReadAsStringAsync();
+            var errors = JsonSerializer.Deserialize<IEnumerable<ApiError>>(errorContent);
+            return (default, errors);
         }
-        
+
         public void Delete(string action)
         {
             Logger.Debug($"Doing Delete request to: {action}");
