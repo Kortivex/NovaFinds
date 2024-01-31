@@ -1,0 +1,41 @@
+﻿@page
+@model ShippingAddressModel
+@{
+    ViewData["Title"] = "Shipping Address";
+    ViewData["ActivePage"] = ManageNavPages.Address;
+}
+
+<header class="section-heading">
+    <h2 class="section-title">@ViewData["Title"]</h2>
+</header>
+<partial name="_StatusMessage" for="StatusMessage"/>
+<div class="row">
+    <div class="col-md-6">
+        <form id="change-shipping-address-form" method="post">
+            <div asp-validation-summary="All" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="Input.ShippingStreetAddress"></label>
+                <input asp-for="Input.ShippingStreetAddress" class="form-control"/>
+            </div>
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label asp-for="Input.ShippingCity"></label>
+                        <input asp-for="Input.ShippingCity" class="form-control"/>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Input.ShippingState"></label>
+                        <input asp-for="Input.ShippingState" class="form-control"/>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label asp-for="Input.ShippingCountry"></label>
+                        <input asp-for="Input.ShippingCountry" class="form-control"/>
+                    </div>
+                </div>
+            </div>
+            <button type="submit" class="btn btn-primary">Save</button>
+        </form>
+    </div>
+</div>
