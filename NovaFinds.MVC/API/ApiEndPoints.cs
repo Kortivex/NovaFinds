@@ -59,6 +59,11 @@ namespace NovaFinds.MVC.API
         /// POST /users.
         /// </summary>
         public const string PostUsers = "/users";
+        
+        /// <summary>
+        /// PUT /users/:id.
+        /// </summary>
+        public const string PutUsers = "/users/{0}";
 
         /// <summary>
         /// GET /users.

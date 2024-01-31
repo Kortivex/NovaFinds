@@ -53,6 +53,23 @@
             return (default, errors);
         }
 
+        public async Task<(T? Data, IEnumerable<ApiError>? Errors)> Put<T>(string action, object value)
+        {
+            Logger.Debug($"Doing {WebRequestMethods.Http.Put} request to: {action}");
+            var httpClient = GenerateHttpClient();
+            var content = new StringContent(JsonSerializer.Serialize(value), Encoding.UTF8, ApplicationJson);
+
+            var result = await httpClient.PutAsync(this.Url + action, content);
+            if (result.IsSuccessStatusCode){
+                var resultContent = await result.Content.ReadAsStringAsync();
+                var data = JsonSerializer.Deserialize<T>(resultContent);
+                return (data, null);
+            }
+            var errorContent = await result.Content.ReadAsStringAsync();
+            var errors = JsonSerializer.Deserialize<IEnumerable<ApiError>>(errorContent);
+            return (default, errors);
+        }
+
         public void Delete(string action)
         {
             Logger.Debug($"Doing Delete request to: {action}");
