@@ -45,7 +45,10 @@ builder.Services.Configure<JsonOptions>(options => { options.SerializerOptions.R
 
 // Add DB Context.
 builder.Services.AddDbContext<ApplicationDbContext>(
-    options => options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+    options => {
+        options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"));
+        options.EnableSensitiveDataLogging();
+    });
 
 // Add Authentication.
 builder.Services
@@ -72,6 +75,10 @@ app.UseAuthorization();
 // Handlers
 app.MapPost("/users", (UserHandler handler, HttpRequest request) => handler.PostUser(request))
     .WithName("PostUser")
+    .RequireAuthorization();
+
+app.MapPut("/users/{username}", (UserHandler handler, HttpRequest request, string username) => handler.PutUser(request, username))
+    .WithName("PutUser")
     .RequireAuthorization();
 
 app.MapGet("/users", (UserHandler handler, HttpRequest request) => handler.GetUsers(request))

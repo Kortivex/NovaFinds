@@ -18,6 +18,7 @@ namespace NovaFinds.API.Handlers
     using IFR.Logger;
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Identity;
+    using Microsoft.EntityFrameworkCore;
     using System.Text.Json;
 
     [Authorize(AuthenticationSchemes = ApiKeySchemeOptions.AuthenticateScheme)]
@@ -47,6 +48,44 @@ namespace NovaFinds.API.Handlers
 
             if (resultCreated.Succeeded){ return TypedResults.Created($"/users/{resultObtained!.Id}", reqUserDto); }
             return TypedResults.BadRequest(resultCreated.Errors);
+        }
+
+        public async Task<IResult> PutUser(HttpRequest request, string username)
+        {
+            Logger.Debug("Put User Handler");
+            var reader = new StreamReader(request.Body);
+            var body = await reader.ReadToEndAsync();
+
+            var reqUserDto = JsonSerializer.Deserialize<UserDto>(body);
+            var userDb = UserMapper.ToDb(reqUserDto!);
+
+            var user = userManager.FindByNameAsync(username).Result ?? userManager.FindByEmailAsync(username).Result;
+
+            if (user == null) return TypedResults.BadRequest("user can not be updated");
+
+            user.Password = userDb!.Password;
+            user.FirstName = userDb.FirstName;
+            user.LastName = userDb.LastName;
+            user.Email = userDb.Email;
+            user.EmailConfirmed = userDb.EmailConfirmed;
+            user.Nif = userDb.Nif;
+            user.City = userDb.City;
+            user.Country = userDb.Country;
+            user.State = userDb.State;
+            user.StreetAddress = userDb.StreetAddress;
+            user.PhoneNumber = userDb.PhoneNumber;
+            user.PhoneNumberConfirmed = userDb.PhoneNumberConfirmed;
+            user.IsActive = userDb.IsActive;
+
+            if (userDb.Password.Length != 0){
+                await userManager.RemovePasswordAsync(user);
+                await userManager.AddPasswordAsync(user, user.Password);
+            }
+
+            await userManager.UpdateAsync(user);
+
+            var userDto = UserMapper.ToDomain(userDb);
+            return TypedResults.Created($"/users/{username}", userDto);
         }
 
         public IEnumerable<UserDto?> GetUsers(HttpRequest request)
