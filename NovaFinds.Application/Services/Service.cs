@@ -177,7 +177,7 @@ namespace NovaFinds.Application.Services
         /// </returns>
         public async Task<int> SaveChangesAsync()
         {
-            return await this.Context.SaveChangesAsync().ConfigureAwait(false);
+            return await this.Context.SaveChangesAsync();
         }
 
         /// <summary>
