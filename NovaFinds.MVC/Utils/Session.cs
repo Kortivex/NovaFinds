@@ -9,6 +9,7 @@
 
 namespace NovaFinds.MVC.Utils
 {
+    using System.Text;
     using System.Text.Json;
 
     /// <summary>
@@ -22,7 +23,7 @@ namespace NovaFinds.MVC.Utils
         public static void StoreListInSession(ISession session, string key, List<Dictionary<string, int>> data)
         {
             var jsonData = JsonSerializer.Serialize(data);
-            var byteData = System.Text.Encoding.UTF8.GetBytes(jsonData);
+            var byteData = Encoding.UTF8.GetBytes(jsonData);
             session.Set(key, byteData);
         }
 
@@ -32,7 +33,7 @@ namespace NovaFinds.MVC.Utils
         public static List<Dictionary<string, int>>? RetrieveListFromSession(ISession session, string key)
         {
             if (!session.TryGetValue(key, out var byteData)) return null;
-            var jsonData = System.Text.Encoding.UTF8.GetString(byteData);
+            var jsonData = Encoding.UTF8.GetString(byteData);
 
             return JsonSerializer.Deserialize<List<Dictionary<string, int>>>(jsonData);
         }

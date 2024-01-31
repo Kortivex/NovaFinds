@@ -9,7 +9,6 @@
 
 namespace NovaFinds.MVC.Models
 {
-    using System;
 
     /// <summary>
     /// The cart ajax, ready for receive request from web with product info.

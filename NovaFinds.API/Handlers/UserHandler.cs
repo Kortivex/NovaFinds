@@ -18,7 +18,6 @@ namespace NovaFinds.API.Handlers
     using IFR.Logger;
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Identity;
-    using Microsoft.EntityFrameworkCore;
     using System.Text.Json;
 
     [Authorize(AuthenticationSchemes = ApiKeySchemeOptions.AuthenticateScheme)]

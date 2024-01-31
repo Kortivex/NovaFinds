@@ -17,10 +17,7 @@ namespace NovaFinds.API.Handlers
     using DTOs;
     using IFR.Logger;
     using Microsoft.AspNetCore.Authorization;
-    using Microsoft.AspNetCore.Http.HttpResults;
     using Microsoft.AspNetCore.Identity;
-    using Microsoft.AspNetCore.Mvc;
-    using System.Net;
     using System.Text.Json;
 
     [Authorize(AuthenticationSchemes = ApiKeySchemeOptions.AuthenticateScheme)]

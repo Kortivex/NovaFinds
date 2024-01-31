@@ -9,8 +9,6 @@
 
 namespace NovaFinds.MVC.Areas.Identity.Pages.Account.Manage
 {
-    using System;
-    using System.IO;
     using Microsoft.AspNetCore.Mvc.Rendering;
 
     /// <summary>
