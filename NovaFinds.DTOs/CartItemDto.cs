@@ -17,6 +17,15 @@ namespace NovaFinds.DTOs
     public sealed class CartItemDto
     {
         /// <summary>
+        ///     Entity Identifier
+        /// </summary>
+        /// <remarks>
+        ///     Entity Identifier of CartItem
+        /// </remarks>
+        [JsonPropertyName("id")]
+        public int Id { get; set; }
+        
+        /// <summary>
         ///     Amount of product
         /// </summary>
         /// <remarks>

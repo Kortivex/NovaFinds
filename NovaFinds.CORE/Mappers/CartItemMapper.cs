@@ -21,6 +21,7 @@ namespace NovaFinds.CORE.Mappers
         {
             return new CartItemDto
             {
+                Id = cartItem.Id,
                 CartId = cartItem.CartId,
                 ProductId = cartItem.ProductId,
                 Quantity = cartItem.Quantity

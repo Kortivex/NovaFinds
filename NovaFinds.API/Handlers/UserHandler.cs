@@ -105,6 +105,19 @@ namespace NovaFinds.API.Handlers
 
             return UserMapper.ToListDomain(users);
         }
+        
+        public async Task<IResult> DeleteUser(HttpRequest request, string username)
+        {
+            Logger.Debug("Delete User Handler");
+            var users = _userService.GetAll()
+                    .Where(user => user.UserName == username).ToList();
+            var user = users[0];
+            
+            await _userService.DeleteByIdAsync(user.Id);
+            await _userService.SaveChangesAsync();
+
+            return TypedResults.Empty;
+        }
 
         public IEnumerable<CartDto?> GetUsersCart(HttpRequest request, string username)
         {

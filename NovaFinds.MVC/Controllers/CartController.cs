@@ -16,7 +16,7 @@ namespace NovaFinds.MVC.Controllers
     using Microsoft.AspNetCore.Mvc;
     using Models;
     using SmartBreadcrumbs.Attributes;
-    using System.Globalization;
+    using Utils;
 
     /// <summary>
     /// The cart controller.
@@ -52,32 +52,38 @@ namespace NovaFinds.MVC.Controllers
         [Breadcrumb("Cart")]
         public async Task<IActionResult> Index()
         {
-            // We process the items that we have in session
-            if (!HttpContext.Session.Keys.Contains("CartItems")) return View("Show");
-            var productQuantity = Utils.Session.RetrieveListFromSession(HttpContext.Session, "CartItems");
+            var username = "";
+            if (_signInManager.IsSignedIn(User)){ username = User.Identity!.Name; }
+            else if (HttpContext.Session.Keys.Contains("tempUser")){ username = HttpContext.Session.GetString("tempUser"); } // EMAIL 
 
-            var totalWithTax = 0D;
-            var totalWithoutTax = 0D;
+            var url = string.Format(ApiEndPoints.GetUsersEmailFilter, username);
+            var users = await ApiClient.Get<List<UserDto>>(url);
+            if (users != null && users.Count != 0){
+                var user = users[0];
 
-            // Items are processed and prepared for the view
-            var products = new Dictionary<ProductDto, int>();
-            foreach (var product in productQuantity!){
-                var productId = product["ProductId"];
-                var url = string.Format(ApiEndPoints.GetProduct, productId);
-                var p = await ApiClient.Get<ProductDto>(url);
-
-                products.Add(p!, product["Quantity"]);
-
-                totalWithTax += (p!.Price + p.Price * 21 / 100.0) * product["Quantity"];
-                totalWithoutTax += p.Price * product["Quantity"];
+                url = string.Format(ApiEndPoints.GetCart, user.UserName);
+                var carts = await ApiClient.Get<List<CartDto>>(url);
+                if (carts != null && carts.Count != 0){
+                    var cart = carts[0];
+                    url = string.Format(ApiEndPoints.GetCartsItems, cart.Id);
+                    var cartItems = await ApiClient.Get<List<CartItemDto>>(url);
+                    if (cartItems != null && cartItems.Count != 0){
+                        var totalWithTax = 0D;
+                        var totalWithoutTax = 0D;
+                        var products = new Dictionary<ProductDto, int>();
+                        foreach (var cartItem in cartItems){
+                            url = string.Format(ApiEndPoints.GetProduct, cartItem.ProductId);
+                            var product = await ApiClient.Get<ProductDto>(url);
+                            products.Add(product!, cartItem.Quantity);
+                            totalWithTax += (product!.Price + product.Price * 21 / 100.0) * cartItem.Quantity;
+                            totalWithoutTax += product.Price * cartItem.Quantity;
+                        }
+                        ViewData["Products"] = products;
+                        ViewData["TotalTax"] = totalWithTax;
+                        ViewData["TotalWithOutTax"] = totalWithoutTax;
+                    }
+                }
             }
-
-            ViewData["Products"] = products;
-            ViewData["TotalTax"] = totalWithTax;
-            ViewData["TotalWithOutTax"] = totalWithoutTax;
-
-            HttpContext.Session.SetString("TotalTax", totalWithTax.ToString(CultureInfo.InvariantCulture));
-
             return View("Show");
         }
 
@@ -98,31 +104,60 @@ namespace NovaFinds.MVC.Controllers
             var product = await ApiClient.Get<ProductDto>(url);
 
             // It is verified that the units are not under minimum
-            if (product!.Stock == 0 || !HttpContext.Session.IsAvailable) return Json(new { response = "KO" });
-            var productQuantity = new List<Dictionary<string, int>>();
-            // Collect session items
-            if (HttpContext.Session.Keys.Contains("CartItems"))
-                productQuantity = Utils.Session.RetrieveListFromSession(HttpContext.Session, "CartItems");
+            if (!(product!.Stock >= cartAjax.Quantity)) return Json(new { response = "KO" });
 
-            // The dictionary is generated to be added later in the session
-            var productQuantityExist = productQuantity!.Find(pq => pq["ProductId"] == cartAjax.ProductId);
-            if (productQuantityExist != null) productQuantityExist["Quantity"] += cartAjax.Quantity;
-            else
-                productQuantity.Add(
-                    new Dictionary<string, int>
+            var username = "";
+            if (_signInManager.IsSignedIn(User)){ username = User.Identity!.Name; }
+            else if (HttpContext.Session.Keys.Contains("tempUser")){ username = HttpContext.Session.GetString("tempUser"); } // EMAIL 
+
+            // API call to get user info.
+            url = string.Format(ApiEndPoints.GetUsersEmailFilter, username);
+            var users = await ApiClient.Get<List<UserDto>>(url);
+            if (users != null && users.Count != 0){
+                var user = users[0];
+
+                url = string.Format(ApiEndPoints.GetCart, user.UserName);
+                var carts = await ApiClient.Get<List<CartDto>>(url);
+                if (carts == null || carts.Count == 0){
+                    var newCart = new CartDto
                     {
-                        { "ProductId", cartAjax.ProductId }, { "Quantity", cartAjax.Quantity }
-                    });
+                        UserName = username!,
+                        Date = DateTime.Now,
+                        UserId = user.Id
+                    };
+                    url = string.Format(ApiEndPoints.PostCarts);
+                    var result = await ApiClient.Post<CartDto>(url, newCart);
+                    if (result.Errors != null){ return Json(new { response = "KO" }); }
 
-            // The above is added to the session again
-            Utils.Session.StoreListInSession(HttpContext.Session, "CartItems", productQuantity);
-
-            if (_signInManager.IsSignedIn(User)){
-                // TODO: ADD ITEM TO CART
+                    url = string.Format(ApiEndPoints.GetCart, user.UserName);
+                    carts = await ApiClient.Get<List<CartDto>>(url);
+                }
+                var cart = carts![0];
+                url = string.Format(ApiEndPoints.GetCartsItems, cart.Id);
+                var cartItems = await ApiClient.Get<List<CartItemDto>>(url);
+                if (cartItems != null && cartItems.Count != 0){
+                    foreach (var cartItem in cartItems){
+                        if (cartItem.ProductId == cartAjax.ProductId){
+                            url = string.Format(ApiEndPoints.PutCartsItems, cart.Id, cartItem.Id);
+                            cartItem.Quantity = cartAjax.Quantity;
+                            var result = await ApiClient.Put<CartItemDto>(url, cartItem);
+                            if (result.Errors != null){ return Json(new { response = "KO" }); }
+                        }
+                    }
+                }
+                else{
+                    url = string.Format(ApiEndPoints.PostCartsItems, cart.Id);
+                    var newCartItem = new CartItemDto
+                    {
+                        CartId = cart.Id,
+                        ProductId = cartAjax.ProductId,
+                        Quantity = cartAjax.Quantity
+                    };
+                    await ApiClient.Post<CartItemDto>(url, newCartItem);
+                }
             }
 
             return Json(new { response = "OK" });
-
         }
 
         /// <summary>
@@ -137,22 +172,16 @@ namespace NovaFinds.MVC.Controllers
         [HttpPost("RemoveItem")]
         public async Task<ActionResult<CartAjaxModel>> RemoveItem([FromBody] CartAjaxModel cartAjax)
         {
-            var url = string.Format(ApiEndPoints.GetProduct, cartAjax.ProductId);
-            var product = await ApiClient.Get<ProductDto>(url);
+            var username = "";
+            if (_signInManager.IsSignedIn(User)){ username = User.Identity!.Name; }
+            else if (HttpContext.Session.Keys.Contains("tempUser")){ username = HttpContext.Session.GetString("tempUser"); } // EMAIL
 
-            // Search and delete session
-            if (product!.Stock == 0 || !HttpContext.Session.IsAvailable) return Json(new { response = "KO" });
-            var productQuantity = new List<Dictionary<string, int>>();
-            if (HttpContext.Session.Keys.Contains("CartItems")){
-                productQuantity = Utils.Session.RetrieveListFromSession(HttpContext.Session, "CartItems");
-                var productToRemove = productQuantity!.Find(x => x["ProductId"] == cartAjax.ProductId);
-                productQuantity.Remove(productToRemove!);
-            }
-
-            Utils.Session.StoreListInSession(HttpContext.Session, "CartItems", productQuantity);
-            
-            if (_signInManager.IsSignedIn(User)){
-                // TODO: DELETE ITEM FROM CART
+            var url = string.Format(ApiEndPoints.GetCart, username);
+            var carts = await ApiClient.Get<List<CartDto>>(url);
+            if (carts != null || carts!.Count != 0){
+                var cart = carts[0];
+                url = string.Format(ApiEndPoints.DeleteCartsItemProducts, cart.Id, cartAjax.ProductId);
+                ApiClient.Delete(url);
             }
 
             return Json(new { response = "OK" });

@@ -21,6 +21,7 @@ namespace NovaFinds.CORE.Mappers
         {
             return new UserDto
             {
+                Id = user.Id,
                 UserName = user.UserName!,
                 Password = user.Password,
                 FirstName = user.FirstName,

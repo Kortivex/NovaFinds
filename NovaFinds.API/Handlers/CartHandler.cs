@@ -38,6 +38,11 @@ namespace NovaFinds.API.Handlers
         /// </summary>
         private readonly CartItemService _cartItemService = new(context);
 
+        /// <summary>
+        /// The product service.
+        /// </summary>
+        private readonly ProductService _productService = new(context);
+
         public async Task<IResult> PostCarts(HttpRequest request)
         {
             Logger.Debug("Post Cart Handler");
@@ -72,8 +77,19 @@ namespace NovaFinds.API.Handlers
         public async Task<IResult> DeleteCart(HttpRequest request, int cartId)
         {
             Logger.Debug("Delete Cart Handler");
+
+            var cartItems = _cartItemService.GetAll()
+                .Where(cartItem => cartItem.CartId == cartId)
+                .ToList();
+
+            foreach (var item in cartItems){
+                var product = await _productService.GetByIdAsync(item.ProductId);
+                product!.Stock += item.Quantity;
+                await _productService.SaveChangesAsync();
+            }
+
             await _cartService.DeleteByIdAsync(cartId);
-            await _cartItemService.SaveChangesAsync();
+            await _cartService.SaveChangesAsync();
 
             return TypedResults.Empty;
         }
@@ -95,6 +111,13 @@ namespace NovaFinds.API.Handlers
             var reqCartItemDto = JsonSerializer.Deserialize<CartItemDto>(body);
             var cartItemDb = CartItemMapper.ToDb(reqCartItemDto!);
             cartItemDb!.CartId = cartId;
+
+            var product = await _productService.GetByIdAsync(cartItemDb.ProductId);
+            if (product!.Stock >= cartItemDb.Quantity){
+                product.Stock -= cartItemDb.Quantity;
+                await _productService.SaveChangesAsync();
+            }
+            else{ return TypedResults.BadRequest("cart-item can not updated"); }
 
             await _cartItemService.CreateAsync(cartItemDb);
             await _cartItemService.SaveChangesAsync();
@@ -118,7 +141,14 @@ namespace NovaFinds.API.Handlers
             cartItemDb!.Id = itemId;
 
             var resCartItem = await _cartItemService.GetByIdAsync(itemId);
-            resCartItem!.Quantity = cartItemDb.Quantity;
+            resCartItem!.Quantity += cartItemDb.Quantity;
+
+            var product = await _productService.GetByIdAsync(cartItemDb.ProductId);
+            if (product!.Stock >= cartItemDb.Quantity){
+                product.Stock -= cartItemDb.Quantity;
+                await _productService.SaveChangesAsync();
+            }
+            else{ return TypedResults.BadRequest("cart-item can not updated"); }
 
             _cartItemService.Update(resCartItem);
             await _cartItemService.SaveChangesAsync();
@@ -129,6 +159,26 @@ namespace NovaFinds.API.Handlers
             if (resultObtained.Count == 0) return TypedResults.BadRequest("cart-item can not updated");
             var cartItemDto = CartItemMapper.ToDomain(cartItemDb);
             return TypedResults.Created($"/carts/{cartId}/items/{resultObtained[0].Id}", cartItemDto);
+        }
+
+        public async Task<IResult> DeleteCartItems(HttpRequest request, int cartId, int productId)
+        {
+            Logger.Debug("Delete Cart-Items Handler");
+
+            var cartItems = _cartItemService.GetAll()
+                .Where(cartItem => cartItem.CartId == cartId)
+                .Where(cartItem => cartItem.ProductId == productId)
+                .ToList();
+
+            var cartItem = cartItems[0];
+            var product = await _productService.GetByIdAsync(cartItem.ProductId);
+            product!.Stock += cartItem.Quantity;
+            await _productService.SaveChangesAsync();
+
+            await _cartItemService.DeleteByIdAsync(cartItem.Id);
+            await _cartItemService.SaveChangesAsync();
+
+            return TypedResults.Empty;
         }
     }
 }

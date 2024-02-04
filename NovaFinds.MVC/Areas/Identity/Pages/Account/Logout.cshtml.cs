@@ -12,6 +12,7 @@ namespace NovaFinds.MVC.Areas.Identity.Pages.Account
     using API;
     using CORE.Domain;
     using DTOs;
+    using Faker;
     using IFR.Logger;
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Identity;
@@ -68,22 +69,16 @@ namespace NovaFinds.MVC.Areas.Identity.Pages.Account
         /// </returns>
         public async Task<IActionResult> OnPost(string? returnUrl = null)
         {
-            if (HttpContext.Session.Keys.Contains("CartItems")){
-                var username = HttpContext.User.FindFirstValue(ClaimTypes.Name);
-                if (HttpContext.Session.Keys.Contains("CartItems")){
-                    var url = string.Format(ApiEndPoints.GetCart, username);
-                    var userCart = await this.ApiClient.Get<List<CartDto>>(url);
-                    if (userCart!.Count > 0){
-                        url = string.Format(ApiEndPoints.DeleteCarts, userCart[0].Id);
-                        this.ApiClient.Delete(url);
-                    }
-                    HttpContext.Session.Remove("CartItems");
-                }
-                if (HttpContext.Session.Keys.Contains("TotalTax")) HttpContext.Session.Remove("TotalTax");
-            }
-
             await _signInManager.SignOutAsync();
             Logger.Debug("User logged out.");
+
+            var url = string.Format(ApiEndPoints.GetCart, User.Identity!.Name);
+            var cart = await this.ApiClient.Get<List<CartDto>>(url);
+            if (cart!.Count != 0){
+                url = string.Format(ApiEndPoints.DeleteCarts, cart[0].Id);
+                this.ApiClient.Delete(url);
+            }
+
             if (returnUrl != null) return LocalRedirect(returnUrl);
             return RedirectToPage();
         }

@@ -14,6 +14,15 @@ namespace NovaFinds.DTOs
     public sealed class UserDto
     {
         /// <summary>
+        ///     Entity Identifier
+        /// </summary>
+        /// <remarks>
+        ///     Entity Identifier of the User
+        /// </remarks>
+        [JsonPropertyName("id")]
+        public int Id { get; set; }
+        
+        /// <summary>
         ///     Email of the User
         /// </summary>
         /// <remarks>

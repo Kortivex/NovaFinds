@@ -69,6 +69,11 @@ namespace NovaFinds.MVC.API
         /// GET /users.
         /// </summary>
         public const string GetUsers = "/users";
+        
+        /// <summary>
+        /// DELETE /users/:id.
+        /// </summary>
+        public const string DeleteUsers = "/users/{0}";
 
         /// <summary>
         /// GET /users with username filter.
@@ -109,5 +114,10 @@ namespace NovaFinds.MVC.API
         /// GET /carts/:cart_id/items.
         /// </summary>
         public const string GetCartsItems = "/carts/{0}/items";
+        
+        /// <summary>
+        /// DELETE /carts/:cart_id/item-products/:product_id.
+        /// </summary>
+        public const string DeleteCartsItemProducts = "/carts/{0}/item-products/{1}";
     }
 }

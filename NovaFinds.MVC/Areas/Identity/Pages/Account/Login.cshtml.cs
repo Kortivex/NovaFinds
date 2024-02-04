@@ -114,8 +114,23 @@ namespace NovaFinds.MVC.Areas.Identity.Pages.Account
             if (result.Succeeded){
                 Logger.Debug("User Logged In");
 
+                string url;
+                if (HttpContext.Session.Keys.Contains("tempUser")){
+                    var tempUsername = HttpContext.Session.GetString("tempUser");
+
+                    url = string.Format(ApiEndPoints.GetCart, tempUsername);
+                    var cart = await this.ApiClient.Get<List<CartDto>>(url);
+                    if (cart!.Count != 0){
+                        url = string.Format(ApiEndPoints.DeleteCarts, cart[0].Id);
+                        this.ApiClient.Delete(url);
+                    }
+                    url = string.Format(ApiEndPoints.DeleteUsers, tempUsername);
+                    this.ApiClient.Delete(url);
+                    HttpContext.Session.Remove("tempUser");
+                }
+
                 // API call to get user info.
-                var url = string.Format(ApiEndPoints.GetUsersEmailFilter, this.Input.Email);
+                url = string.Format(ApiEndPoints.GetUsersEmailFilter, this.Input.Email);
                 var users = await this.ApiClient.Get<List<UserDto>>(url);
                 // API call to get cart info.
                 url = string.Format(ApiEndPoints.GetCart, users![0].UserName);

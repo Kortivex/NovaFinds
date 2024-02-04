@@ -85,6 +85,10 @@ app.MapGet("/users", (UserHandler handler, HttpRequest request) => handler.GetUs
     .WithName("GetUsers")
     .RequireAuthorization();
 
+app.MapDelete("/users/{username}", (UserHandler handler, HttpRequest request, string username) => handler.DeleteUser(request, username))
+    .WithName("DeleteUser")
+    .RequireAuthorization();
+
 app.MapGet("/users/{username}/carts", (UserHandler handler, HttpRequest request, string username) => handler.GetUsersCart(request, username))
     .WithName("GetUsersCart")
     .RequireAuthorization();
@@ -107,6 +111,10 @@ app.MapPut("/carts/{cartId:int}/items/{itemId:int}", (CartHandler handler, HttpR
 
 app.MapGet("/carts/{cartId:int}/items", (CartHandler handler, HttpRequest request, int cartId) => handler.GetCartItems(request, cartId))
     .WithName("GetCartItems")
+    .RequireAuthorization();
+
+app.MapDelete("/carts/{cartId:int}/item-products/{productId:int}", (CartHandler handler, HttpRequest request, int cartId, int productId) => handler.DeleteCartItems(request, cartId, productId))
+    .WithName("DeleteCartItems")
     .RequireAuthorization();
 
 app.MapGet("/products", (ProductHandler handler, HttpRequest request) => handler.GetProducts(request))
