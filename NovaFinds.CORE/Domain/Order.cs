@@ -104,9 +104,9 @@ namespace NovaFinds.CORE.Domain
         /// <remarks>
         ///     Relation Oder & User
         /// </remarks>
-        public User User { get; set; }
+        public User? User { get; set; }
 
-        public IEnumerable<OrderProduct> OrderProducts { get; }
+        public IEnumerable<OrderProduct>? OrderProducts { get; set; }
 
         /// <summary>
         ///     Static create function (for use in LINQ queries, etc.)

@@ -152,7 +152,7 @@ namespace NovaFinds.Application.Services
         /// </returns>
         public async Task<TEntity> GetByElementAsync(TEntity entity)
         {
-            return await this.Context.Set<TEntity>().FindAsync(entity.Id).ConfigureAwait(false) ?? throw new InvalidOperationException();
+            return await this.Context.Set<TEntity>().FindAsync(entity.Id) ?? throw new InvalidOperationException();
         }
 
         /// <summary>
@@ -166,7 +166,7 @@ namespace NovaFinds.Application.Services
         /// </returns>
         public async Task<TEntity?> GetByIdAsync(long id)
         {
-            return await this.Context.Set<TEntity>().SingleOrDefaultAsync(e => e.Id == id).ConfigureAwait(false);
+            return await this.Context.Set<TEntity>().SingleOrDefaultAsync(e => e.Id == id);
         }
 
         /// <summary>

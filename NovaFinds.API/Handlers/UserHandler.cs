@@ -18,6 +18,7 @@ namespace NovaFinds.API.Handlers
     using IFR.Logger;
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Identity;
+    using Microsoft.EntityFrameworkCore;
     using System.Text.Json;
 
     [Authorize(AuthenticationSchemes = ApiKeySchemeOptions.AuthenticateScheme)]
@@ -32,6 +33,11 @@ namespace NovaFinds.API.Handlers
         /// The cart service.
         /// </summary>
         private readonly CartService _cartService = new(context);
+
+        /// <summary>
+        /// The order service.
+        /// </summary>
+        private readonly OrderService _orderService = new(context);
 
         public async Task<IResult> PostUser(HttpRequest request)
         {
@@ -105,20 +111,21 @@ namespace NovaFinds.API.Handlers
 
             return UserMapper.ToListDomain(users);
         }
-        
+
         public async Task<IResult> DeleteUser(HttpRequest request, string username)
         {
             Logger.Debug("Delete User Handler");
             var users = _userService.GetAll()
-                    .Where(user => user.UserName == username).ToList();
+                .Where(user => user.UserName == username).ToList();
             var user = users[0];
-            
+
             await _userService.DeleteByIdAsync(user.Id);
             await _userService.SaveChangesAsync();
 
             return TypedResults.Empty;
         }
 
+        // CARTS
         public IEnumerable<CartDto?> GetUsersCart(HttpRequest request, string username)
         {
             Logger.Debug("List User-Carts Handler");
@@ -138,6 +145,93 @@ namespace NovaFinds.API.Handlers
             }
 
             return CartMapper.ToListDomain(carts);
+        }
+
+        // ORDERS
+        public IEnumerable<OrderDto?> GetUsersOrders(HttpRequest request, string username)
+        {
+            Logger.Debug("List User-Orders Handler");
+            List<Order> orders;
+            var users = _userService.GetAll()
+                .Where(user => user.UserName == username).ToList();
+
+            if (users.Count != 0){
+                orders = _orderService.GetAll()
+                    .Where(order => order.UserId == users[0].Id).ToList();
+            }
+            else{
+                users = _userService.GetAll()
+                    .Where(user => user.Email == username).ToList();
+                orders = _orderService.GetAll()
+                    .Where(order => order.UserId == users[0].Id).ToList();
+            }
+
+            return OrderMapper.ToListDomain(orders);
+        }
+
+        public async Task<IResult> PostUsersOrders(HttpRequest request, string username)
+        {
+            Logger.Debug("Post Users-Orders Handler");
+            var reader = new StreamReader(request.Body);
+            var body = await reader.ReadToEndAsync();
+
+            var reqOrderDto = JsonSerializer.Deserialize<OrderDto>(body);
+            var orderDb = OrderMapper.ToDb(reqOrderDto!);
+
+            var users = _userService.GetAll()
+                .Where(user => user.UserName == username).ToList();
+
+            if (users.Count == 0) return TypedResults.BadRequest("username not exist");
+            {
+                var user = users[0];
+                orderDb!.UserId = user.Id;
+                await _orderService.CreateAsync(orderDb);
+                await _orderService.SaveChangesAsync();
+
+                var resultObtained = _orderService.GetAll()
+                    .Where(order => order.UserId == user.Id).ToList();
+
+                if (resultObtained.Count == 0) return TypedResults.BadRequest("order can not created");
+                var orderDto = OrderMapper.ToDomain(orderDb);
+                orderDto!.UserId = user.Id;
+                return TypedResults.Created($"/users/{user.UserName}/orders/{resultObtained[0].Id}", orderDto);
+            }
+        }
+
+        public async Task<IResult> PutUsersOrders(HttpRequest request, string username, int id)
+        {
+            Logger.Debug("Put Users-Orders Handler");
+            var reader = new StreamReader(request.Body);
+            var body = await reader.ReadToEndAsync();
+
+            var reqOrderDto = JsonSerializer.Deserialize<OrderDto>(body);
+            var orderDb = OrderMapper.ToDb(reqOrderDto!);
+
+            var users = _userService.GetAll()
+                .Where(user => user.UserName == username).ToList();
+            await _userService.SaveChangesAsync();
+
+            if (users.Count == 0) return TypedResults.BadRequest("username not exist");
+            {
+                var user = users[0];
+                var orderExist = _orderService.GetByIdAsync(id).Result;
+                if (orderExist != null && orderExist.UserId == user.Id){
+                    orderExist.Status = orderDb!.Status;
+                    await _orderService.SaveChangesAsync();
+
+                    var resultObtained = _orderService.GetAll()
+                        .Where(order => order.UserId == user.Id)
+                        .Where(order => order.Id == id)
+                        .ToList();
+
+                    if (resultObtained.Count == 0) return TypedResults.BadRequest("order can not updated");
+                    var orderDto = OrderMapper.ToDomain(orderDb);
+                    orderDto!.Id = id;
+                    orderDto.UserId = user.Id;
+                    return TypedResults.Created($"/users/{user.UserName}/orders/{resultObtained[0].Id}", orderDto);
+                }
+                return TypedResults.BadRequest("order can not updated");
+            }
         }
     }
 }

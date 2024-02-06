@@ -111,7 +111,7 @@ namespace NovaFinds.CORE.Domain
         /// <remarks>
         ///     Relation Product-Order & Product
         /// </remarks>
-        public Product Product { get; set; }
+        public Product? Product { get; set; }
 
         /// <summary>
         ///     Required
@@ -119,7 +119,7 @@ namespace NovaFinds.CORE.Domain
         /// <remarks>
         ///     Relation Product-Order & Order
         /// </remarks>
-        public Order Order { get; set; }
+        public Order? Order { get; set; }
 
         /// <summary>
         ///     Static create function (for use in LINQ queries, etc.)

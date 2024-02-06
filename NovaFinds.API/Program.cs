@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Http.Json;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.EntityFrameworkCore;
 using NovaFinds.API.Handlers;
 using NovaFinds.API.Handlers.Auth;
@@ -23,12 +24,15 @@ builder.Services.AddScoped<ICategoryRepository, CategoryService>();
 builder.Services.AddScoped<IProductImageRepository, ProductImageService>();
 builder.Services.AddScoped<IUserRepository, UserService>();
 builder.Services.AddScoped<IRoleRepository, RoleService>();
+builder.Services.AddTransient<IEmailSender, EmailService>();
 
 // Handlers.
 builder.Services.AddScoped<ProductHandler>();
 builder.Services.AddScoped<CategoryHandler>();
 builder.Services.AddScoped<UserHandler>();
 builder.Services.AddScoped<CartHandler>();
+builder.Services.AddScoped<OrderHandler>();
+builder.Services.AddScoped<EmailHandler>();
 
 // Identity.
 builder.Services.AddIdentity<User, Role>()
@@ -73,6 +77,7 @@ app.UseAuthentication();
 app.UseAuthorization();
 
 // Handlers
+//  - USERS
 app.MapPost("/users", (UserHandler handler, HttpRequest request) => handler.PostUser(request))
     .WithName("PostUser")
     .RequireAuthorization();
@@ -89,10 +94,12 @@ app.MapDelete("/users/{username}", (UserHandler handler, HttpRequest request, st
     .WithName("DeleteUser")
     .RequireAuthorization();
 
+//  - USER - CARTS
 app.MapGet("/users/{username}/carts", (UserHandler handler, HttpRequest request, string username) => handler.GetUsersCart(request, username))
     .WithName("GetUsersCart")
     .RequireAuthorization();
 
+//  - CARTS
 app.MapPost("/carts", (CartHandler handler, HttpRequest request) => handler.PostCarts(request))
     .WithName("PostCarts")
     .RequireAuthorization();
@@ -113,10 +120,12 @@ app.MapGet("/carts/{cartId:int}/items", (CartHandler handler, HttpRequest reques
     .WithName("GetCartItems")
     .RequireAuthorization();
 
+//  - CART - PRODUCTS
 app.MapDelete("/carts/{cartId:int}/item-products/{productId:int}", (CartHandler handler, HttpRequest request, int cartId, int productId) => handler.DeleteCartItems(request, cartId, productId))
     .WithName("DeleteCartItems")
     .RequireAuthorization();
 
+//  - PRODUCTS
 app.MapGet("/products", (ProductHandler handler, HttpRequest request) => handler.GetProducts(request))
     .WithName("GetProducts")
     .RequireAuthorization();
@@ -125,12 +134,41 @@ app.MapGet("/products/{id}", (ProductHandler handler, HttpRequest request, strin
     .WithName("GetProduct")
     .RequireAuthorization();
 
+//  - CATEGORIES
 app.MapGet("/categories", (CategoryHandler handler, HttpRequest request) => handler.GetCategories(request))
     .WithName("GetCategories")
     .RequireAuthorization();
 
 app.MapGet("/categories/{id}", (CategoryHandler handler, HttpRequest request, string id) => handler.GetCategory(request, id))
     .WithName("GetCategory")
+    .RequireAuthorization();
+
+//  - ORDERS
+//  USERS - ORDERS
+app.MapGet("/users/{username}/orders", (UserHandler handler, HttpRequest request, string username) => handler.GetUsersOrders(request, username))
+    .WithName("GetUsersOrders")
+    .RequireAuthorization();
+
+app.MapPost("/users/{username}/orders", (UserHandler handler, HttpRequest request, string username) => handler.PostUsersOrders(request, username))
+    .WithName("PostUsersOrders")
+    .RequireAuthorization();
+
+app.MapPut("/users/{username}/orders/{id:int}", (UserHandler handler, HttpRequest request, string username, int id) => handler.PutUsersOrders(request, username, id))
+    .WithName("PutUsersOrders")
+    .RequireAuthorization();
+
+//  ORDERS - PRODUCTS
+app.MapGet("/orders/{id:int}/products", (OrderHandler handler, HttpRequest request, int id) => handler.GetOrdersProducts(request, id))
+    .WithName("GetOrdersProducts")
+    .RequireAuthorization();
+
+app.MapPost("/orders/{id:int}/products", (OrderHandler handler, HttpRequest request, int id) => handler.PostOrdersProducts(request, id))
+    .WithName("PostOrdersProducts")
+    .RequireAuthorization();
+
+//  EMAILS
+app.MapPost("/emails", (EmailHandler handler, HttpRequest request) => handler.PostEmails(request))
+    .WithName("PostEmails")
     .RequireAuthorization();
 
 Logger.Debug("REST API app configured!");

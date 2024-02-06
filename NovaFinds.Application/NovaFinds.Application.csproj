@@ -8,6 +8,11 @@
 
   <ItemGroup>
     <ProjectReference Include="..\NovaFinds.CORE\NovaFinds.CORE.csproj" />
+    <ProjectReference Include="..\NovaFinds.IFR\NovaFinds.IFR.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="SendGrid" Version="9.29.1" />
   </ItemGroup>
 
 </Project>
