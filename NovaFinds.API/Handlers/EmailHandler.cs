@@ -14,6 +14,7 @@ namespace NovaFinds.API.Handlers
     using DTOs;
     using IFR.Logger;
     using Microsoft.AspNetCore.Authorization;
+    using Microsoft.Net.Http.Headers;
     using System.Text.Json;
 
     [Authorize(AuthenticationSchemes = ApiKeySchemeOptions.AuthenticateScheme)]
@@ -34,7 +35,7 @@ namespace NovaFinds.API.Handlers
 
             var response = await _emailService.SendEmailAsync(emailDto!.Email, emailDto.Subject, emailDto.Message,  emailDto.From, emailDto.Name);
 
-            return TypedResults.Ok(response);
+            return TypedResults.Content(response.GetData().ToString(), new MediaTypeHeaderValue("application/json"));
         }
     }
 }

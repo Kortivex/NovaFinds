@@ -10,12 +10,12 @@
 namespace NovaFinds.Application.Services
 {
     using IFR.Logger;
+    using Mailjet.Client;
+    using Mailjet.Client.Resources;
     using System.Threading.Tasks;
     using Microsoft.AspNetCore.Identity.UI.Services;
     using Microsoft.Extensions.Configuration;
-    using Microsoft.Extensions.Logging;
-    using SendGrid;
-    using SendGrid.Helpers.Mail;
+    using Newtonsoft.Json.Linq;
 
     /// <summary>
     /// The email sender.
@@ -23,9 +23,14 @@ namespace NovaFinds.Application.Services
     public class EmailService : IEmailSender
     {
         /// <summary>
-        /// The sendgrid api key.
+        /// The MailJet api key.
         /// </summary>
         private readonly string _apiKey;
+
+        /// <summary>
+        /// The MailJet secret.
+        /// </summary>
+        private readonly string _secret;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="EmailService"/> class.
@@ -35,7 +40,8 @@ namespace NovaFinds.Application.Services
         /// </param>
         public EmailService(IConfiguration configuration)
         {
-            _apiKey = configuration.GetSection("ApiKeys").GetSection("SendGrid").Value!;
+            _apiKey = configuration.GetSection("ApiKeys").GetSection("MailJetApi").Value!;
+            _secret = configuration.GetSection("ApiKeys").GetSection("MailJetSecret").Value!;
         }
 
         /// <summary>
@@ -79,14 +85,14 @@ namespace NovaFinds.Application.Services
         /// <returns>
         /// The <see cref="Task"/>.
         /// </returns>
-        public Task<Response> SendEmailAsync(
+        public Task<MailjetResponse> SendEmailAsync(
             string email,
             string subject,
             string message,
             string from,
             string name = "")
         {
-            return ConfigEmailToSend(_apiKey, subject, message, email, from, name);
+            return ConfigEmailToSend(_apiKey, _secret, subject, message, email, from, name);
         }
 
         /// <summary>
@@ -94,6 +100,9 @@ namespace NovaFinds.Application.Services
         /// </summary>
         /// <param name="apiKey">
         /// The api key.
+        /// </param>
+        /// <param name="secret">
+        /// The secret key.
         /// </param>
         /// <param name="subject">
         /// The subject.
@@ -113,21 +122,54 @@ namespace NovaFinds.Application.Services
         /// <returns>
         /// The <see cref="Task"/>.
         /// </returns>
-        private async Task<Response> ConfigEmailToSend(
+        private async Task<MailjetResponse> ConfigEmailToSend(
             string apiKey,
+            string secret,
             string subject,
             string message,
             string email,
             string from = "",
             string name = "")
         {
-            var client = new SendGridClient(apiKey);
-            var msg = MailHelper.CreateSingleEmail(new EmailAddress(from, name), new EmailAddress(email, ""), subject, message, message);
-            var response = await client.SendEmailAsync(msg);
+            var client = new MailjetClient(apiKey, secret);
+            var request = new MailjetRequest
+                {
+                    Resource = SendV31.Resource,
+                }
+                .Property(Send.Messages,
+                    new JArray
+                    {
+                        new JObject
+                        {
+                            {
+                                "From", new JObject
+                                {
+                                    { "Email", from },
+                                    { "Name", name }
+                                }
+                            },
+                            {
+                                "To", new JArray
+                                {
+                                    new JObject
+                                    {
+                                        { "Email", email },
+                                        { "Name", email }
+                                    }
+                                }
+                            },
+                            { "Subject", subject },
+                            { "TextPart", message },
+                            { "HTMLPart", message }
+                        }
+                    });
 
-            Logger.Debug(response.StatusCode.ToString());
-            Logger.Debug(await response.Body.ReadAsStringAsync());
-            Logger.Debug(response.Headers.ToString());
+            var response = await client.PostAsync(request);
+            if (response.IsSuccessStatusCode){
+                Logger.Debug($"Email sent successfully, Total: {response.GetTotal()}, Count: {response.GetCount()}");
+                Logger.Debug(response.GetData().ToString());
+            }
+            else{ Logger.Debug($"An error occurred: StatusCode = {response.StatusCode}, ErrorInfo = {response.GetErrorInfo()}"); }
 
             return response;
         }
