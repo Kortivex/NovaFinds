@@ -123,7 +123,12 @@ namespace NovaFinds.MVC.API
         /// <summary>
         /// DELETE /carts/:cart_id.
         /// </summary>
-        public const string DeleteCarts = "/carts/{0}";
+        public const string DeleteCarts = "/carts/{0}";        
+        
+        /// <summary>
+        /// DELETE /carts/:cart_id. with stock filter.
+        /// </summary>
+        public const string DeleteCartsWithStockFilter = "/carts/{0}/?stock={1}";
 
         /// <summary>
         /// POST /carts/:cart_id/items.

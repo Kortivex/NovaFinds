@@ -31,7 +31,6 @@
 
   <ItemGroup>
     <Folder Include="Areas\" />
-    <Folder Include="Views\Tpv\" />
     <Folder Include="wwwroot\fonts\" />
   </ItemGroup>
 

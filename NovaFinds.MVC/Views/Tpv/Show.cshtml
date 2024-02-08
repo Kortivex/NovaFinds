@@ -1,0 +1,71 @@
+﻿@{
+    ViewData["Title"] = "TPV";
+}
+@model TpvController
+<section class="padding-y">
+    <div class="container">
+        <form>
+            <div class="row">
+                <main class="col-md-12">
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-md-9">
+                                    <h4>Payment Method</h4>
+                                    <hr/>
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label asp-for="Input.FirstName"></label>
+                                                <input asp-for="Input.FirstName" class="form-control"/>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label asp-for="Input.LastName"></label>
+                                                <input asp-for="Input.LastName" class="form-control"/>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <div class="form-group">
+                                                <label asp-for="Input.CardNumber"></label>
+                                                <input asp-for="Input.CardNumber" class="form-control"/>
+                                                <span asp-validation-for="Input.CardNumber" class="text-danger"></span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label asp-for="Input.ExpMonthDate"></label>
+                                                <input asp-for="Input.ExpMonthDate" class="form-control"/>
+                                                <span asp-validation-for="Input.ExpMonthDate" class="text-danger"></span>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label asp-for="Input.ExpYearDate"></label>
+                                                <input asp-for="Input.ExpYearDate" class="form-control"/>
+                                                <span asp-validation-for="Input.ExpYearDate" class="text-danger"></span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="form-group">
+                                        <button id="buyProducts" type="button" class="btn btn-primary">Register</button>
+                                    </div>
+                                    <div class="form-group">
+                                        <div asp-validation-summary="All" class="text-danger"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </main>
+            </div>
+        </form>
+    </div>
+</section>

@@ -82,10 +82,15 @@ namespace NovaFinds.API.Handlers
                 .Where(cartItem => cartItem.CartId == cartId)
                 .ToList();
 
-            foreach (var item in cartItems){
-                var product = await _productService.GetByIdAsync(item.ProductId);
-                product!.Stock += item.Quantity;
-                await _productService.SaveChangesAsync();
+            var stock = "1";
+            if (request.Query.ContainsKey("stock")){ stock = request.Query["stock"].ToString(); }
+
+            if (stock == "1"){
+                foreach (var item in cartItems){
+                    var product = await _productService.GetByIdAsync(item.ProductId);
+                    product!.Stock += item.Quantity;
+                    await _productService.SaveChangesAsync();
+                }
             }
 
             await _cartService.DeleteByIdAsync(cartId);

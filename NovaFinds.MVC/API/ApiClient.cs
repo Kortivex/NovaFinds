@@ -45,8 +45,12 @@
             var result = await httpClient.PostAsync(this.Url + action, content);
             if (result.IsSuccessStatusCode){
                 var resultContent = await result.Content.ReadAsStringAsync();
-                var data = JsonSerializer.Deserialize<T>(resultContent);
-                return (data, null);
+                if (resultContent != ""){
+                    var data = JsonSerializer.Deserialize<T>(resultContent);
+                    return (data, null);
+                }
+
+                return (default, null);
             }
             var errorContent = await result.Content.ReadAsStringAsync();
             var errors = JsonSerializer.Deserialize<IEnumerable<ApiError>>(errorContent);

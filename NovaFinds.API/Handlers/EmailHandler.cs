@@ -33,9 +33,8 @@ namespace NovaFinds.API.Handlers
 
             var emailDto = JsonSerializer.Deserialize<EmailDto>(body);
 
-            var response = await _emailService.SendEmailAsync(emailDto!.Email, emailDto.Subject, emailDto.Message,  emailDto.From, emailDto.Name);
-
-            return TypedResults.Content(response.GetData().ToString(), new MediaTypeHeaderValue("application/json"));
+            await _emailService.SendEmailAsync(emailDto!.Email, emailDto.Subject, emailDto.Message,  emailDto.From, emailDto.Name);
+            return TypedResults.Created($"/emails");
         }
     }
 }
