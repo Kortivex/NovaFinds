@@ -1,0 +1,98 @@
+﻿@page
+@using NovaFinds.DTOs
+@model OrdersModel
+@{
+    ViewData["Title"] = "Orders";
+    ViewData["ActivePage"] = ManageNavPages.Orders;
+    var ordersDict = ViewData["OrderDict"] as Dictionary<string, OrderDto>;
+    var orderProductDict = ViewData["OrderProductsDict"] as Dictionary<string, List<OrderProductDto>>;
+    var productsDict = ViewData["ProductsDict"] as Dictionary<string, ProductDto>;
+}
+
+<header class="section-heading">
+    <h2 class="section-title">@ViewData["Title"]</h2>
+</header>
+
+@if (ordersDict is { Count: > 0 }){
+    <div id="accordion">
+        @foreach (var (id, order) in ordersDict){
+            float orderTotal = 0;
+            <div class="card">
+                <div class="card-header" id="@($"heading{id}")">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <h5 class="mb-0">
+                                <button class="btn btn-link" data-toggle="collapse" data-target="@($"#collapse{id}")" aria-expanded="true" aria-controls="@($"collapse{id}")">
+                                    Order #@order.Id
+                                </button>
+                                <h6 class="small text-uppercase mt-0 pl-5 font-weight-bold">Date: @order.Date</h6>
+                                <h6 class="small text-uppercase mt-0 pl-5 font-weight-bold">Status: @order.Status</h6>
+                            </h5>
+                        </div>
+                    </div>
+                </div>
+                <div id="@($"collapse{id}")" class="collapse" aria-labelledby="@($"heading{id}")" data-parent="#accordion">
+                    <div class="card-body">
+                        <div class="row">
+                            <main class="col-md-9">
+                                <div class="card">
+                                    <table class="table table-borderless table-shopping-cart">
+                                        <thead class="text-muted">
+                                        <tr class="small text-uppercase">
+                                            <th scope="col">Product</th>
+                                            <th scope="col" width="120">Quantity</th>
+                                            <th scope="col" width="120">Price</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        @foreach (var (_, orderProductList) in orderProductDict!){
+                                            @foreach (var orderProductDto in orderProductList){
+                                                if (orderProductDto.OrderId == order.Id){
+                                                    <tr>
+                                                        <td>
+                                                            <figure class="item">
+                                                                <figcaption class="info">
+                                                                    <a asp-controller="Product" asp-action="Show" asp-route-productId="@orderProductDto.ProductId" class="title text-dark">@productsDict![orderProductDto.ProductId.ToString()].Name</a>
+                                                                </figcaption>
+                                                            </figure>
+                                                        </td>
+                                                        <td>
+                                                            <input type="text" disabled="disabled" class="form-control disabled" value="@orderProductDto.Quantity"/>
+                                                        </td>
+                                                        <td>
+                                                            <div class="price-wrap">
+                                                                <var class="price">@orderProductDto.Total.ToString("0.##€")</var>
+                                                            </div>
+                                                        </td>
+                                                    </tr>
+                                                    orderTotal += (float)orderProductDto.Total;
+                                                }
+                                            }
+                                        }
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </main>
+                            <aside class="col-md-3">
+                                <div class="card">
+                                    <div class="card-body">
+                                        <dl class="dlist-align">
+                                            <dt>Total:</dt>
+                                            <dd class="text-right h5">
+                                                <strong>€@orderTotal.ToString("0.##€")</strong>
+                                            </dd>
+                                        </dl>
+                                        <hr>
+                                    </div>
+                                </div>
+                            </aside>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+}
+else{
+    <p>Not Orders can be found!</p>
+}

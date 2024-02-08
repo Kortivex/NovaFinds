@@ -84,6 +84,31 @@ namespace NovaFinds.MVC.API
         /// GET /users with email filter.
         /// </summary>
         public const string GetUsersEmailFilter = "/users/?email={0}";
+        
+        /// <summary>
+        /// GET /users/:username/orders.
+        /// </summary>
+        public const string GetOrders = "/users/{0}/orders";
+        
+        /// <summary>
+        /// POST /users/:username/orders.
+        /// </summary>
+        public const string PostOrders = "/users/{0}/orders";
+        
+        /// <summary>
+        /// PUT /users/:username/orders/:order_id.
+        /// </summary>
+        public const string PutOrders = "/users/{0}/orders/{1}";
+        
+        /// <summary>
+        /// GET /orders/:order_id/products.
+        /// </summary>
+        public const string GetOrdersProducts = "/orders/{0}/products";
+        
+        /// <summary>
+        /// POST /orders/:order_id/products.
+        /// </summary>
+        public const string PostOrdersProducts = "/orders/{0}/products";
 
         /// <summary>
         /// GET /users/:username/carts.
@@ -119,5 +144,10 @@ namespace NovaFinds.MVC.API
         /// DELETE /carts/:cart_id/item-products/:product_id.
         /// </summary>
         public const string DeleteCartsItemProducts = "/carts/{0}/item-products/{1}";
+        
+        /// <summary>
+        /// POST /emails.
+        /// </summary>
+        public const string PostEmails = "/emails";
     }
 }
