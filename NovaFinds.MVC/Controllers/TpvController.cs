@@ -28,6 +28,7 @@ namespace NovaFinds.MVC.Controllers
     using Microsoft.Extensions.Logging;
     using Models;
     using SmartBreadcrumbs.Attributes;
+    using System.Text.RegularExpressions;
     using Utils;
     using OrderStatusType=CORE.Enums.OrderStatusType;
 
@@ -35,7 +36,7 @@ namespace NovaFinds.MVC.Controllers
     /// The tpv controller.
     /// </summary>
     [Route("Tpv")]
-    public class TpvController : MainController
+    public partial class TpvController : MainController
     {
         /// <summary>
         /// The configuration.
@@ -98,7 +99,29 @@ namespace NovaFinds.MVC.Controllers
             if (_signInManager.IsSignedIn(User) || HttpContext.Session.Keys.Contains("tempUser")){
                 var username = "";
                 if (_signInManager.IsSignedIn(User)){ username = User.Identity!.Name; }
-                else if (HttpContext.Session.Keys.Contains("tempUser")){ username = HttpContext.Session.GetString("tempUser"); } // EMAIL
+                else if (HttpContext.Session.Keys.Contains("tempUser")){
+                    username = HttpContext.Session.GetString("tempUser");
+                    if (buy != null){
+                        if (buy.Email == "") { return BadRequest(Json(new { result = "Email required!" })); }
+                        if (!EmailRegex().IsMatch(buy.Email)){ return BadRequest(Json(new { result = "Invalid Email format!" }));}
+
+                        if (buy.Email == "") { return BadRequest(Json(new { result = "Email required!" })); }
+                        // API call to get user info.
+                        var url = string.Format(ApiEndPoints.GetUsersEmailFilter, username);
+                        var users = await ApiClient.Get<List<UserDto>>(url);
+                        if (users == null || users.Count == 0){ return NotFound($"Unable to load user with ID '{User.Identity!.Name}'."); }
+                        var user = users[0];
+
+                        user.UserName = buy.Email;
+                        user.Email = buy.Email;
+                        // API call to update user info.
+                        url = string.Format(ApiEndPoints.PutUsers, username);
+                        var result = await ApiClient.Put<UserDto>(url, user);
+                        if (result.Errors == null || !result.Errors.Any()){ Logger.Debug("User buying changed their email successfully."); }
+                        HttpContext.Session.SetString("tempUser", buy.Email);
+                        username = HttpContext.Session.GetString("tempUser");
+                    }
+                }
 
                 if (buy != null){
                     // The credit card is verified
@@ -196,5 +219,8 @@ namespace NovaFinds.MVC.Controllers
 
             return BadRequest(Json(new { result = "User is not logged!" }));
         }
+
+        [GeneratedRegex(@"^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,4})+$")]
+        private static partial Regex EmailRegex();
     }
 }

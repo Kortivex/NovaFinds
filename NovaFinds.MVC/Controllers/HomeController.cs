@@ -52,7 +52,7 @@ namespace NovaFinds.MVC.Controllers
                 HttpContext.Session.SetString("Date", DateTime.Now.ToLongDateString());
 
             if (!HttpContext.Session.Keys.Contains("tempUser") && !User.Identity!.IsAuthenticated){
-                var email = Internet.Email();
+                var email = Internet.Email().Split("@")[0] + "@" + "mailinator.com";
                 var user = new UserDto
                 {
                     UserName = email,

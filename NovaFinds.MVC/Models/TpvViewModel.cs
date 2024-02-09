@@ -16,6 +16,18 @@ namespace NovaFinds.MVC.Models
     /// </summary>
     public class TpvViewModel
     {
+        
+        /// <summary>
+        /// Gets or sets the card number.
+        /// </summary>
+        [Required]
+        [StringLength(
+            60,
+            ErrorMessage = "The {0} must be at least {2} and at max {1} characters long.",
+            MinimumLength = 5)]
+        [Display(Name = "Email")]
+        public string Email { get; set; }
+        
         /// <summary>
         /// Gets or sets the card number.
         /// </summary>

@@ -137,10 +137,21 @@ namespace NovaFinds.MVC.Controllers
                 var cartItems = await ApiClient.Get<List<CartItemDto>>(url);
                 if (cartItems != null && cartItems.Count != 0){
                     foreach (var cartItem in cartItems){
+                        cartItem.Quantity = cartAjax.Quantity;
                         if (cartItem.ProductId == cartAjax.ProductId){
                             url = string.Format(ApiEndPoints.PutCartsItems, cart.Id, cartItem.Id);
-                            cartItem.Quantity = cartAjax.Quantity;
                             var result = await ApiClient.Put<CartItemDto>(url, cartItem);
+                            if (result.Errors != null){ return Json(new { response = "KO" }); }
+                        }
+                        else{
+                            url = string.Format(ApiEndPoints.PostCartsItems, cart.Id);
+                            var newCartItem = new CartItemDto
+                            {
+                                CartId = cart.Id,
+                                ProductId = cartAjax.ProductId,
+                                Quantity = cartAjax.Quantity
+                            };
+                            var result = await ApiClient.Post<CartItemDto>(url, newCartItem);
                             if (result.Errors != null){ return Json(new { response = "KO" }); }
                         }
                     }

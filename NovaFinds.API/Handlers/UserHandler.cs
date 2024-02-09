@@ -68,7 +68,8 @@ namespace NovaFinds.API.Handlers
 
             if (user == null) return TypedResults.BadRequest("user can not be updated");
 
-            user.Password = userDb!.Password;
+            user.UserName = userDb!.UserName;
+            user.Password = userDb.Password;
             user.FirstName = userDb.FirstName;
             user.LastName = userDb.LastName;
             user.Email = userDb.Email;

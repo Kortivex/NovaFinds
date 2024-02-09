@@ -18,6 +18,11 @@ namespace NovaFinds.MVC.Models
     public class BuyAjax
     {
         /// <summary>
+        /// Gets or sets the email.
+        /// </summary>
+        public string Email { get; set; }
+        
+        /// <summary>
         /// Gets or sets the card number.
         /// </summary>
         public long CardNumber { get; set; }
