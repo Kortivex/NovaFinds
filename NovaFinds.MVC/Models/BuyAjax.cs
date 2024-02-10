@@ -23,6 +23,11 @@ namespace NovaFinds.MVC.Models
         public string Email { get; set; }
         
         /// <summary>
+        /// Gets or sets the street address.
+        /// </summary>
+        public string StreetAddress { get; set; }
+        
+        /// <summary>
         /// Gets or sets the card number.
         /// </summary>
         public long CardNumber { get; set; }

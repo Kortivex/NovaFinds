@@ -102,24 +102,27 @@ namespace NovaFinds.MVC.Controllers
                 else if (HttpContext.Session.Keys.Contains("tempUser")){
                     username = HttpContext.Session.GetString("tempUser");
                     if (buy != null){
-                        if (buy.Email == "") { return BadRequest(Json(new { result = "Email required!" })); }
-                        if (!EmailRegex().IsMatch(buy.Email)){ return BadRequest(Json(new { result = "Invalid Email format!" }));}
+                        if (buy.Email == ""){ return BadRequest(Json(new { result = "Email is required!" })); }
+                        if (!EmailRegex().IsMatch(buy.Email)){ return BadRequest(Json(new { result = "Invalid Email format!" })); }
+                        if (buy.StreetAddress == ""){ return BadRequest(Json(new { result = "Street Address is required!" })); }
 
-                        if (buy.Email == "") { return BadRequest(Json(new { result = "Email required!" })); }
                         // API call to get user info.
                         var url = string.Format(ApiEndPoints.GetUsersEmailFilter, username);
                         var users = await ApiClient.Get<List<UserDto>>(url);
                         if (users == null || users.Count == 0){ return NotFound($"Unable to load user with ID '{User.Identity!.Name}'."); }
                         var user = users[0];
-
+                        user.Nif = "99999999X";
                         user.UserName = buy.Email;
                         user.Email = buy.Email;
+                        user.StreetAddress = buy.StreetAddress;
+
                         // API call to update user info.
                         url = string.Format(ApiEndPoints.PutUsers, username);
                         var result = await ApiClient.Put<UserDto>(url, user);
                         if (result.Errors == null || !result.Errors.Any()){ Logger.Debug("User buying changed their email successfully."); }
                         HttpContext.Session.SetString("tempUser", buy.Email);
                         username = HttpContext.Session.GetString("tempUser");
+
                     }
                 }
 
@@ -214,7 +217,7 @@ namespace NovaFinds.MVC.Controllers
                     return BadRequest(Json(new { result = "Not items in the cart!" }));
                 }
 
-                return BadRequest(Json(new { result = "Not items to buy!" }));
+                return BadRequest(Json(new { result = "Something was wrong!" }));
             }
 
             return BadRequest(Json(new { result = "User is not logged!" }));

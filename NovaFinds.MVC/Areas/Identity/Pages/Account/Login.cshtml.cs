@@ -106,6 +106,16 @@ namespace NovaFinds.MVC.Areas.Identity.Pages.Account
             returnUrl ??= Url.Content("~/");
 
             if (!ModelState.IsValid) return Page();
+
+            // API call to get user info.
+            var url = string.Format(ApiEndPoints.GetUsersEmailFilter, this.Input.Email);
+            var users = await this.ApiClient.Get<List<UserDto>>(url);
+
+            if (!users![0].IsActive){
+                ModelState.AddModelError(string.Empty, "Not Allowed to Login");
+                return Page();
+            }
+
             var result = await _signInManager.PasswordSignInAsync(
                 this.Input.Email,
                 this.Input.Password,
@@ -114,7 +124,6 @@ namespace NovaFinds.MVC.Areas.Identity.Pages.Account
             if (result.Succeeded){
                 Logger.Debug("User Logged In");
 
-                string url;
                 if (HttpContext.Session.Keys.Contains("tempUser")){
                     var tempUsername = HttpContext.Session.GetString("tempUser");
 
@@ -133,12 +142,8 @@ namespace NovaFinds.MVC.Areas.Identity.Pages.Account
                         HttpContext.Session.Remove("tempUser");
                     }
                 }
-
-                // API call to get user info.
-                url = string.Format(ApiEndPoints.GetUsersEmailFilter, this.Input.Email);
-                var users = await this.ApiClient.Get<List<UserDto>>(url);
                 // API call to get cart info.
-                url = string.Format(ApiEndPoints.GetCart, users![0].UserName);
+                url = string.Format(ApiEndPoints.GetCart, users[0].UserName);
                 var userCart = await this.ApiClient.Get<List<CartDto>>(url);
                 if (userCart!.Count == 0) return LocalRedirect(returnUrl);
                 // Cart items are restored if the set date has not been exempted.

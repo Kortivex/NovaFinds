@@ -178,6 +178,7 @@ $(document).ready(function () {
             },
             data: JSON.stringify({
                 "Email": $('#Input_Email').val(),
+                "StreetAddress": $('#Input_StreetAddress').val(),
                 "CardNumber": parseInt($('#Input_CardNumber').val()),
                 "ExpMonthDate": parseInt($('#Input_ExpMonthDate').val()),
                 "ExpYearDate": parseInt($('#Input_ExpYearDate').val())

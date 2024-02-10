@@ -13,7 +13,7 @@
                         <div class="card-body">
                             <div class="row @if (SignInManager.IsSignedIn(User)){ @("disabled-div") }">
                                 <div class="col-md-9">
-                                    <h4>Email info</h4>
+                                    <h4>User info</h4>
                                     <hr/>
                                     <div class="row">
                                         <div class="col-md-6">
@@ -21,6 +21,15 @@
                                                 <label asp-for="Input.Email"></label>
                                                 <input type="email" minlength="5" maxlength="60" asp-for="Input.Email" class="form-control"/>
                                                 <span asp-validation-for="Input.Email" class="text-danger"></span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label asp-for="Input.StreetAddress"></label>
+                                                <input minlength="5" maxlength="70" asp-for="Input.StreetAddress" class="form-control"/>
+                                                <span asp-validation-for="Input.StreetAddress" class="text-danger"></span>
                                             </div>
                                         </div>
                                     </div>

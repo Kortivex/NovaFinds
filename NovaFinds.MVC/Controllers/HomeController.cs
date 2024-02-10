@@ -68,7 +68,7 @@ namespace NovaFinds.MVC.Controllers
                     Country = Address.Country(),
                     EmailConfirmed = true,
                     PhoneNumberConfirmed = true,
-                    IsActive = true
+                    IsActive = false
                 };
 
                 url = ApiEndPoints.PostUsers;

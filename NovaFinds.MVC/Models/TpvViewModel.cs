@@ -18,7 +18,7 @@ namespace NovaFinds.MVC.Models
     {
         
         /// <summary>
-        /// Gets or sets the card number.
+        /// Gets or sets the email.
         /// </summary>
         [Required]
         [StringLength(
@@ -27,6 +27,17 @@ namespace NovaFinds.MVC.Models
             MinimumLength = 5)]
         [Display(Name = "Email")]
         public string Email { get; set; }
+        
+        /// <summary>
+        /// Gets or sets the street address.
+        /// </summary>
+        [Required]
+        [StringLength(
+            70,
+            ErrorMessage = "The {0} must be at least {2} and at max {1} characters long.",
+            MinimumLength = 5)]
+        [Display(Name = "Street Address")]
+        public string StreetAddress { get; set; }
         
         /// <summary>
         /// Gets or sets the card number.
