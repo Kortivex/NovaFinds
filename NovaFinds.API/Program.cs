@@ -90,6 +90,10 @@ app.MapGet("/users", (UserHandler handler, HttpRequest request) => handler.GetUs
     .WithName("GetUsers")
     .RequireAuthorization();
 
+app.MapGet("/users/{username}", (UserHandler handler, HttpRequest request, string username) => handler.GetUser(request, username))
+    .WithName("GetUser")
+    .RequireAuthorization();
+
 app.MapDelete("/users/{username}", (UserHandler handler, HttpRequest request, string username) => handler.DeleteUser(request, username))
     .WithName("DeleteUser")
     .RequireAuthorization();
@@ -144,7 +148,19 @@ app.MapGet("/categories/{id}", (CategoryHandler handler, HttpRequest request, st
     .RequireAuthorization();
 
 //  - ORDERS
-//  USERS - ORDERS
+app.MapGet("/orders", (OrderHandler handler, HttpRequest request) => handler.GetOrders(request))
+    .WithName("GetOrders")
+    .RequireAuthorization();
+
+app.MapPut("/orders/{orderId:int}", (OrderHandler handler, HttpRequest request, int orderId) => handler.PutOrder(request, orderId))
+    .WithName("PutOrders") 
+    .RequireAuthorization();
+
+app.MapDelete("/orders/{orderId:int}", (OrderHandler handler, HttpRequest request, int orderId) => handler.DeleteOrder(request, orderId))
+    .WithName("DeleteOrder")
+    .RequireAuthorization();
+
+//  -- USERS - ORDERS
 app.MapGet("/users/{username}/orders", (UserHandler handler, HttpRequest request, string username) => handler.GetUsersOrders(request, username))
     .WithName("GetUsersOrders")
     .RequireAuthorization();
@@ -157,7 +173,7 @@ app.MapPut("/users/{username}/orders/{id:int}", (UserHandler handler, HttpReques
     .WithName("PutUsersOrders")
     .RequireAuthorization();
 
-//  ORDERS - PRODUCTS
+//  -- ORDERS - PRODUCTS
 app.MapGet("/orders/{id:int}/products", (OrderHandler handler, HttpRequest request, int id) => handler.GetOrdersProducts(request, id))
     .WithName("GetOrdersProducts")
     .RequireAuthorization();
