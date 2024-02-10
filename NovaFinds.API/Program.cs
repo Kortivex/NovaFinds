@@ -30,6 +30,7 @@ builder.Services.AddTransient<IEmailSender, EmailService>();
 builder.Services.AddScoped<ProductHandler>();
 builder.Services.AddScoped<CategoryHandler>();
 builder.Services.AddScoped<UserHandler>();
+builder.Services.AddScoped<RoleHandler>();
 builder.Services.AddScoped<CartHandler>();
 builder.Services.AddScoped<OrderHandler>();
 builder.Services.AddScoped<EmailHandler>();
@@ -98,6 +99,27 @@ app.MapDelete("/users/{username}", (UserHandler handler, HttpRequest request, st
     .WithName("DeleteUser")
     .RequireAuthorization();
 
+//  - ROLES
+app.MapPost("/roles", (RoleHandler handler, HttpRequest request) => handler.PostRole(request))
+    .WithName("PostRole")
+    .RequireAuthorization();
+
+app.MapPut("/roles/{roleId:int}", (RoleHandler handler, HttpRequest request, int roleId) => handler.PutRole(request, roleId))
+    .WithName("PutRole")
+    .RequireAuthorization();
+
+app.MapGet("/roles", (RoleHandler handler, HttpRequest request) => handler.GetRoles(request))
+    .WithName("GetRoles")
+    .RequireAuthorization();
+
+app.MapGet("/roles/{roleId:int}", (RoleHandler handler, HttpRequest request, int roleId) => handler.GetRole(request, roleId))
+    .WithName("GetRole")
+    .RequireAuthorization();
+
+app.MapDelete("/roles/{roleId:int}", (RoleHandler handler, HttpRequest request, int roleId) => handler.DeleteRole(request, roleId))
+    .WithName("DeleteRole")
+    .RequireAuthorization();
+
 //  - USER - CARTS
 app.MapGet("/users/{username}/carts", (UserHandler handler, HttpRequest request, string username) => handler.GetUsersCart(request, username))
     .WithName("GetUsersCart")
@@ -153,7 +175,7 @@ app.MapGet("/orders", (OrderHandler handler, HttpRequest request) => handler.Get
     .RequireAuthorization();
 
 app.MapPut("/orders/{orderId:int}", (OrderHandler handler, HttpRequest request, int orderId) => handler.PutOrder(request, orderId))
-    .WithName("PutOrders") 
+    .WithName("PutOrders")
     .RequireAuthorization();
 
 app.MapDelete("/orders/{orderId:int}", (OrderHandler handler, HttpRequest request, int orderId) => handler.DeleteOrder(request, orderId))

@@ -18,10 +18,5 @@ namespace NovaFinds.CORE.Contracts
         /// Gets or sets the Id.
         /// </summary>
         public int Id { get; set; }
-        
-        /// <summary>
-        /// Gets or sets the ConcurrencyStamp.
-        /// </summary>
-        public byte[] ConcurrencyStamp { get; set; }
     }
 }

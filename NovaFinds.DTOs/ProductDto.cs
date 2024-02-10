@@ -12,12 +12,11 @@ namespace NovaFinds.DTOs
     using System.Text.Json.Serialization;
 
     /// <summary>
-    ///     Product table
+    ///    The Product.
     /// </summary>
     public class ProductDto
     {
         /// <summary>
-        ///     Identity, Indexed, Required
         ///     Entity Identifier
         /// </summary>
         /// <remarks>
