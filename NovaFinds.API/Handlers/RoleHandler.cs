@@ -22,13 +22,17 @@ namespace NovaFinds.API.Handlers
     using System.Text.Json;
 
     [Authorize(AuthenticationSchemes = ApiKeySchemeOptions.AuthenticateScheme)]
-    public class RoleHandler(IDbContext context, RoleManager<Role> roleManager)
+    public class RoleHandler(IDbContext context, RoleManager<Role> roleManager, UserManager<User> userManager)
     {
         /// <summary>
         /// The role service.
         /// </summary>
         private readonly RoleService _roleService = new(context, roleManager);
 
+        /// <summary>
+        /// The user service.
+        /// </summary>
+        private readonly UserService _userService = new(context, userManager);
 
         public async Task<IResult> PostRole(HttpRequest request)
         {
@@ -108,6 +112,58 @@ namespace NovaFinds.API.Handlers
             await _roleService.SaveChangesAsync();
 
             return TypedResults.Empty;
+        }
+
+        // USERNAME - ROLE
+        public async Task<IResult> GetUserRole(HttpRequest request, string username)
+        {
+            Logger.Debug("Get User - Role Handler");
+            var user = await userManager.FindByNameAsync(username) ?? await userManager.FindByEmailAsync(username);
+            if (user == null){ return TypedResults.NotFound("username not found"); }
+
+            var rolesResult = await userManager.GetRolesAsync(user);
+
+            var rolesDb = new List<Role>();
+            foreach (var role in rolesResult){
+                var roles = _roleService.GetAll()
+                    .Where(r => r.Name == role).ToList();
+                rolesDb.Add(roles[0]);
+            }
+            return TypedResults.Ok(RoleMapper.ToListDomain(rolesDb));
+        }
+
+        public async Task<IResult> PutUserRole(HttpRequest request, string username, int id)
+        {
+            Logger.Debug("Put User - Role Handler");
+            var user = await userManager.FindByNameAsync(username) ?? await userManager.FindByEmailAsync(username);
+            if (user == null){ return TypedResults.NotFound("username not found"); }
+
+            var roles = _roleService.GetAll()
+                .Where(role => role.Id == id).ToList();
+
+            if (roles.Count == 0){ return TypedResults.NotFound("role not found"); }
+            var role = roles[0];
+
+            var roleAssignResult = await userManager.AddToRoleAsync(user, role.Name!);
+            if (roleAssignResult.Succeeded){ return TypedResults.Ok(); }
+            return TypedResults.BadRequest("role can not be associated to the user");
+        }
+
+        public async Task<IResult> DeleteUserRole(HttpRequest request, string username, int id)
+        {
+            Logger.Debug("Delete User - Role Handler");
+            var user = await userManager.FindByNameAsync(username) ?? await userManager.FindByEmailAsync(username);
+            if (user == null){ return TypedResults.NotFound("username not found"); }
+
+            var roles = _roleService.GetAll()
+                .Where(role => role.Id == id).ToList();
+
+            if (roles.Count == 0){ return TypedResults.NotFound("role not found"); }
+            var role = roles[0];
+
+            var roleAssignResult = await userManager.RemoveFromRoleAsync(user, role.Name!);
+            if (roleAssignResult.Succeeded){ return TypedResults.NoContent(); }
+            return TypedResults.BadRequest("role can not be removed from the user");
         }
     }
 }

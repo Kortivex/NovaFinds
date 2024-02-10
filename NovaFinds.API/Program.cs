@@ -120,6 +120,19 @@ app.MapDelete("/roles/{roleId:int}", (RoleHandler handler, HttpRequest request, 
     .WithName("DeleteRole")
     .RequireAuthorization();
 
+//  - USER - ROLES
+app.MapGet("/users/{username}/roles", (RoleHandler handler, HttpRequest request, string username) => handler.GetUserRole(request, username))
+    .WithName("GetUserRoles")
+    .RequireAuthorization();
+
+app.MapPut("/users/{username}/roles/{roleId:int}", (RoleHandler handler, HttpRequest request, string username, int roleId) => handler.PutUserRole(request, username, roleId))
+    .WithName("PutUserRoles")
+    .RequireAuthorization();
+
+app.MapDelete("/users/{username}/roles/{roleId:int}", (RoleHandler handler, HttpRequest request, string username, int roleId) => handler.DeleteUserRole(request, username, roleId))
+    .WithName("DeleteUserRoles")
+    .RequireAuthorization();
+
 //  - USER - CARTS
 app.MapGet("/users/{username}/carts", (UserHandler handler, HttpRequest request, string username) => handler.GetUsersCart(request, username))
     .WithName("GetUsersCart")
