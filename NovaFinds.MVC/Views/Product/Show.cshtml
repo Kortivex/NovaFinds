@@ -2,7 +2,8 @@
     var product = ViewData["Product"] as ProductDto;
     ViewData["Title"] = product!.Name;
     var productTax = (double)ViewData["ProductTax"]!;
-    var productImageFirst = product.ProductImages!.ElementAt(0);
+    var productImageFirst = new ProductImageDto();
+    if (product.ProductImages != null && product.ProductImages.Any()){ productImageFirst = product.ProductImages.ElementAt(0); }
     var productStock = (product.Stock == 0) ? "disabled" : "";
 }
 <section class="padding-y">
@@ -19,10 +20,12 @@
                             </div>
                         </div>
                         <div class="thumbs-wrap">
-                            @foreach (var media in product.ProductImages!){
-                                <a href="@media!.Image">
-                                    <img class="xzoom-gallery item-thumb" width="80" src="@media.Image" alt="">
-                                </a>
+                            @if (product.ProductImages != null && product.ProductImages.Any()){
+                                foreach (var media in product.ProductImages!){
+                                    <a href="@media!.Image">
+                                        <img class="xzoom-gallery item-thumb" width="80" src="@media.Image" alt="">
+                                    </a>
+                                }
                             }
                         </div>
                     </article>

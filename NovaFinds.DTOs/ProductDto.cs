@@ -24,7 +24,7 @@ namespace NovaFinds.DTOs
         /// </remarks>
         [JsonPropertyName("id")]
         public int Id { get; set; }
-        
+
         /// <summary>
         ///     Required
         ///     Name of the product
@@ -34,7 +34,7 @@ namespace NovaFinds.DTOs
         /// </remarks>
         [JsonPropertyName("name")]
         public string Name { get; set; }
-        
+
         /// <summary>
         ///     Full Description of the product
         /// </summary>
@@ -43,7 +43,7 @@ namespace NovaFinds.DTOs
         /// </remarks>
         [JsonPropertyName("description")]
         public string Description { get; set; }
-        
+
         /// <summary>
         ///     Required
         ///     Brand of the product
@@ -74,11 +74,21 @@ namespace NovaFinds.DTOs
         [JsonPropertyName("stock")]
         public int Stock { get; set; }
 
+        /// <summary>
+        ///     External Product-Category Ref.
+        /// </summary>
+        /// <remarks>
+        ///     FK of the related category
+        /// </remarks>
+        [JsonPropertyName("category_id")]
+        public int CategoryId { get; set; }
+
         [JsonPropertyName("category")]
-        public CategoryDto? Category { get; set;}
-        
-        [JsonPropertyName("productImages")]
+        [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
+        public CategoryDto? Category { get; set; }
+
+        [JsonPropertyName("product_images")]
+        [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
         public IEnumerable<ProductImageDto?>? ProductImages { get; set; }
-        
     }
 }

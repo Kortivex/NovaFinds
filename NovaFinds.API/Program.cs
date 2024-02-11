@@ -165,12 +165,24 @@ app.MapDelete("/carts/{cartId:int}/item-products/{productId:int}", (CartHandler 
     .RequireAuthorization();
 
 //  - PRODUCTS
+app.MapPost("/products", (ProductHandler handler, HttpRequest request) => handler.PostProducts(request))
+    .WithName("PostProducts")
+    .RequireAuthorization();
+
 app.MapGet("/products", (ProductHandler handler, HttpRequest request) => handler.GetProducts(request))
     .WithName("GetProducts")
     .RequireAuthorization();
 
 app.MapGet("/products/{id}", (ProductHandler handler, HttpRequest request, string id) => handler.GetProduct(request, id))
     .WithName("GetProduct")
+    .RequireAuthorization();
+
+app.MapPut("/products/{id}", (ProductHandler handler, HttpRequest request, string id) => handler.PutProduct(request, id))
+    .WithName("PutProducts")
+    .RequireAuthorization();
+
+app.MapDelete("/products/{id}", (ProductHandler handler, HttpRequest request, string id) => handler.DeleteProduct(request, id))
+    .WithName("DeleteProduct")
     .RequireAuthorization();
 
 //  - CATEGORIES

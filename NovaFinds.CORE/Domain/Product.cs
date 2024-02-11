@@ -147,11 +147,11 @@ namespace NovaFinds.CORE.Domain
         /// </remarks>
         public byte[] ConcurrencyStamp { get; set; }
 
-        public Category Category { get; }
+        public Category? Category { get; set; }
 
         public IEnumerable<CartItem> CartItems { get; }
 
-        public IEnumerable<ProductImage> ProductImages { get; set; }
+        public IEnumerable<ProductImage>? ProductImages { get; set; }
 
         public IEnumerable<OrderProduct> OrderProducts { get; }
 

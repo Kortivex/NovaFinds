@@ -17,6 +17,7 @@ namespace NovaFinds.API.Handlers
     using Filters;
     using IFR.Logger;
     using Microsoft.AspNetCore.Authorization;
+    using System.Text.Json;
 
     [Authorize(AuthenticationSchemes = ApiKeySchemeOptions.AuthenticateScheme)]
     public class ProductHandler(IDbContext context)
@@ -27,6 +28,29 @@ namespace NovaFinds.API.Handlers
         /// The product service.
         /// </summary>
         private readonly ProductService _productService = new(context);
+
+        public async Task<IResult> PostProducts(HttpRequest request)
+        {
+            Logger.Debug("Post Products Handler");
+            var reader = new StreamReader(request.Body);
+            var body = await reader.ReadToEndAsync();
+
+            var reqProductDto = JsonSerializer.Deserialize<ProductDto>(body);
+            var productDb = ProductMapper.ToDb(reqProductDto!);
+
+            await _productService.CreateAsync(productDb!);
+            await _productService.SaveChangesAsync();
+
+            var products = _productService.GetAll()
+                .Where(product => product.Name == productDb!.Name)
+                .Where(product => product.Description == productDb!.Description)
+                .Where(product => product.Brand == productDb!.Brand)
+                .Where(product => product.CategoryId == productDb!.CategoryId)
+                .ToList();
+
+            if (products.Count != 0){ return TypedResults.Created($"/products/{products[0].Id}", ProductMapper.ToDomain(products[0])); }
+            return TypedResults.BadRequest("product can not be created!");
+        }
 
         public IEnumerable<ProductDto?> GetProducts(HttpRequest request)
         {
@@ -65,7 +89,52 @@ namespace NovaFinds.API.Handlers
         {
             Logger.Debug("Get Product Handler");
             var product = _productService.GetByIdWithImage(int.Parse(id)).FirstOrDefault();
+            if (product == null){ product = _productService.GetAll().FirstOrDefault(p => p.Id == int.Parse(id)); }
             return Task.FromResult(ProductMapper.ToDomain(product!));
+        }
+
+        public async Task<IResult> PutProduct(HttpRequest request, string id)
+        {
+            Logger.Debug("Put Role Handler");
+            var reader = new StreamReader(request.Body);
+            var body = await reader.ReadToEndAsync();
+
+            var reqProductDto = JsonSerializer.Deserialize<ProductDto>(body);
+            var productDb = ProductMapper.ToDb(reqProductDto!);
+
+            var product = _productService.GetByIdAsync(int.Parse(id)).Result;
+
+            if (product == null) return TypedResults.BadRequest("product can not be updated");
+
+            product.Name = productDb!.Name;
+            product.Description = productDb.Description;
+            product.Brand = productDb.Brand;
+            product.Price = productDb.Price;
+            product.Stock = productDb.Stock;
+            product.CategoryId = productDb.CategoryId;
+
+            _productService.Update(product);
+            await _productService.SaveChangesAsync();
+
+            productDb.Id = product.Id;
+            var productDto = ProductMapper.ToDomain(productDb);
+            return TypedResults.Created($"/products/{id}", productDto);
+        }
+
+        public async Task<IResult> DeleteProduct(HttpRequest request, string id)
+        {
+            Logger.Debug("Delete Product Handler");
+            var products = _productService.GetAll()
+                .Where(product => product.Id == int.Parse(id)).ToList();
+
+            if (products.Count == 0){ return TypedResults.NotFound(); }
+
+            var product = products[0];
+
+            await _productService.DeleteByIdAsync(product.Id);
+            await _productService.SaveChangesAsync();
+
+            return TypedResults.Empty;
         }
     }
 }
