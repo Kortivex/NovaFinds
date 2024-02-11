@@ -190,6 +190,33 @@ namespace NovaFinds.API.Handlers
             return TypedResults.Ok(ProductImageMapper.ToDomain(productImage));
         }
 
+        public async Task<IResult> PutProductImage(HttpRequest request, string id, string imageId)
+        {
+            Logger.Debug("Put Product - Image Handler");
+            var reader = new StreamReader(request.Body);
+            var body = await reader.ReadToEndAsync();
+
+            var reqProductImageDto = JsonSerializer.Deserialize<ProductImageDto>(body);
+            var productImageDb = ProductImageMapper.ToDb(reqProductImageDto!);
+            productImageDb!.ProductId = int.Parse(id);
+
+            var product = await _productService.GetByIdAsync(int.Parse(id));
+            if (product == null){ return TypedResults.NotFound("product not found"); }
+
+            var productImage = await _productImagesService.GetByIdAsync(int.Parse(imageId));
+            if (productImage == null){ return TypedResults.NotFound("product-image not found"); }
+
+            productImage.Id = int.Parse(imageId);
+            productImage.Description = productImageDb.Description;
+            productImage.Image = productImageDb.Image;
+            productImage.ProductId = int.Parse(id);
+
+            _productImagesService.Update(productImage);
+            await _productImagesService.SaveChangesAsync();
+
+            return TypedResults.Created($"/products/{id}/images/{productImage.Id}", ProductImageMapper.ToDomain(productImage));
+        }
+
         public async Task<IResult> DeleteProductImage(HttpRequest request, string id, string imageId)
         {
             Logger.Debug("Delete Product - Image Handler");

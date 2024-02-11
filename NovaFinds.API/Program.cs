@@ -198,6 +198,10 @@ app.MapGet("/products/{id}/images/{imageId}", (ProductHandler handler, HttpReque
     .WithName("GetProductImage")
     .RequireAuthorization();
 
+app.MapPut("/products/{id}/images/{imageId}", (ProductHandler handler, HttpRequest request, string id,  string imageId) => handler.PutProductImage(request, id, imageId))
+    .WithName("PutProductImage")
+    .RequireAuthorization();
+
 app.MapDelete("/products/{id}/images/{imageId}", (ProductHandler handler, HttpRequest request, string id,  string imageId) => handler.DeleteProductImage(request, id, imageId))
     .WithName("DeleteProductImage")
     .RequireAuthorization();
