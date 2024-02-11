@@ -127,7 +127,7 @@ namespace NovaFinds.MVC.Areas.Identity.Pages.Account
                 if (HttpContext.Session.Keys.Contains("tempUser")){
                     var tempUsername = HttpContext.Session.GetString("tempUser");
 
-                    url = string.Format(ApiEndPoints.GetOrders, tempUsername);
+                    url = string.Format(ApiEndPoints.GetUserOrders, tempUsername);
                     var orders = await this.ApiClient.Get<List<OrderDto>>(url);
 
                     if (orders is not { Count: > 0 }){

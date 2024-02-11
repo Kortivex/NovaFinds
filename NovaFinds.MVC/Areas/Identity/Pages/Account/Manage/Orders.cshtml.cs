@@ -66,7 +66,7 @@ namespace NovaFinds.MVC.Areas.Identity.Pages.Account.Manage
         /// </returns>
         private async Task LoadAsync(UserDto user)
         {
-            var url = string.Format(ApiEndPoints.GetOrders, User.Identity!.Name);
+            var url = string.Format(ApiEndPoints.GetUserOrders, User.Identity!.Name);
             var orders = await this.ApiClient.Get<List<OrderDto>>(url);
 
             var ordersDict = new Dictionary<string, OrderDto>();

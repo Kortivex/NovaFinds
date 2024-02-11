@@ -146,7 +146,7 @@ namespace NovaFinds.MVC.Controllers
                         UserId = users[0].Id,
                     };
 
-                    url = string.Format(ApiEndPoints.PostOrders, username);
+                    url = string.Format(ApiEndPoints.PostUserOrders, username);
                     var orderRes = await ApiClient.Post<OrderDto>(url, order);
                     order = orderRes.Data;
 
