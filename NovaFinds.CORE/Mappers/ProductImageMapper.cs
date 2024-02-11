@@ -38,5 +38,30 @@ namespace NovaFinds.CORE.Mappers
 
             return productImagesDto;
         }
+
+        /// <summary>
+        ///     Convert from Domain to DB.
+        /// </summary>
+        public static ProductImage? ToDb(ProductImageDto productImage)
+        {
+            return new ProductImage
+            {
+                Description = productImage.Description,
+                ProductId = productImage.ProductId,
+                Image = productImage.Image,
+                Product = null
+            };
+        }
+
+        /// <summary>
+        ///     Convert from List Domain to DB.
+        /// </summary>
+        public static IEnumerable<ProductImage?> ToListDb(IEnumerable<ProductImageDto> productImages)
+        {
+            var productImagesDb = new List<ProductImage?>();
+            foreach (var productImage in productImages){ productImagesDb.Add(ToDb(productImage)); }
+
+            return productImagesDb;
+        }
     }
 }

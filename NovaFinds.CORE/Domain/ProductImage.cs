@@ -105,7 +105,7 @@ namespace NovaFinds.CORE.Domain
         /// <remarks>
         ///     Relation Product-Image & Product
         /// </remarks>
-        public Product Product { get; set; }
+        public Product? Product { get; set; }
 
         /// <summary>
         ///     Static create function (for use in LINQ queries, etc.)
