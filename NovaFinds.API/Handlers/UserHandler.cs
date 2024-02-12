@@ -113,9 +113,18 @@ namespace NovaFinds.API.Handlers
             return UserMapper.ToListDomain(users);
         }
 
+        public async Task<IResult> GetUser(HttpRequest request, int id)
+        {
+            Logger.Debug("Get User by Id Handler");
+            var user = await _userService.GetByIdAsync(id);
+            if (user == null){ return TypedResults.NotFound(); }
+
+            return TypedResults.Ok(UserMapper.ToDomain(user));
+        }
+
         public async Task<IResult> GetUser(HttpRequest request, string username)
         {
-            Logger.Debug("Get User Handler");
+            Logger.Debug("Get User by Username Handler");
             var users = _userService.GetAll()
                 .Where(user => user.UserName == username).ToList();
             if (users.Count == 0){

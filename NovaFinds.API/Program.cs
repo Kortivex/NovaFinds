@@ -91,8 +91,12 @@ app.MapGet("/users", (UserHandler handler, HttpRequest request) => handler.GetUs
     .WithName("GetUsers")
     .RequireAuthorization();
 
+app.MapGet("/users/{id:int}", (UserHandler handler, HttpRequest request, int id) => handler.GetUser(request, id))
+    .WithName("GetUserById")
+    .RequireAuthorization();
+
 app.MapGet("/users/{username}", (UserHandler handler, HttpRequest request, string username) => handler.GetUser(request, username))
-    .WithName("GetUser")
+    .WithName("GetUserByUsername")
     .RequireAuthorization();
 
 app.MapDelete("/users/{username}", (UserHandler handler, HttpRequest request, string username) => handler.DeleteUser(request, username))
@@ -194,15 +198,15 @@ app.MapGet("/products/{id}/images", (ProductHandler handler, HttpRequest request
     .WithName("GetProductImages")
     .RequireAuthorization();
 
-app.MapGet("/products/{id}/images/{imageId}", (ProductHandler handler, HttpRequest request, string id,  string imageId) => handler.GetProductImage(request, id, imageId))
+app.MapGet("/products/{id}/images/{imageId}", (ProductHandler handler, HttpRequest request, string id, string imageId) => handler.GetProductImage(request, id, imageId))
     .WithName("GetProductImage")
     .RequireAuthorization();
 
-app.MapPut("/products/{id}/images/{imageId}", (ProductHandler handler, HttpRequest request, string id,  string imageId) => handler.PutProductImage(request, id, imageId))
+app.MapPut("/products/{id}/images/{imageId}", (ProductHandler handler, HttpRequest request, string id, string imageId) => handler.PutProductImage(request, id, imageId))
     .WithName("PutProductImage")
     .RequireAuthorization();
 
-app.MapDelete("/products/{id}/images/{imageId}", (ProductHandler handler, HttpRequest request, string id,  string imageId) => handler.DeleteProductImage(request, id, imageId))
+app.MapDelete("/products/{id}/images/{imageId}", (ProductHandler handler, HttpRequest request, string id, string imageId) => handler.DeleteProductImage(request, id, imageId))
     .WithName("DeleteProductImage")
     .RequireAuthorization();
 
@@ -218,6 +222,10 @@ app.MapGet("/categories/{id}", (CategoryHandler handler, HttpRequest request, st
 //  - ORDERS
 app.MapGet("/orders", (OrderHandler handler, HttpRequest request) => handler.GetOrders(request))
     .WithName("GetOrders")
+    .RequireAuthorization();
+
+app.MapGet("/orders/{orderId:int}", (OrderHandler handler, HttpRequest request, int orderId) => handler.GetOrder(request, orderId))
+    .WithName("GetOrder")
     .RequireAuthorization();
 
 app.MapPut("/orders/{orderId:int}", (OrderHandler handler, HttpRequest request, int orderId) => handler.PutOrder(request, orderId))

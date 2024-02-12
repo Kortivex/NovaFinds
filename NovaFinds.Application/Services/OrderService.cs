@@ -36,7 +36,7 @@ namespace NovaFinds.Application.Services
         /// </returns>
         public IQueryable<Order> GetAllWithUser()
         {
-            return this.GetAll().Include(order => order.User);
+            return GetAll().Include(order => order.User);
         }
 
         /// <summary>
@@ -53,7 +53,7 @@ namespace NovaFinds.Application.Services
         /// </returns>
         public IQueryable<Order> GetByUserIdAndOrderId(int userId, int id)
         {
-            return this.GetAll().Where(order => order.UserId == userId).Where(order => order.Id == id);
+            return GetAll().Where(order => order.UserId == userId).Where(order => order.Id == id);
         }
 
         /// <summary>
@@ -67,7 +67,7 @@ namespace NovaFinds.Application.Services
         /// </returns>
         public IQueryable<Order> GetByIdWithUser(int id)
         {
-            return this.GetAll().Include(order => order.User).Where(order => order.Id == id);
+            return GetAll().Include(order => order.User).Where(order => order.Id == id);
         }
 
         /// <summary>
@@ -81,7 +81,7 @@ namespace NovaFinds.Application.Services
         /// </returns>
         public IQueryable<Order> GetByUserId(int userId)
         {
-            return this.GetAll().Where(order => order.UserId == userId);
+            return GetAll().Where(order => order.UserId == userId);
         }
 
         /// <summary>

@@ -1,0 +1,61 @@
+﻿@page
+@model NovaFinds.MVC.Areas.Admin.Pages.CRUD.Order.IndexModel
+
+@{ ViewData["Title"] = "Order List"; }
+
+<h1>@ViewData["Title"]</h1>
+
+<table class="table table-striped">
+    <thead class="thead-dark">
+    @if (Model.Orders.Count > 0){
+        <tr scope="row">
+            <th scope="col">
+                @Html.DisplayNameFor(model => model.Orders[0].Id)
+            </th>
+            <th scope="col">
+                @Html.DisplayNameFor(model => model.Orders[0].Status)
+            </th>
+            <th scope="col">
+                @Html.DisplayNameFor(model => model.Orders[0].Date)
+            </th>
+            <th scope="col"></th>
+        </tr>
+    }
+    </thead>
+    <tbody>
+    @if (Model.Orders.Count > 0){
+        @for (var i = 0; i < Model.Orders.Count; i++){
+            var order = Model.Orders[i];
+            <tr scope="row">
+                <td>
+                    @Html.DisplayFor(modelItem => order.Id)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => order.Status)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => order.Date)
+                </td>
+                <td>
+                    <div class="btn-group" role="group">
+                        <a class="btn btn-primary" asp-page="./Edit" asp-route-id="@order.Id">Edit</a>
+                        <a class="btn btn-outline-primary" asp-page="./Details" asp-route-id="@order.Id">Details</a>
+                    </div>
+                </td>
+            </tr>
+        }
+    }
+    else{
+        <tr>
+            <td>
+                No Orders can be found!
+            </td>
+        </tr>
+    }
+    </tbody>
+</table>
+<div class="row mb-4 mt-3">
+    <div class="col-md-12">
+        @await Component.InvokeAsync("Pagination", new { paginator = ViewData["Pagination"], text = ViewData["PaginationText"] })
+    </div>
+</div>

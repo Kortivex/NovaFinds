@@ -10,27 +10,15 @@
 namespace NovaFinds.MVC.Controllers
 {
     using API;
-    using Application.Services;
     using CORE.Domain;
-    using DAL.Context;
     using DTOs;
     using IFR.Logger;
-    using System;
-    using System.Collections.Generic;
-    using System.Globalization;
-    using System.Linq;
-    using System.Security.Claims;
-    using System.Threading.Tasks;
     using Microsoft.AspNetCore.Identity;
-    using Microsoft.AspNetCore.Identity.UI.Services;
     using Microsoft.AspNetCore.Mvc;
-    using Microsoft.Extensions.Configuration;
-    using Microsoft.Extensions.Logging;
     using Models;
     using SmartBreadcrumbs.Attributes;
     using System.Text.RegularExpressions;
     using Utils;
-    using OrderStatusType=CORE.Enums.OrderStatusType;
 
     /// <summary>
     /// The tpv controller.
@@ -142,7 +130,7 @@ namespace NovaFinds.MVC.Controllers
                     var order = new OrderDto
                     {
                         Date = DateTime.Now,
-                        Status = DTOs.OrderStatusType.Paid,
+                        Status = OrderStatusType.Paid,
                         UserId = users[0].Id,
                     };
 

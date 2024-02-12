@@ -15,6 +15,7 @@ namespace NovaFinds.API.Handlers
     using CORE.Domain;
     using CORE.Mappers;
     using DTOs;
+    using Filters;
     using IFR.Logger;
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Identity;
@@ -24,6 +25,8 @@ namespace NovaFinds.API.Handlers
     [Authorize(AuthenticationSchemes = ApiKeySchemeOptions.AuthenticateScheme)]
     public class OrderHandler(IDbContext context)
     {
+        private static int _size = 1000;
+
         /// <summary>
         /// The order-product service.
         /// </summary>
@@ -34,10 +37,32 @@ namespace NovaFinds.API.Handlers
         /// </summary>
         private readonly OrderService _orderService = new(context);
 
+        public async Task<IResult> GetOrder(HttpRequest request, int id)
+        {
+            Logger.Debug("Get Order Handler");
+            var orders = _orderService.GetAll()
+                .Where(order => order.Id == id).ToList();
+
+            if (orders.Count == 0){ return TypedResults.NotFound(); }
+            var order = orders[0];
+
+            return TypedResults.Ok(OrderMapper.ToDomain(order));
+        }
+
         public IEnumerable<OrderDto?> GetOrders(HttpRequest request)
         {
             Logger.Debug("List Orders Handler");
             var orders = _orderService.GetAll().ToList();
+
+            if (request.Query.ContainsKey("size") && request.Query.ContainsKey("sortBy") && request.Query.ContainsKey("page")){
+                _size = int.Parse(request.Query["size"]!);
+                var sortBy = request.Query["sortBy"];
+                var page = int.Parse(request.Query["page"]!);
+
+                var orderQuery = _orderService.GetAllWithUser().GetPaged(page, _size);
+                if (sortBy == "id"){ orderQuery = orderQuery.OrderByDescending(o => o.Id); }
+                orders = orderQuery.ToList();
+            }
 
             return OrderMapper.ToListDomain(orders);
         }

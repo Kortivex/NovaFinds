@@ -116,6 +116,11 @@ namespace NovaFinds.MVC.API
         /// GET /users.
         /// </summary>
         public const string GetUsers = "/users";
+        
+        /// <summary>
+        /// GET /users/:id.
+        /// </summary>
+        public const string GetUser = "/users/{0}";
 
         /// <summary>
         /// DELETE /users/:id.
@@ -199,6 +204,16 @@ namespace NovaFinds.MVC.API
         /// GET /orders.
         /// </summary>
         public const string GetOrders = "/orders";
+        
+        /// <summary>
+        /// GET /orders/:id.
+        /// </summary>
+        public const string GetOrder = "/orders/{0}";
+        
+        /// <summary>
+        /// GET /orders with sort filters.
+        /// </summary>
+        public const string GetOrdersSortFilters = "/orders/?size={0}&sortBy={1}&page={2}";
 
         /// <summary>
         /// PUT /orders/:id.

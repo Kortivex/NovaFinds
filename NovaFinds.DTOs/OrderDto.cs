@@ -9,6 +9,7 @@
 
 namespace NovaFinds.DTOs
 {
+    using System.ComponentModel;
     using System.Text.Json.Serialization;
 
     /// <summary>
@@ -23,6 +24,7 @@ namespace NovaFinds.DTOs
         ///     Entity Identifier of Category
         /// </remarks>
         [JsonPropertyName("id")]
+        [DisplayName("Order Id")]
         public int Id { get; set; }
 
         /// <summary>
