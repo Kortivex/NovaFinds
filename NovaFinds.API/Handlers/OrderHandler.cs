@@ -9,11 +9,11 @@
 
 namespace NovaFinds.API.Handlers
 {
+    using Application.Mappers;
     using Application.Services;
     using Auth;
     using CORE.Contracts;
     using CORE.Domain;
-    using CORE.Mappers;
     using DTOs;
     using Filters;
     using IFR.Logger;

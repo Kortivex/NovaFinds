@@ -8,6 +8,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\NovaFinds.CORE\NovaFinds.CORE.csproj" />
+    <ProjectReference Include="..\NovaFinds.DTOs\NovaFinds.DTOs.csproj" />
     <ProjectReference Include="..\NovaFinds.IFR\NovaFinds.IFR.csproj" />
   </ItemGroup>
 

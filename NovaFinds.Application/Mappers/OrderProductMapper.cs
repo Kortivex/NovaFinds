@@ -7,9 +7,9 @@
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
 
-namespace NovaFinds.CORE.Mappers
+namespace NovaFinds.Application.Mappers
 {
-    using Domain;
+    using CORE.Domain;
     using DTOs;
 
     public static class OrderProductMapper

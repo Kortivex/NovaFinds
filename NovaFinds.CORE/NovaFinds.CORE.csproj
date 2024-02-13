@@ -14,8 +14,4 @@
     <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="8.0.1" />
   </ItemGroup>
 
-  <ItemGroup>
-    <ProjectReference Include="..\NovaFinds.DTOs\NovaFinds.DTOs.csproj" />
-  </ItemGroup>
-
 </Project>
