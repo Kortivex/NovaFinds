@@ -10,6 +10,7 @@
 namespace NovaFinds.CORE.Contracts
 {
     using Domain;
+    using System.Collections;
 
     /// <summary>
     /// The OrderRepository interface.
@@ -59,5 +60,13 @@ namespace NovaFinds.CORE.Contracts
         /// The <see cref="IQueryable"/>.
         /// </returns>
         public IQueryable<Order> GetByUserId(int userId);
+        
+        /// <summary>
+        /// The get order status types.
+        /// </summary>
+        /// <returns>
+        /// The <see cref="IEnumerable"/>.
+        /// </returns>
+        IEnumerable GetOrderStatusTypes();
     }
 }

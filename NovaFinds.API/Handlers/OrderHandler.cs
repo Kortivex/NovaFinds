@@ -113,6 +113,14 @@ namespace NovaFinds.API.Handlers
             return TypedResults.Empty;
         }
 
+        public async Task<IResult> GetOrderType(HttpRequest request)
+        {
+            Logger.Debug("Get Order-Type Handler");
+            var ordersType = _orderService.GetOrderStatusTypes();
+
+            return TypedResults.Ok(ordersType);
+        }
+
         public IEnumerable<OrderProductDto?> GetOrdersProducts(HttpRequest request, int id)
         {
             Logger.Debug("List Orders-Products Handler");

@@ -236,6 +236,10 @@ app.MapDelete("/orders/{orderId:int}", (OrderHandler handler, HttpRequest reques
     .WithName("DeleteOrder")
     .RequireAuthorization();
 
+app.MapGet("/order-types", (OrderHandler handler, HttpRequest request) => handler.GetOrderType(request))
+    .WithName("GetOrderType")
+    .RequireAuthorization();
+
 //  -- USERS - ORDERS
 app.MapGet("/users/{username}/orders", (UserHandler handler, HttpRequest request, string username) => handler.GetUsersOrders(request, username))
     .WithName("GetUsersOrders")

@@ -226,6 +226,11 @@ namespace NovaFinds.MVC.API
         public const string DeleteOrder = "/orders/{0}";
 
         /// <summary>
+        /// GET /order-types.
+        /// </summary>
+        public const string GetOrderTypes = "/order-types";
+        
+        /// <summary>
         /// GET /orders/:order_id/products.
         /// </summary>
         public const string GetOrdersProducts = "/orders/{0}/products";

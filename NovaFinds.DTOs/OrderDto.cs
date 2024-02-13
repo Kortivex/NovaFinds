@@ -82,4 +82,22 @@ namespace NovaFinds.DTOs
         /// </summary>
         Delivered = 4
     }
+
+    public class OrderStatusDto
+    {
+        /// <summary>
+        ///     Entity Identifier
+        /// </summary>
+        /// <remarks>
+        ///     Entity Identifier of Order Status Type
+        /// </remarks>
+        [JsonPropertyName("id")]
+        public int Id { get; set; }
+
+        /// <summary>
+        ///     Real Order Status Type
+        /// </summary>
+        [JsonPropertyName("name")]
+        public string Name { get; set; }
+    }
 }
