@@ -9,6 +9,7 @@
 
 namespace NovaFinds.DTOs
 {
+    using System.ComponentModel;
     using System.Text.Json.Serialization;
 
     /// <summary>
@@ -81,6 +82,7 @@ namespace NovaFinds.DTOs
         ///     FK of the related category
         /// </remarks>
         [JsonPropertyName("category_id")]
+        [DisplayName("Category")]
         public int CategoryId { get; set; }
 
         [JsonPropertyName("category")]

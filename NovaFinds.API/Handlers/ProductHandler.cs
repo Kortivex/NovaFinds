@@ -62,7 +62,16 @@ namespace NovaFinds.API.Handlers
             Logger.Debug("List Products Handler");
             var products = _productService.GetAll().ToList();
 
-            if (request.Query.ContainsKey("size") && request.Query.ContainsKey("sortBy")){
+            if (request.Query.ContainsKey("size") && request.Query.ContainsKey("sortBy") && request.Query.ContainsKey("page")){
+                _size = int.Parse(request.Query["size"]!);
+                var sortBy = request.Query["sortBy"];
+                var page = int.Parse(request.Query["page"]!);
+
+                var productQuery = _productService.GetAll().GetPaged(page, _size);
+                if (sortBy == "id"){ productQuery = productQuery.OrderByDescending(o => o.Id); }
+                products = productQuery.ToList();
+            }
+            else if (request.Query.ContainsKey("size") && request.Query.ContainsKey("sortBy")){
                 if (request.Query.ContainsKey("size")){
                     _size = int.Parse(request.Query["size"]!);
                     products = _productService.GetWithCategoryImageSize(_size).ToList();

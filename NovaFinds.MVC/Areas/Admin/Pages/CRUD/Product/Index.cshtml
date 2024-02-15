@@ -1,0 +1,82 @@
+﻿@page
+@model NovaFinds.MVC.Areas.Admin.Pages.CRUD.Product.IndexModel
+
+@{ ViewData["Title"] = "Product List"; }
+
+<h1>@ViewData["Title"]</h1>
+
+<p>
+    <a class="btn btn-primary" asp-page="./Create">Create New</a>
+</p>
+<table class="table table-striped">
+    <thead class="thead-dark">
+    @if (Model.Product is { Count: > 0 }){
+        <tr scope="row">
+            <th scope="col">
+                @Html.DisplayNameFor(model => model.Product![0].Id)
+            </th>
+            <th scope="col">
+                @Html.DisplayNameFor(model => model.Product![0].Name)
+            </th>
+            <th scope="col">
+                @Html.DisplayNameFor(model => model.Product![0].Brand)
+            </th>
+            <th scope="col">
+                @Html.DisplayNameFor(model => model.Product![0].Price)
+            </th>
+            <th scope="col">
+                Tax
+            </th>
+            <th scope="col">
+                @Html.DisplayNameFor(model => model.Product![0].Stock)
+            </th>
+            <th scope="col"></th>
+        </tr>
+    }
+    </thead>
+    <tbody>
+    @if (Model.Product != null && Model.Product.Count > 0){
+        @foreach (var item in Model.Product){
+            <tr scope="row">
+                <td>
+                    @Html.DisplayFor(modelItem => item.Id)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Brand)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Price)€
+                </td>
+                <td>
+                    21%
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Stock)
+                </td>
+                <td>
+                    <div class="btn-group" role="group">
+                        <a class="btn btn-primary" asp-page="./Edit" asp-route-id="@item.Id">Edit</a>
+                        <a class="btn btn-outline-primary" asp-page="./Details" asp-route-id="@item.Id">Details</a>
+                        <a class="btn btn-danger" asp-page="./Delete" asp-route-id="@item.Id">Delete</a>
+                    </div>
+                </td>
+            </tr>
+        }
+    }
+    else{
+        <tr>
+            <td>
+                No Products can be found!
+            </td>
+        </tr>
+    }
+    </tbody>
+</table>
+<div class="row mb-4 mt-3">
+    <div class="col-md-12">
+        @await Component.InvokeAsync("Pagination", new { paginator = ViewData["Pagination"], text = ViewData["PaginationText"] }).ConfigureAwait(false)
+    </div>
+</div>
