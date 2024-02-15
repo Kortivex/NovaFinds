@@ -13,13 +13,10 @@ namespace NovaFinds.API.Handlers
     using Application.Services;
     using Auth;
     using CORE.Contracts;
-    using CORE.Domain;
     using DTOs;
     using Filters;
     using IFR.Logger;
     using Microsoft.AspNetCore.Authorization;
-    using Microsoft.AspNetCore.Identity;
-    using Microsoft.EntityFrameworkCore;
     using System.Text.Json;
 
     [Authorize(AuthenticationSchemes = ApiKeySchemeOptions.AuthenticateScheme)]

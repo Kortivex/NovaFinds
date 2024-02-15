@@ -12,13 +12,10 @@ namespace NovaFinds.MVC.Areas.Admin.Pages.CRUD.Product
     using API;
     using DTOs;
     using IFR.Logger;
-    using System;
-    using System.Threading.Tasks;
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.AspNetCore.Mvc.RazorPages;
     using Microsoft.AspNetCore.Mvc.Rendering;
-    using Microsoft.Extensions.Logging;
     using SmartBreadcrumbs.Attributes;
 
     /// <summary>

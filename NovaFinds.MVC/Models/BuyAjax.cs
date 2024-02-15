@@ -9,7 +9,6 @@
 
 namespace NovaFinds.MVC.Models
 {
-    using System;
 
     /// <summary>
     /// The buy ajax object, ready for receive request from web with credit card info.

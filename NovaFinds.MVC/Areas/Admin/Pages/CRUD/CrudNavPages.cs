@@ -9,8 +9,6 @@
 
 namespace NovaFinds.MVC.Areas.Admin.Pages.CRUD
 {
-    using System;
-    using System.IO;
     using Microsoft.AspNetCore.Mvc.Rendering;
 
     /// <summary>

@@ -11,7 +11,6 @@ namespace NovaFinds.CORE.Domain
 {
     using Contracts;
     using Microsoft.AspNetCore.Identity;
-    using System.ComponentModel.DataAnnotations;
 
     /// <summary>
     /// The role.

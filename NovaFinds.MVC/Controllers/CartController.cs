@@ -16,7 +16,6 @@ namespace NovaFinds.MVC.Controllers
     using Microsoft.AspNetCore.Mvc;
     using Models;
     using SmartBreadcrumbs.Attributes;
-    using Utils;
 
     /// <summary>
     /// The cart controller.

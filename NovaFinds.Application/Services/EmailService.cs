@@ -12,7 +12,6 @@ namespace NovaFinds.Application.Services
     using IFR.Logger;
     using Mailjet.Client;
     using Mailjet.Client.Resources;
-    using System.Threading.Tasks;
     using Microsoft.AspNetCore.Identity.UI.Services;
     using Microsoft.Extensions.Configuration;
     using Newtonsoft.Json.Linq;

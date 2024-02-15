@@ -10,7 +10,6 @@
 namespace NovaFinds.MVC.Areas.Identity.Pages.Account.Manage
 {
     using API;
-    using CORE.Domain;
     using DTOs;
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.AspNetCore.Mvc.RazorPages;

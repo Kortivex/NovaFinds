@@ -12,14 +12,12 @@ namespace NovaFinds.MVC.Areas.Identity.Pages.Account
     using API;
     using CORE.Domain;
     using DTOs;
-    using Faker;
     using IFR.Logger;
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Identity;
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.AspNetCore.Mvc.RazorPages;
     using SmartBreadcrumbs.Attributes;
-    using System.Security.Claims;
 
     /// <summary>
     /// The logout model.

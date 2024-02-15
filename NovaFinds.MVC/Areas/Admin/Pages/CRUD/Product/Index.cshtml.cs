@@ -12,17 +12,12 @@ namespace NovaFinds.MVC.Areas.Admin.Pages.CRUD.Product
     using API;
     using DTOs;
     using IFR.Logger;
-    using System;
-    using System.Collections.Generic;
-    using System.Globalization;
-    using System.Linq;
-    using System.Threading.Tasks;
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.AspNetCore.Mvc.RazorPages;
-    using Microsoft.Extensions.Configuration;
     using NovaFinds.API.Filters;
     using SmartBreadcrumbs.Attributes;
+    using System.Globalization;
 
     /// <summary>
     /// The index model for product.

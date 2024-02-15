@@ -9,7 +9,6 @@
 
 namespace NovaFinds.MVC.Utils
 {
-    using System.Globalization;
 
     /// <summary>
     /// The credit card verification.
