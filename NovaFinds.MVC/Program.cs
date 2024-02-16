@@ -99,9 +99,6 @@ builder.Services.Configure<RazorViewEngineOptions>(
 
 builder.Services.AddSingleton(builder.Configuration);
 
-// Email provider config
-// services.AddTransient<IEmailSender, EmailSender>();
-
 // Adds Razor Pages services to the application's services container.
 builder.Services.AddRazorPages();
 

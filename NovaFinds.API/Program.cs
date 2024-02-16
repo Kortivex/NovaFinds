@@ -210,6 +210,26 @@ app.MapDelete("/products/{id}/images/{imageId}", (ProductHandler handler, HttpRe
     .WithName("DeleteProductImage")
     .RequireAuthorization();
 
+app.MapPost("/images", (ProductHandler handler, HttpRequest request) => handler.PostImage(request))
+    .WithName("PostImage")
+    .RequireAuthorization();
+
+app.MapGet("/images", (ProductHandler handler, HttpRequest request) => handler.GetImages(request))
+    .WithName("GetImages")
+    .RequireAuthorization();
+
+app.MapGet("/images/{imageId}", (ProductHandler handler, HttpRequest request, string imageId) => handler.GetImage(request, imageId))
+    .WithName("GetImage")
+    .RequireAuthorization();
+
+app.MapPut("/images/{imageId}", (ProductHandler handler, HttpRequest request, string imageId) => handler.PutImage(request, imageId))
+    .WithName("PutImage")
+    .RequireAuthorization();
+
+app.MapDelete("/images/{imageId}", (ProductHandler handler, HttpRequest request, string imageId) => handler.DeleteImage(request, imageId))
+    .WithName("DeleteImage")
+    .RequireAuthorization();
+
 //  - CATEGORIES
 app.MapGet("/categories", (CategoryHandler handler, HttpRequest request) => handler.GetCategories(request))
     .WithName("GetCategories")

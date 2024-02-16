@@ -109,7 +109,7 @@ namespace NovaFinds.API.Handlers
 
         public async Task<IResult> PutProduct(HttpRequest request, string id)
         {
-            Logger.Debug("Put Role Handler");
+            Logger.Debug("Put Product Handler");
             var reader = new StreamReader(request.Body);
             var body = await reader.ReadToEndAsync();
 
@@ -231,6 +231,98 @@ namespace NovaFinds.API.Handlers
             Logger.Debug("Delete Product - Image Handler");
             var productImage = _productImagesService.GetAll()
                 .FirstOrDefault(productImage => productImage.ProductId == int.Parse(id) && productImage.Id == int.Parse(imageId));
+
+            if (productImage == null){ return TypedResults.NotFound("product-image not found"); }
+
+            await _productImagesService.DeleteByIdAsync(productImage.Id);
+            await _productImagesService.SaveChangesAsync();
+
+            return TypedResults.Empty;
+        }
+
+        // PRODUCT - IMAGES
+
+        public async Task<IResult> PostImage(HttpRequest request)
+        {
+            Logger.Debug("Post Images Handler");
+            var reader = new StreamReader(request.Body);
+            var body = await reader.ReadToEndAsync();
+
+            var reqImageDto = JsonSerializer.Deserialize<ProductImageDto>(body);
+            var productImageDb = ProductImageMapper.ToDb(reqImageDto!);
+
+            await _productImagesService.CreateAsync(productImageDb!);
+            await _productImagesService.SaveChangesAsync();
+
+            var productImages = _productImagesService.GetAll()
+                .Where(image => image.ProductId == productImageDb!.ProductId)
+                .Where(image => image.Description == productImageDb!.Description)
+                .Where(image => image.Image == productImageDb!.Image)
+                .ToList();
+
+            if (productImages.Count != 0){ return TypedResults.Created($"/products/{productImages[0].Id}", ProductImageMapper.ToDomain(productImages[0])); }
+            return TypedResults.BadRequest("image can not be created!");
+        }
+
+        public IEnumerable<ProductImageDto?> GetImages(HttpRequest request)
+        {
+            Logger.Debug("List Images Handler");
+            var productImages = _productImagesService.GetAll().ToList();
+
+            if (request.Query.ContainsKey("size") && request.Query.ContainsKey("sortBy") && request.Query.ContainsKey("page")){
+                _size = int.Parse(request.Query["size"]!);
+                var sortBy = request.Query["sortBy"];
+                var page = int.Parse(request.Query["page"]!);
+
+                var productImagesQuery = _productImagesService.GetAll().GetPaged(page, _size);
+                if (sortBy == "id"){ productImagesQuery = productImagesQuery.OrderByDescending(o => o.Id); }
+                productImages = productImagesQuery.ToList();
+            }
+
+
+            return ProductImageMapper.ToListDomain(productImages);
+        }
+
+        public async Task<IResult?> GetImage(HttpRequest request, string imageId)
+        {
+            Logger.Debug("Get Image Handler");
+            var productImage = await _productImagesService.GetByIdAsync(int.Parse(imageId));
+
+            if (productImage == null){ return TypedResults.NotFound("product-image not found"); }
+
+            return TypedResults.Ok(ProductImageMapper.ToDomain(productImage));
+        }
+
+        public async Task<IResult> PutImage(HttpRequest request, string imageId)
+        {
+            Logger.Debug("Put Image Handler");
+            var reader = new StreamReader(request.Body);
+            var body = await reader.ReadToEndAsync();
+
+            var reqProductImageDto = JsonSerializer.Deserialize<ProductImageDto>(body);
+            var productImageDb = ProductImageMapper.ToDb(reqProductImageDto!);
+
+            var productImage = _productImagesService.GetByIdAsync(int.Parse(imageId)).Result;
+
+            if (productImage == null) return TypedResults.BadRequest("image can not be updated");
+
+            productImage.Id = int.Parse(imageId);
+            productImage.Description = productImageDb!.Description;
+            productImage.Image = productImageDb.Image;
+            productImage.ProductId = productImageDb.ProductId;
+
+            _productImagesService.Update(productImage);
+            await _productService.SaveChangesAsync();
+
+            productImageDb.Id = productImage.Id;
+            var productImageDto = ProductImageMapper.ToDomain(productImageDb);
+            return TypedResults.Created($"/images/{imageId}", productImageDto);
+        }
+
+        public async Task<IResult> DeleteImage(HttpRequest request, string imageId)
+        {
+            Logger.Debug("Delete Image Handler");
+            var productImage = await _productImagesService.GetByIdAsync(int.Parse(imageId));
 
             if (productImage == null){ return TypedResults.NotFound("product-image not found"); }
 

@@ -17,35 +17,7 @@ namespace NovaFinds.MVC.Areas.Admin.Pages.CRUD
     public static class CrudNavPages
     {
         /// <summary>
-        /// The index brands nav class.
-        /// </summary>
-        /// <param name="viewContext">
-        /// The view context.
-        /// </param>
-        /// <returns>
-        /// The <see cref="string"/>.
-        /// </returns>
-        public static string IndexBrandsNavClass(ViewContext viewContext)
-        {
-            return PageCrudNavClass(viewContext, "Index");
-        }
-
-        /// <summary>
-        /// The index categories nav class.
-        /// </summary>
-        /// <param name="viewContext">
-        /// The view context.
-        /// </param>
-        /// <returns>
-        /// The <see cref="string"/>.
-        /// </returns>
-        public static string IndexCategoriesNavClass(ViewContext viewContext)
-        {
-            return PageCrudNavClass(viewContext, "Index");
-        }
-
-        /// <summary>
-        /// The index media nav class.
+        /// The index image nav class.
         /// </summary>
         /// <param name="viewContext">
         /// The view context.
@@ -82,20 +54,6 @@ namespace NovaFinds.MVC.Areas.Admin.Pages.CRUD
         /// The <see cref="string"/>.
         /// </returns>
         public static string IndexProductNavClass(ViewContext viewContext)
-        {
-            return PageCrudNavClass(viewContext, "Index");
-        }
-
-        /// <summary>
-        /// The index tax nav class.
-        /// </summary>
-        /// <param name="viewContext">
-        /// The view context.
-        /// </param>
-        /// <returns>
-        /// The <see cref="string"/>.
-        /// </returns>
-        public static string IndexTaxNavClass(ViewContext viewContext)
         {
             return PageCrudNavClass(viewContext, "Index");
         }

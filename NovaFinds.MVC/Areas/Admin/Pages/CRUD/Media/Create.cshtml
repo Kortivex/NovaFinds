@@ -1,0 +1,36 @@
+﻿@page
+@model NovaFinds.MVC.Areas.Admin.Pages.CRUD.Media.CreateModel
+
+@{
+    ViewData["Title"] = "Media Create";
+}
+
+<h1>@ViewData["Title"]</h1>
+
+<form method="post" enctype="multipart/form-data">
+    <div class="row">
+        <div class="col-md-4">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="Image!.Description"></label>
+                <input asp-for="Image!.Description" class="form-control"/>
+                <span asp-validation-for="Image!.Description" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Image!.ProductId"></label>
+                <select asp-for="Image!.ProductId" class="form-control" asp-items="ViewBag.ProductId"></select>
+                <span asp-validation-for="Image!.ProductId" class="text-danger"></span>
+            </div>
+            <div class="input-group">
+                <div class="custom-file">
+                    <input class="custom-file-input" type="file" asp-for="ImageFile"/>
+                    <label class="custom-file-label" asp-for="ImageFile"></label>
+                </div>
+            </div>
+            <div class="btn-group mt-2" role="group">
+                <input class="btn btn-primary" type="submit" value="Create"/>
+                <a class="btn btn-outline-primary" asp-page="Index">Back to List</a>
+            </div>
+        </div>
+    </div>
+</form>

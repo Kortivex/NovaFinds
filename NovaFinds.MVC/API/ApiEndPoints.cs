@@ -40,9 +40,9 @@ namespace NovaFinds.MVC.API
         /// GET /products with category and sort filters.
         /// </summary>
         public const string GetProductsCategorySortFilter = "/products/?category={0}&size={1}&page={2}";
-        
+
         /// <summary>
-        /// GET /products with category and sort filters.
+        /// GET /products with sort filters.
         /// </summary>
         public const string GetProductsSortByFilters = "/products/?size={0}&sortBy={1}&page={2}";
 
@@ -87,6 +87,36 @@ namespace NovaFinds.MVC.API
         /// DELETE /products/:id/images/:image_id.
         /// </summary>
         public const string DeleteProductsImage = "/products/{0}/images/{1}";
+        
+        /// <summary>
+        /// POST /images.
+        /// </summary>
+        public const string PostImages = "/images";
+
+        /// <summary>
+        /// GET /images.
+        /// </summary>
+        public const string GetImages = "/images";
+
+        /// <summary>
+        /// GET /images with sort filters.
+        /// </summary>
+        public const string GetImagesSortByFilters = "/images/?size={0}&sortBy={1}&page={2}";
+        
+        /// <summary>
+        /// GET /images/:id.
+        /// </summary>
+        public const string GetImage = "/images/{0}";        
+        
+        /// <summary>
+        /// PUT /images/:id.
+        /// </summary>
+        public const string PutImage = "/images/{0}";
+        
+        /// <summary>
+        /// DELETE /images/:id.
+        /// </summary>
+        public const string DeleteImage = "/images/{0}";
 
         // CATEGORIES
 
@@ -121,7 +151,7 @@ namespace NovaFinds.MVC.API
         /// GET /users.
         /// </summary>
         public const string GetUsers = "/users";
-        
+
         /// <summary>
         /// GET /users/:id.
         /// </summary>
@@ -209,12 +239,12 @@ namespace NovaFinds.MVC.API
         /// GET /orders.
         /// </summary>
         public const string GetOrders = "/orders";
-        
+
         /// <summary>
         /// GET /orders/:id.
         /// </summary>
         public const string GetOrder = "/orders/{0}";
-        
+
         /// <summary>
         /// GET /orders with sort filters.
         /// </summary>
@@ -234,7 +264,7 @@ namespace NovaFinds.MVC.API
         /// GET /order-types.
         /// </summary>
         public const string GetOrderTypes = "/order-types";
-        
+
         /// <summary>
         /// GET /orders/:order_id/products.
         /// </summary>

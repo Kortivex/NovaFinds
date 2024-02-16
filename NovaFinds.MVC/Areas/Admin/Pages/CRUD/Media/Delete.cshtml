@@ -1,0 +1,16 @@
+﻿@page
+@model NovaFinds.MVC.Areas.Admin.Pages.CRUD.Media.DeleteModel
+
+@{ ViewData["Title"] = "Media Delete"; }
+
+<h1>@ViewData["Title"]</h1>
+
+<h3>Are you sure you want to delete this image?</h3>
+
+<form method="post">
+    <input type="hidden" asp-for="Image!.Id"/>
+    <div class="btn-group" role="group">
+        <input class="btn btn-danger" type="submit" value="Delete"/>
+        <a class="btn btn-outline-primary" asp-page="Index">Back to List</a>
+    </div>
+</form>
