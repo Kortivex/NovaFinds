@@ -71,22 +71,26 @@
             </dl>
         </div>
         <div class="col-md-4">
-            <dl class="row">
-                @foreach (var role in Model.Role!){
-                    <dt class="col-sm-2">
-                        @Html.DisplayNameFor(model => role.Id)
-                    </dt>
-                    <dd class="col-sm-10">
-                        @Html.DisplayFor(model => role.Id)
-                    </dd>
-                    <dt class="col-sm-2">
-                        @Html.DisplayNameFor(model => role.Name)
-                    </dt>
-                    <dd class="col-sm-10">
-                        @Html.DisplayFor(model => role.Name)
-                    </dd>
-                }
-            </dl>
+            @if (Model.Role!.Count > 0){
+
+                <h3>Roles</h3>
+                <dl class="row">
+                    @foreach (var role in Model.Role!){
+                        <dt class="col-sm-2">
+                            @Html.DisplayNameFor(model => role.Id)
+                        </dt>
+                        <dd class="col-sm-10">
+                            @Html.DisplayFor(model => role.Id)
+                        </dd>
+                        <dt class="col-sm-2">
+                            @Html.DisplayNameFor(model => role.Name)
+                        </dt>
+                        <dd class="col-sm-10">
+                            @Html.DisplayFor(model => role.Name)
+                        </dd>
+                    }
+                </dl>
+            }
         </div>
         <div>
             <div class="btn-group mt-4" role="group">
