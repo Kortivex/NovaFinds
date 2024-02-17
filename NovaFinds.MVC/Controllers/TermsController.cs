@@ -7,7 +7,7 @@
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
 
-namespace NovaFinds.MVC.Controllers.Company
+namespace NovaFinds.MVC.Controllers
 {
     using IFR.Logger;
     using Microsoft.AspNetCore.Mvc;

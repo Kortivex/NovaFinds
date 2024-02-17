@@ -9,7 +9,6 @@
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Http.Json;
 using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Mvc.Razor;
 using Microsoft.EntityFrameworkCore;
 using NovaFinds.CORE.Domain;
 using NovaFinds.DAL.Context;
@@ -87,15 +86,6 @@ builder.Services.AddIdentity<User, Role>(
     .AddDefaultUI()
     .AddEntityFrameworkStores<ApplicationDbContext>()
     .AddDefaultTokenProviders();
-
-// Config Razor View Engine
-builder.Services.Configure<RazorViewEngineOptions>(
-    o => {
-        o.ViewLocationFormats.Add($"/Views/Company/About{RazorViewEngine.ViewExtension}");
-        o.ViewLocationFormats.Add($"/Views/Company/Terms{RazorViewEngine.ViewExtension}");
-        o.ViewLocationFormats.Add($"/Views/Help/Refund{RazorViewEngine.ViewExtension}");
-        o.ViewLocationFormats.Add($"/Views/Help/Shipping{RazorViewEngine.ViewExtension}");
-    });
 
 builder.Services.AddSingleton(builder.Configuration);
 
