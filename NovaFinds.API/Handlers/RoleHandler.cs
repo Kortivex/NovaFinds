@@ -97,6 +97,19 @@ namespace NovaFinds.API.Handlers
             return TypedResults.Ok(RoleMapper.ToDomain(roles[0]));
         }
 
+        public async Task<IResult> GetRoleUsers(HttpRequest request, int id)
+        {
+            Logger.Debug("Get Role - Users Handler");
+            var roles = _roleService.GetAll()
+                .Where(role => role.Id == id).ToList();
+
+            if (roles.Count == 0){ return TypedResults.NotFound(); }
+
+            var usersInRole = await userManager.GetUsersInRoleAsync(roles[0].Name!);
+
+            return TypedResults.Ok(UserMapper.ToListDomain(usersInRole));
+        }
+
         public async Task<IResult> DeleteRole(HttpRequest request, int id)
         {
             Logger.Debug("Delete Role Handler");

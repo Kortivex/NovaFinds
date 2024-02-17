@@ -151,6 +151,11 @@ namespace NovaFinds.MVC.API
         /// GET /users.
         /// </summary>
         public const string GetUsers = "/users";
+        
+        /// <summary>
+        /// GET /users with sort filters.
+        /// </summary>
+        public const string GetUsersSortByFilters = "/users/?size={0}&sortBy={1}&page={2}";
 
         /// <summary>
         /// GET /users/:id.
@@ -188,6 +193,11 @@ namespace NovaFinds.MVC.API
         /// GET /roles/:id.
         /// </summary>
         public const string GetRole = "/roles/{0}";
+        
+        /// <summary>
+        /// GET /roles/:id/users.
+        /// </summary>
+        public const string GetRolesUsers = "/roles/{0}/users";
 
         /// <summary>
         /// PUT /roles/:id.
@@ -204,17 +214,17 @@ namespace NovaFinds.MVC.API
         /// <summary>
         /// GET /users/:username/roles.
         /// </summary>
-        public const string GetUserRoles = "/roles/{0}/roles";
+        public const string GetUserRoles = "/users/{0}/roles";
 
         /// <summary>
         /// PUT /users/:username/roles/:id.
         /// </summary>
-        public const string PostUserRoles = "/roles/{0}/roles/{1}";
+        public const string PostUserRoles = "/users/{0}/roles/{1}";
 
         /// <summary>
         /// DELETE /users/:username/roles/:id.
         /// </summary>
-        public const string DeleteUserRoles = "/roles/{0}/roles/{1}";
+        public const string DeleteUserRoles = "/users/{0}/roles/{1}";
 
         // USER - ORDERS
 

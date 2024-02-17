@@ -15,6 +15,7 @@ namespace NovaFinds.API.Handlers
     using CORE.Contracts;
     using CORE.Domain;
     using DTOs;
+    using Filters;
     using IFR.Logger;
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Identity;
@@ -23,6 +24,8 @@ namespace NovaFinds.API.Handlers
     [Authorize(AuthenticationSchemes = ApiKeySchemeOptions.AuthenticateScheme)]
     public class UserHandler(IDbContext context, UserManager<User> userManager)
     {
+        private static int _size = 1000;
+
         /// <summary>
         /// The user service.
         /// </summary>
@@ -97,13 +100,23 @@ namespace NovaFinds.API.Handlers
         {
             Logger.Debug("List Users Handler");
             var users = _userService.GetAll().ToList();
-            if (request.Query.ContainsKey("username")){
-                var username = request.Query["username"].ToString();
-                users = _userService.GetAll()
-                    .Where(user => user.UserName == username).ToList();
+
+            if (request.Query.ContainsKey("size") && request.Query.ContainsKey("sortBy") && request.Query.ContainsKey("page")){
+                _size = int.Parse(request.Query["size"]!);
+                var sortBy = request.Query["sortBy"];
+                var page = int.Parse(request.Query["page"]!);
+
+                var usersQuery = _userService.GetAll().GetPaged(page, _size);
+                if (sortBy == "id"){ usersQuery = usersQuery.OrderByDescending(o => o.Id); }
+                users = usersQuery.ToList();
             }
-            if (!request.Query.ContainsKey("email")) return UserMapper.ToListDomain(users);
-            {
+            else{
+                if (request.Query.ContainsKey("username")){
+                    var username = request.Query["username"].ToString();
+                    users = _userService.GetAll()
+                        .Where(user => user.UserName == username).ToList();
+                }
+                if (!request.Query.ContainsKey("email")) return UserMapper.ToListDomain(users);
                 var email = request.Query["email"].ToString();
                 users = _userService.GetAll()
                     .Where(user => user.Email == email).ToList();

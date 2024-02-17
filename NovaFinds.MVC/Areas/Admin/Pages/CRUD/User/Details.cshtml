@@ -1,0 +1,98 @@
+﻿@page
+@model NovaFinds.MVC.Areas.Admin.Pages.CRUD.User.DetailsModel
+
+@{ ViewData["Title"] = "User Details"; }
+
+<h1>@ViewData["Title"]</h1>
+<div class="container">
+    <div class="row">
+        <div class="col-md-8">
+            <dl class="row">
+                <dt class="col-sm-2">
+                    @Html.DisplayNameFor(model => model.UserDto!.Id)
+                </dt>
+                <dd class="col-sm-10">
+                    @Html.DisplayFor(model => model.UserDto!.Id)
+                </dd>
+                <dt class="col-sm-2">
+                    @Html.DisplayNameFor(model => model.UserDto!.Nif)
+                </dt>
+                <dd class="col-sm-10">
+                    @Html.DisplayFor(model => model.UserDto!.Nif)
+                </dd>
+                <dt class="col-sm-2">
+                    First Name
+                </dt>
+                <dd class="col-sm-10">
+                    @Html.DisplayFor(model => model.UserDto!.FirstName)
+                </dd>
+                <dt class="col-sm-2">
+                    Last Name
+                </dt>
+                <dd class="col-sm-10">
+                    @Html.DisplayFor(model => model.UserDto!.LastName)
+                </dd>
+                <dt class="col-sm-2">
+                    @Html.DisplayNameFor(model => model.UserDto!.Email)
+                </dt>
+                <dd class="col-sm-10">
+                    @Html.DisplayFor(model => model.UserDto!.Email)
+                </dd>
+                <dt class="col-sm-2">
+                    Phone
+                </dt>
+                <dd class="col-sm-10">
+                    @Html.DisplayFor(model => model.UserDto!.PhoneNumber)
+                </dd>
+                <dt class="col-sm-2">
+                    St. Address
+                </dt>
+                <dd class="col-sm-10">
+                    @Html.DisplayFor(model => model.UserDto!.StreetAddress)
+                </dd>
+                <dt class="col-sm-2">
+                    @Html.DisplayNameFor(model => model.UserDto!.City)
+                </dt>
+                <dd class="col-sm-10">
+                    @Html.DisplayFor(model => model.UserDto!.City)
+                </dd>
+                <dt class="col-sm-2">
+                    @Html.DisplayNameFor(model => model.UserDto!.State)
+                </dt>
+                <dd class="col-sm-10">
+                    @Html.DisplayFor(model => model.UserDto!.State)
+                </dd>
+                <dt class="col-sm-2">
+                    @Html.DisplayNameFor(model => model.UserDto!.Country)
+                </dt>
+                <dd class="col-sm-10">
+                    @Html.DisplayFor(model => model.UserDto!.Country)
+                </dd>
+            </dl>
+        </div>
+        <div class="col-md-4">
+            <dl class="row">
+                @foreach (var role in Model.Role!){
+                    <dt class="col-sm-2">
+                        @Html.DisplayNameFor(model => role.Id)
+                    </dt>
+                    <dd class="col-sm-10">
+                        @Html.DisplayFor(model => role.Id)
+                    </dd>
+                    <dt class="col-sm-2">
+                        @Html.DisplayNameFor(model => role.Name)
+                    </dt>
+                    <dd class="col-sm-10">
+                        @Html.DisplayFor(model => role.Name)
+                    </dd>
+                }
+            </dl>
+        </div>
+        <div>
+            <div class="btn-group mt-4" role="group">
+                <a class="btn btn-primary" asp-page="./Edit" asp-route-id="@Model.UserDto!.Id">Edit</a>
+                <a class="btn btn-outline-primary" asp-page="./Index">Back to List</a>
+            </div>
+        </div>
+    </div>
+</div>

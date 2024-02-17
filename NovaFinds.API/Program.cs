@@ -120,6 +120,10 @@ app.MapGet("/roles/{roleId:int}", (RoleHandler handler, HttpRequest request, int
     .WithName("GetRole")
     .RequireAuthorization();
 
+app.MapGet("/roles/{roleId:int}/users", (RoleHandler handler, HttpRequest request, int roleId) => handler.GetRoleUsers(request, roleId))
+    .WithName("GetRoleUsers")
+    .RequireAuthorization();
+
 app.MapDelete("/roles/{roleId:int}", (RoleHandler handler, HttpRequest request, int roleId) => handler.DeleteRole(request, roleId))
     .WithName("DeleteRole")
     .RequireAuthorization();
