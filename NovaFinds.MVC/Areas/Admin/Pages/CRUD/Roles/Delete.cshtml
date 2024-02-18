@@ -1,0 +1,17 @@
+﻿@page
+@using Microsoft.AspNetCore.Mvc.TagHelpers
+@model NovaFinds.MVC.Areas.Admin.Pages.CRUD.Roles.DeleteModel
+
+@{ ViewData["Title"] = "Role Delete"; }
+
+<h1>@ViewData["Title"]</h1>
+
+<h3>Are you sure you want to delete this role, with <strong>Name</strong>: <span class="font-italic font-weight-light">@Model.Role!.Name</span> and <strong>ID</strong>: <span class="font-italic font-weight-light">@Model.Role.Id</span>?</h3>
+
+<form method="post">
+    <input type="hidden" asp-for="Role!.Id"/>
+    <div class="btn-group" role="group">
+        <input class="btn btn-danger" type="submit" value="Delete"/>
+        <a class="btn btn-outline-primary" asp-page="Index">Back to List</a>
+    </div>
+</form>

@@ -188,6 +188,11 @@ namespace NovaFinds.MVC.API
         /// GET /roles.
         /// </summary>
         public const string GetRoles = "/roles";
+        
+        /// <summary>
+        /// GET /roles with sort filters.
+        /// </summary>
+        public const string GetRolesSortByFilters = "/roles/?size={0}&sortBy={1}&page={2}";
 
         /// <summary>
         /// GET /roles/:id.

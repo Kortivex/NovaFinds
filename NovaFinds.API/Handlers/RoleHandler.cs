@@ -15,6 +15,7 @@ namespace NovaFinds.API.Handlers
     using CORE.Contracts;
     using CORE.Domain;
     using DTOs;
+    using Filters;
     using IFR.Logger;
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Identity;
@@ -23,6 +24,8 @@ namespace NovaFinds.API.Handlers
     [Authorize(AuthenticationSchemes = ApiKeySchemeOptions.AuthenticateScheme)]
     public class RoleHandler(IDbContext context, RoleManager<Role> roleManager, UserManager<User> userManager)
     {
+        private static int _size = 1000;
+
         /// <summary>
         /// The role service.
         /// </summary>
@@ -82,6 +85,16 @@ namespace NovaFinds.API.Handlers
         {
             Logger.Debug("List Roles Handler");
             var roles = _roleService.GetAll().ToList();
+
+            if (request.Query.ContainsKey("size") && request.Query.ContainsKey("sortBy") && request.Query.ContainsKey("page")){
+                _size = int.Parse(request.Query["size"]!);
+                var sortBy = request.Query["sortBy"];
+                var page = int.Parse(request.Query["page"]!);
+
+                var rolesQuery = _roleService.GetAll().GetPaged(page, _size);
+                if (sortBy == "id"){ rolesQuery = rolesQuery.OrderByDescending(o => o.Id); }
+                roles = rolesQuery.ToList();
+            }
 
             return RoleMapper.ToListDomain(roles);
         }
