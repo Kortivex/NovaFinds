@@ -219,7 +219,7 @@ namespace NovaFinds.MVC.API
         /// <summary>
         /// PUT /users/:username/roles/:id.
         /// </summary>
-        public const string PostUserRoles = "/users/{0}/roles/{1}";
+        public const string PutUserRoles = "/users/{0}/roles/{1}";
 
         /// <summary>
         /// DELETE /users/:username/roles/:id.

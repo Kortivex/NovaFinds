@@ -60,6 +60,11 @@
                             <input asp-for="UserDto!.Country" class="form-control"/>
                             <span asp-validation-for="UserDto!.Country" class="text-danger"></span>
                         </div>
+                        <div class="form-group">
+                            <label asp-for="RoleDto!.Id">Role Id</label>
+                            <select asp-for="RoleDto!.Id" class="form-control" asp-items="ViewBag.RoleId"></select>
+                            <span asp-validation-for="RoleDto!.Id" class="text-danger"></span>
+                        </div>
                         <div class="btn-group mt-2" role="group">
                             <input class="btn btn-primary" type="submit" value="Create"/>
                             <a class="btn btn-outline-primary" asp-page="Index">Back to List</a>

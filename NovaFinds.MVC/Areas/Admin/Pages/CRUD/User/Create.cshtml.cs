@@ -48,6 +48,12 @@ namespace NovaFinds.MVC.Areas.Admin.Pages.CRUD.User
         public UserDto? UserDto { get; set; }
 
         /// <summary>
+        /// Gets or sets the role.
+        /// </summary>
+        [BindProperty]
+        public RoleDto? RoleDto { get; set; }
+
+        /// <summary>
         /// The on get.
         /// </summary>
         /// <returns>
@@ -55,6 +61,11 @@ namespace NovaFinds.MVC.Areas.Admin.Pages.CRUD.User
         /// </returns>
         public async Task<IActionResult> OnGetAsync()
         {
+            var url = string.Format(ApiEndPoints.GetRoles);
+            var rolesDto = await this.ApiClient.Get<List<RoleDto>>(url);
+
+            ViewData["RoleId"] = new SelectList(rolesDto, "Id", "Name");
+
             return Page();
         }
 
@@ -77,8 +88,17 @@ namespace NovaFinds.MVC.Areas.Admin.Pages.CRUD.User
                 var errs = result.Errors;
                 if (errs != null){
                     foreach (var apiError in errs){ ModelState.AddModelError(string.Empty, apiError.Description); }
+
+                    url = string.Format(ApiEndPoints.GetRoles);
+                    var rolesDto = await this.ApiClient.Get<List<RoleDto>>(url);
+
+                    ViewData["RoleId"] = new SelectList(rolesDto, "Id", "Name");
+
                     return Page();
                 }
+
+                url = string.Format(ApiEndPoints.PutUserRoles, this.UserDto.UserName, this.RoleDto!.Id);
+                await this.ApiClient.Put(url);
             }
             catch (Exception exception){
                 Logger.Error(exception.Message);

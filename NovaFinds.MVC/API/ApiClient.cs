@@ -57,7 +57,7 @@
             return (default, errors);
         }
 
-        public async Task<(T? Data, IEnumerable<ApiError>? Errors)> Put<T>(string action, object value)
+        public async Task<(T? Data, IEnumerable<ApiError>? Errors)> Put<T>(string action, object? value)
         {
             Logger.Debug($"Doing {WebRequestMethods.Http.Put} request to: {action}");
             var httpClient = GenerateHttpClient();
@@ -72,6 +72,14 @@
             var errorContent = await result.Content.ReadAsStringAsync();
             var errors = JsonSerializer.Deserialize<IEnumerable<ApiError>>(errorContent);
             return (default, errors);
+        }
+
+        public async Task Put(string action)
+        {
+            Logger.Debug($"Doing {WebRequestMethods.Http.Put} request to: {action}");
+            var httpClient = GenerateHttpClient();
+
+            await httpClient.PutAsync(this.Url + action, null);
         }
 
         public void Delete(string action)
