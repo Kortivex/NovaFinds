@@ -7,7 +7,7 @@
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
 
-namespace NovaFinds.API.Handlers.Auth
+namespace NovaFinds.IFR.Security.Auth
 {
     using Microsoft.AspNetCore.Authentication;
     using Microsoft.Net.Http.Headers;

@@ -9,9 +9,9 @@
 
 namespace NovaFinds.MVC.Areas.Identity.Pages.Account
 {
-    using API;
     using CORE.Domain;
     using DTOs;
+    using IFR.API;
     using IFR.Logger;
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Identity;

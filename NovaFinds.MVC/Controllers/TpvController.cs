@@ -9,9 +9,9 @@
 
 namespace NovaFinds.MVC.Controllers
 {
-    using API;
     using CORE.Domain;
     using DTOs;
+    using IFR.API;
     using IFR.Logger;
     using Microsoft.AspNetCore.Identity;
     using Microsoft.AspNetCore.Mvc;

@@ -9,11 +9,11 @@
 
 namespace NovaFinds.MVC.Controllers
 {
-    using API;
+    using API.Filters;
     using DTOs;
+    using IFR.API;
     using IFR.Logger;
     using Microsoft.AspNetCore.Mvc;
-    using NovaFinds.API.Filters;
     using SmartBreadcrumbs.Attributes;
     using System.Globalization;
 

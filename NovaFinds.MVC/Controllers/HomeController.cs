@@ -9,9 +9,9 @@
 
 namespace NovaFinds.MVC.Controllers
 {
-    using API;
     using DTOs;
     using Faker;
+    using IFR.API;
     using Microsoft.AspNetCore.Mvc;
     using SmartBreadcrumbs.Attributes;
     using System.Globalization;

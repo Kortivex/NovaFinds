@@ -1,7 +1,8 @@
-﻿namespace NovaFinds.MVC.API
+﻿namespace NovaFinds.IFR.API
 {
     using Errors;
-    using IFR.Logger;
+    using Logger;
+    using Microsoft.Extensions.Configuration;
     using System.Net;
     using System.Net.Http.Headers;
     using System.Text;

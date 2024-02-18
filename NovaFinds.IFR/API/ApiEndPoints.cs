@@ -7,7 +7,7 @@
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
 
-namespace NovaFinds.MVC.API
+namespace NovaFinds.IFR.API
 {
     /// <summary>
     /// Static class with NovaFinds REST API endpoints.

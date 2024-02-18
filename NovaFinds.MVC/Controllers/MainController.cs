@@ -1,6 +1,6 @@
 ﻿namespace NovaFinds.MVC.Controllers
 {
-    using API;
+    using IFR.API;
     using Microsoft.AspNetCore.Mvc;
 
     public class MainController(IConfiguration config) : Controller

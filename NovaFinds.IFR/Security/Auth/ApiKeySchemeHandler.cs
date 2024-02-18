@@ -7,11 +7,12 @@
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
 
-namespace NovaFinds.API.Handlers.Auth
+namespace NovaFinds.IFR.Security.Auth
 {
     using CORE.Contracts;
     using Microsoft.AspNetCore.Authentication;
     using Microsoft.EntityFrameworkCore;
+    using Microsoft.Extensions.Logging;
     using Microsoft.Extensions.Options;
     using System.Security.Claims;
     using System.Text.Encodings.Web;

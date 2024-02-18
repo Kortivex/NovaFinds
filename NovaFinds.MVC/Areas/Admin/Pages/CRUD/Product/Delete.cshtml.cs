@@ -9,8 +9,8 @@
 
 namespace NovaFinds.MVC.Areas.Admin.Pages.CRUD.Product
 {
-    using API;
     using DTOs;
+    using IFR.API;
     using IFR.Logger;
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Mvc;

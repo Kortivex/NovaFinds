@@ -9,13 +9,13 @@
 
 namespace NovaFinds.MVC.Areas.Admin.Pages.CRUD.Order
 {
-    using API;
+    using API.Filters;
     using DTOs;
+    using IFR.API;
     using IFR.Logger;
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.AspNetCore.Mvc.RazorPages;
-    using NovaFinds.API.Filters;
     using SmartBreadcrumbs.Attributes;
 
     /// <summary>

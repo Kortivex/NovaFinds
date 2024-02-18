@@ -9,9 +9,9 @@
 
 namespace NovaFinds.MVC.Components
 {
+    using API.Filters;
     using IFR.Logger;
     using Microsoft.AspNetCore.Mvc;
-    using NovaFinds.API.Filters;
 
     /// <summary>
     /// The pagination.

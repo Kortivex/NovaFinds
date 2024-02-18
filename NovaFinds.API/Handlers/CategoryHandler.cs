@@ -11,11 +11,11 @@ namespace NovaFinds.API.Handlers
 {
     using Application.Mappers;
     using Application.Services;
-    using Auth;
     using CORE.Contracts;
     using DTOs;
     using Filters;
     using IFR.Logger;
+    using IFR.Security.Auth;
     using Microsoft.AspNetCore.Authorization;
 
     [Authorize(AuthenticationSchemes = ApiKeySchemeOptions.AuthenticateScheme)]

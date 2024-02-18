@@ -1,4 +1,4 @@
-﻿namespace NovaFinds.MVC.API.Errors
+﻿namespace NovaFinds.IFR.API.Errors
 {
     using System.Text.Json.Serialization;
 

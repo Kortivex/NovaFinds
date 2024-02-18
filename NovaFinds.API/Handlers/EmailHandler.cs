@@ -10,9 +10,9 @@
 namespace NovaFinds.API.Handlers
 {
     using Application.Services;
-    using Auth;
     using DTOs;
     using IFR.Logger;
+    using IFR.Security.Auth;
     using Microsoft.AspNetCore.Authorization;
     using System.Text.Json;
 
