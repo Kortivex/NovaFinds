@@ -116,7 +116,7 @@ namespace NovaFinds.CORE.Domain
         ///     Password of the User
         /// </remarks>
         [NotMapped]
-        public string Password { get; set; }
+        public string? Password { get; set; }
 
         /// <summary>
         ///     Required, Min length = 9, Max length = 9

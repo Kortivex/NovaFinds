@@ -50,7 +50,7 @@ namespace NovaFinds.API.Handlers
             var reqUserDto = JsonSerializer.Deserialize<UserDto>(body);
             var userDb = UserMapper.ToDb(reqUserDto!);
 
-            var resultCreated = await _userService.CreateUserAsync(userDb!, userDb!.Password);
+            var resultCreated = await _userService.CreateUserAsync(userDb!, userDb!.Password!);
             var resultObtained = await _userService.GetByUserNameAsync(userDb.UserName!);
 
             if (resultCreated.Succeeded){ return TypedResults.Created($"/users/{resultObtained!.Id}", reqUserDto); }
@@ -85,9 +85,9 @@ namespace NovaFinds.API.Handlers
             user.PhoneNumberConfirmed = userDb.PhoneNumberConfirmed;
             user.IsActive = userDb.IsActive;
 
-            if (userDb.Password.Length != 0){
+            if (!string.IsNullOrEmpty(userDb.Password)){
                 await userManager.RemovePasswordAsync(user);
-                await userManager.AddPasswordAsync(user, user.Password);
+                await userManager.AddPasswordAsync(user, user.Password!);
             }
 
             await userManager.UpdateAsync(user);

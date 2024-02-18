@@ -1,0 +1,75 @@
+﻿@page
+@model NovaFinds.MVC.Areas.Admin.Pages.CRUD.User.EditModel
+
+@{ ViewData["Title"] = "User Edit"; }
+
+<h1>@ViewData["Title"]</h1>
+<div class="container">
+    <div class="row">
+        <div class="col-md-8">
+            <form method="post" enctype="multipart/form-data">
+                <div class="row">
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label asp-for="UserDto!.Nif"></label>
+                            <input asp-for="UserDto!.Nif" class="form-control" readonly="readonly"/>
+                            <span asp-validation-for="UserDto!.Nif" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="UserDto!.Email"></label>
+                            <input asp-for="UserDto!.Email" class="form-control" readonly="readonly"/>
+                            <span asp-validation-for="UserDto!.Email" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="UserDto!.PhoneNumber"></label>
+                            <input asp-for="UserDto!.PhoneNumber" class="form-control"/>
+                            <span asp-validation-for="UserDto!.PhoneNumber" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="UserDto!.FirstName"></label>
+                            <input asp-for="UserDto!.FirstName" class="form-control"/>
+                            <span asp-validation-for="UserDto!.FirstName" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="UserDto!.LastName"></label>
+                            <input asp-for="UserDto!.LastName" class="form-control"/>
+                            <span asp-validation-for="UserDto!.LastName" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="UserDto!.StreetAddress"></label>
+                            <input asp-for="UserDto!.StreetAddress" class="form-control"/>
+                            <span asp-validation-for="UserDto!.StreetAddress" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="UserDto!.State"></label>
+                            <input asp-for="UserDto!.State" class="form-control"/>
+                            <span asp-validation-for="UserDto!.State" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="UserDto!.City"></label>
+                            <input asp-for="UserDto!.City" class="form-control"/>
+                            <span asp-validation-for="UserDto!.City" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="UserDto!.Country"></label>
+                            <input asp-for="UserDto!.Country" class="form-control"/>
+                            <span asp-validation-for="UserDto!.Country" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="RoleDto!.Id">Role Id</label>
+                            <select asp-for="RoleDto!.Id" class="form-control" asp-items="ViewBag.RoleId"></select>
+                            <span asp-validation-for="RoleDto!.Id" class="text-danger"></span>
+                        </div>
+                        <div class="btn-group mt-2" role="group">
+                            <input class="btn btn-primary" type="submit" value="Update"/>
+                            <a class="btn btn-outline-primary" asp-page="Index">Back to List</a>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+        <div class="col-md-4">
+            <div asp-validation-summary="All" class="text-danger"></div>
+        </div>
+    </div>
+</div>
