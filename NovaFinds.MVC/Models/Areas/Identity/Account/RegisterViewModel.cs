@@ -100,13 +100,6 @@ namespace NovaFinds.MVC.Models.Areas.Identity.Account
         public string PhoneNumber { get; set; }
 
         /// <summary>
-        /// Gets or sets the postcode.
-        /// </summary>
-        [Required]
-        [Display(Name = "Post Code")]
-        public int Postcode { get; set; }
-
-        /// <summary>
         /// Gets or sets the state.
         /// </summary>
         [Required]
@@ -123,11 +116,5 @@ namespace NovaFinds.MVC.Models.Areas.Identity.Account
             MinimumLength = 1)]
         [Display(Name = "Street Address")]
         public string StreetAddress { get; set; }
-
-        /// <summary>
-        /// Gets or sets a value indicating whether admin.
-        /// </summary>
-        [Display(Name = "Make Admin?")]
-        public bool Admin { get; set; }
     }
 }

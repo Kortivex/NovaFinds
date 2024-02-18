@@ -9,6 +9,8 @@
 
 namespace NovaFinds.DTOs
 {
+    using System.ComponentModel;
+    using System.ComponentModel.DataAnnotations;
     using System.Text.Json.Serialization;
 
     public sealed class UserDto
@@ -29,6 +31,7 @@ namespace NovaFinds.DTOs
         ///     Email of the user like xxx@yyy.zzz
         /// </remarks>
         [JsonPropertyName("email")]
+        [EmailAddress]
         public string Email { get; set; }
         
         /// <summary>
@@ -47,6 +50,8 @@ namespace NovaFinds.DTOs
         ///     Phone Number of the user like xxxxxxxxx
         /// </remarks>
         [JsonPropertyName("phone_number")]
+        [DisplayName("Phone Number")]
+        [Phone]
         public string PhoneNumber { get; set; }
         
         /// <summary>
@@ -74,6 +79,7 @@ namespace NovaFinds.DTOs
         ///     Username of the user
         /// </remarks>
         [JsonPropertyName("username")]
+        [DisplayName("Username")]
         public string UserName { get; set; }
         
         /// <summary>
@@ -83,6 +89,7 @@ namespace NovaFinds.DTOs
         ///     Password of the user
         /// </remarks>
         [JsonPropertyName("password")]
+        [DataType(DataType.Password)]
         public string Password { get; set; }
 
         /// <summary>
@@ -92,6 +99,8 @@ namespace NovaFinds.DTOs
         ///     Real Identifier of the User (DNI...)
         /// </remarks>
         [JsonPropertyName("nif")]
+        [MinLength(9)]
+        [StringLength(9)]
         public string Nif { get; set; }
 
         /// <summary>
@@ -101,6 +110,8 @@ namespace NovaFinds.DTOs
         ///     First Name of user
         /// </remarks>
         [JsonPropertyName("first_name")]
+        [DisplayName("First Name")]
+        [StringLength(256)]
         public string FirstName { get; set; }
 
         /// <summary>
@@ -110,6 +121,8 @@ namespace NovaFinds.DTOs
         ///     Last Name of user
         /// </remarks>
         [JsonPropertyName("last_name")]
+        [DisplayName("Last Name")]
+        [StringLength(256)]
         public string LastName { get; set; }
 
         /// <summary>
@@ -119,6 +132,8 @@ namespace NovaFinds.DTOs
         ///     Main Street Address of user
         /// </remarks>
         [JsonPropertyName("street_address")]
+        [DisplayName("Address")]
+        [StringLength(256)]
         public string StreetAddress { get; set; }
 
         /// <summary>
@@ -128,6 +143,7 @@ namespace NovaFinds.DTOs
         ///     Main City of User
         /// </remarks>
         [JsonPropertyName("city")]
+        [StringLength(128)]
         public string City { get; set; }
 
         /// <summary>
@@ -137,6 +153,7 @@ namespace NovaFinds.DTOs
         ///     Main State of User
         /// </remarks>
         [JsonPropertyName("state")]
+        [StringLength(128)]
         public string State { get; set; }
 
         /// <summary>
@@ -147,6 +164,7 @@ namespace NovaFinds.DTOs
         ///     Main Country of User
         /// </remarks>
         [JsonPropertyName("country")]
+        [StringLength(128)]
         public string Country { get; set; }
     }
 }
