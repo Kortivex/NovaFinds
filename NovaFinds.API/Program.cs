@@ -8,10 +8,15 @@ using NovaFinds.CORE.Contracts;
 using NovaFinds.CORE.Domain;
 using NovaFinds.DAL.Context;
 using NovaFinds.IFR.Logger;
+using NovaFinds.IFR.Configuration;
 using NovaFinds.IFR.Security.Auth;
 using System.Text.Json.Serialization;
 
 var builder = WebApplication.CreateBuilder(args);
+
+// Load Configuration.
+var configBuilder = new Configuration().Config;
+builder.Configuration.AddConfiguration(configBuilder);
 
 // Services.
 builder.Services.AddScoped<IDbContext, ApplicationDbContext>();

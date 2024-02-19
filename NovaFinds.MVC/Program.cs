@@ -12,10 +12,15 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using NovaFinds.CORE.Domain;
 using NovaFinds.DAL.Context;
+using NovaFinds.IFR.Configuration;
 using SmartBreadcrumbs.Extensions;
 using System.Text.Json.Serialization;
 
 var builder = WebApplication.CreateBuilder(args);
+
+// Load Configuration.
+var configBuilder = new Configuration().Config;
+builder.Configuration.AddConfiguration(configBuilder);
 
 // Database connection string configuration
 builder.Services.AddDbContext<ApplicationDbContext>(

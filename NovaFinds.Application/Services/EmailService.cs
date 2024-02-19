@@ -39,8 +39,8 @@ namespace NovaFinds.Application.Services
         /// </param>
         public EmailService(IConfiguration configuration)
         {
-            _apiKey = configuration.GetSection("ApiKeys").GetSection("MailJetApi").Value!;
-            _secret = configuration.GetSection("ApiKeys").GetSection("MailJetSecret").Value!;
+            _apiKey = configuration.GetSection("Api").GetSection("ApiKeys").GetSection("MailJetApi").Value!;
+            _secret = configuration.GetSection("Api").GetSection("ApiKeys").GetSection("MailJetSecret").Value!;
         }
 
         /// <summary>

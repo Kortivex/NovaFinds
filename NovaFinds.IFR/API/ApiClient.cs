@@ -14,9 +14,9 @@
 
         private const string XApiKeyHeader = "X-Api-Key";
 
-        private string? Url { get; set; } = config.GetSection("Config").GetSection("Apis").GetSection("NovaFinds").Value;
+        private string? Url { get; set; } = config.GetSection("Api").GetSection("Host").Value;
 
-        private string? ApiKey { get; set; } = config.GetSection("Config").GetSection("ApiKeys").GetSection("NovaFinds").Value;
+        private string? ApiKey { get; set; } = config.GetSection("Api").GetSection("ApiKeys").GetSection("NovaFinds").Value;
 
         private HttpClient GenerateHttpClient()
         {
