@@ -12,12 +12,14 @@ namespace NovaFinds.MVC.Areas.Identity.Pages.Account.Manage
     using DTOs;
     using IFR.API;
     using IFR.Logger;
+    using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.AspNetCore.Mvc.RazorPages;
     using Models.Areas.Identity.Account.Manage;
     using SmartBreadcrumbs.Attributes;
 
     [Breadcrumb("Change Password")]
+    [Authorize(Roles = "User,Admin")]
     public class ChangePasswordModel : PageModel
     {
         /// <summary>

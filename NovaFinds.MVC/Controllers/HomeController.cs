@@ -73,7 +73,16 @@ namespace NovaFinds.MVC.Controllers
 
                 url = ApiEndPoints.PostUsers;
                 var result = await ApiClient.Post<UserDto>(url, user);
-                if (result.Errors == null || !result.Errors.Any()){ HttpContext.Session.SetString("tempUser", user.Email); }
+                if (result.Errors == null || !result.Errors.Any()){
+                    HttpContext.Session.SetString("tempUser", user.Email);
+                    url = string.Format(ApiEndPoints.GetRoles);
+                    var roles = await ApiClient.Get<List<RoleDto>>(url);
+
+                    foreach (var roleDto in roles!.Where(roleDto => roleDto.Name.ToLower().Equals("user"))){
+                        url = string.Format(ApiEndPoints.PutUserRoles, result.Data!.UserName, roleDto.Id);
+                        await ApiClient.Put(url);
+                    }
+                }
             }
 
             var homeSectionsSize = int.Parse(_shopHomeSections.GetSection("Size").Value!, CultureInfo.InvariantCulture);

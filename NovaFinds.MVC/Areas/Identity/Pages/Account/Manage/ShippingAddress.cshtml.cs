@@ -11,6 +11,7 @@ namespace NovaFinds.MVC.Areas.Identity.Pages.Account.Manage
 {
     using DTOs;
     using IFR.API;
+    using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.AspNetCore.Mvc.RazorPages;
     using Models.Areas.Identity.Account.Manage;
@@ -20,6 +21,7 @@ namespace NovaFinds.MVC.Areas.Identity.Pages.Account.Manage
     /// The shipping address model.
     /// </summary>
     [Breadcrumb("Shipping Address")]
+    [Authorize(Roles = "User,Admin")]
     public class ShippingAddressModel : PageModel
     {
         /// <summary>

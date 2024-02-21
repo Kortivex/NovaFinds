@@ -11,6 +11,7 @@ namespace NovaFinds.MVC.Areas.Identity.Pages.Account.Manage
 {
     using DTOs;
     using IFR.API;
+    using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.AspNetCore.Mvc.RazorPages;
     using SmartBreadcrumbs.Attributes;
@@ -19,6 +20,7 @@ namespace NovaFinds.MVC.Areas.Identity.Pages.Account.Manage
     /// The orders model.
     /// </summary>
     [Breadcrumb("Orders")]
+    [Authorize(Roles = "User,Admin")]
     public class OrdersModel : PageModel
     {
         /// <summary>

@@ -94,10 +94,21 @@ namespace NovaFinds.MVC.Areas.Identity.Pages.Account
                 IsActive = true
             };
 
-            const string url = ApiEndPoints.PostUsers;
+            var url = ApiEndPoints.PostUsers;
             var result = await this.ApiClient.Post<UserDto>(url, user);
 
-            if (result.Errors == null || !result.Errors.Any()) return RedirectToPage("RegisterConfirmation", new { email = this.Input.Email });
+            if (result.Errors == null || !result.Errors.Any()){
+                url = string.Format(ApiEndPoints.GetRoles);
+                var roles = await this.ApiClient.Get<List<RoleDto>>(url);
+
+                if (roles == null || roles.Count == 0) return Page();
+                foreach (var roleDto in roles.Where(roleDto => roleDto.Name.ToLower().Equals("user"))){
+                    url = string.Format(ApiEndPoints.PutUserRoles, result.Data!.UserName, roleDto.Id);
+                    await this.ApiClient.Put(url);
+                }
+
+                return RedirectToPage("RegisterConfirmation", new { email = this.Input.Email });
+            }
 
             foreach (var error in result.Errors!){ ModelState.AddModelError(string.Empty, error.Description); }
             return Page();

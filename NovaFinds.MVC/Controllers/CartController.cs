@@ -12,6 +12,7 @@ namespace NovaFinds.MVC.Controllers
     using CORE.Domain;
     using DTOs;
     using IFR.API;
+    using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Identity;
     using Microsoft.AspNetCore.Mvc;
     using Models;
@@ -21,6 +22,7 @@ namespace NovaFinds.MVC.Controllers
     /// The cart controller.
     /// </summary>
     [Route("Cart")]
+    [Authorize(Roles = "User,Admin")]
     public class CartController : MainController
     {
         /// <summary>

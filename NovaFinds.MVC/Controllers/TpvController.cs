@@ -13,6 +13,7 @@ namespace NovaFinds.MVC.Controllers
     using DTOs;
     using IFR.API;
     using IFR.Logger;
+    using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Identity;
     using Microsoft.AspNetCore.Mvc;
     using Models;
@@ -24,6 +25,7 @@ namespace NovaFinds.MVC.Controllers
     /// The tpv controller.
     /// </summary>
     [Route("Tpv")]
+    [Authorize(Roles = "User,Admin")]
     public partial class TpvController : MainController
     {
         /// <summary>
