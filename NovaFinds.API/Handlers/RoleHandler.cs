@@ -31,11 +31,6 @@ namespace NovaFinds.API.Handlers
         /// </summary>
         private readonly RoleService _roleService = new(context, roleManager);
 
-        /// <summary>
-        /// The user service.
-        /// </summary>
-        private readonly UserService _userService = new(context, userManager);
-
         public async Task<IResult> PostRole(HttpRequest request)
         {
             Logger.Debug("Post Role Handler");
