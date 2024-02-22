@@ -9,13 +9,19 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NovaFinds.CORE", "NovaFinds
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NovaFinds.IFR", "NovaFinds.IFR\NovaFinds.IFR.csproj", "{F8978BFA-6B22-4027-BCBC-830AF3C7E961}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NovaFinds.MVC", "NovaFinds.MVC\NovaFinds.MVC.csproj", "{2E70E541-EEFF-48C3-8E72-3F5160F5844E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NovaFinds.MVC", "NovaFinds.MVC\NovaFinds.MVC.csproj", "{2E70E541-EEFF-48C3-8E72-3F5160F5844E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NovaFinds.Application", "NovaFinds.Application\NovaFinds.Application.csproj", "{B99F9401-1A51-4992-8A6D-771ED508D218}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NovaFinds.Application", "NovaFinds.Application\NovaFinds.Application.csproj", "{B99F9401-1A51-4992-8A6D-771ED508D218}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NovaFinds.API", "NovaFinds.API\NovaFinds.API.csproj", "{9C688BBF-1207-4581-9DBB-F6ABA1754D9A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NovaFinds.API", "NovaFinds.API\NovaFinds.API.csproj", "{9C688BBF-1207-4581-9DBB-F6ABA1754D9A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NovaFinds.DTOs", "NovaFinds.DTOs\NovaFinds.DTOs.csproj", "{079F6F7E-95CF-477A-B6FA-AE82DDEA974E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NovaFinds.DTOs", "NovaFinds.DTOs\NovaFinds.DTOs.csproj", "{079F6F7E-95CF-477A-B6FA-AE82DDEA974E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NovaFinds.MVC.Test", "NovaFinds.MVC.Test\NovaFinds.MVC.Test.csproj", "{989CB408-D607-4FC7-B366-7316F87494BA}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NovaFinds.Application.Test", "NovaFinds.Application.Test\NovaFinds.Application.Test.csproj", "{A5B390B0-BB1E-4A44-B3E4-CDDEC5872141}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NovaFinds.API.Test", "NovaFinds.API.Test\NovaFinds.API.Test.csproj", "{4C0CD040-FE9B-426B-9DC3-FDD22AADCF0A}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -51,6 +57,18 @@ Global
 		{079F6F7E-95CF-477A-B6FA-AE82DDEA974E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{079F6F7E-95CF-477A-B6FA-AE82DDEA974E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{079F6F7E-95CF-477A-B6FA-AE82DDEA974E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{989CB408-D607-4FC7-B366-7316F87494BA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{989CB408-D607-4FC7-B366-7316F87494BA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{989CB408-D607-4FC7-B366-7316F87494BA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{989CB408-D607-4FC7-B366-7316F87494BA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A5B390B0-BB1E-4A44-B3E4-CDDEC5872141}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A5B390B0-BB1E-4A44-B3E4-CDDEC5872141}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A5B390B0-BB1E-4A44-B3E4-CDDEC5872141}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A5B390B0-BB1E-4A44-B3E4-CDDEC5872141}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4C0CD040-FE9B-426B-9DC3-FDD22AADCF0A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4C0CD040-FE9B-426B-9DC3-FDD22AADCF0A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4C0CD040-FE9B-426B-9DC3-FDD22AADCF0A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4C0CD040-FE9B-426B-9DC3-FDD22AADCF0A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
