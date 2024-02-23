@@ -13,7 +13,6 @@ namespace NovaFinds.MVC.Controllers
     using DTOs;
     using IFR.API;
     using IFR.Logger;
-    using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Identity;
     using Microsoft.AspNetCore.Mvc;
     using Models;

@@ -7,8 +7,8 @@ using NovaFinds.Application.Services;
 using NovaFinds.CORE.Contracts;
 using NovaFinds.CORE.Domain;
 using NovaFinds.DAL.Context;
-using NovaFinds.IFR.Logger;
 using NovaFinds.IFR.Configuration;
+using NovaFinds.IFR.Logger;
 using NovaFinds.IFR.Security.Auth;
 using System.Text.Json.Serialization;
 
