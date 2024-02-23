@@ -25,7 +25,6 @@ namespace NovaFinds.MVC.Controllers
     /// The tpv controller.
     /// </summary>
     [Route("Tpv")]
-    [Authorize(Roles = "User,Admin")]
     public partial class TpvController : MainController
     {
         /// <summary>

@@ -12,7 +12,6 @@ namespace NovaFinds.MVC.Controllers
     using CORE.Domain;
     using DTOs;
     using IFR.API;
-    using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Identity;
     using Microsoft.AspNetCore.Mvc;
     using Models;
@@ -22,7 +21,6 @@ namespace NovaFinds.MVC.Controllers
     /// The cart controller.
     /// </summary>
     [Route("Cart")]
-    [Authorize(Roles = "User,Admin")]
     public class CartController : MainController
     {
         /// <summary>
@@ -137,24 +135,26 @@ namespace NovaFinds.MVC.Controllers
                 url = string.Format(ApiEndPoints.GetCartsItems, cart.Id);
                 var cartItems = await ApiClient.Get<List<CartItemDto>>(url);
                 if (cartItems != null && cartItems.Count != 0){
+                    var itemInCart = false;
                     foreach (var cartItem in cartItems){
                         cartItem.Quantity = cartAjax.Quantity;
                         if (cartItem.ProductId == cartAjax.ProductId){
+                            itemInCart = true;
                             url = string.Format(ApiEndPoints.PutCartsItems, cart.Id, cartItem.Id);
                             var result = await ApiClient.Put<CartItemDto>(url, cartItem);
                             if (result.Errors != null){ return Json(new { response = "KO" }); }
                         }
-                        else{
-                            url = string.Format(ApiEndPoints.PostCartsItems, cart.Id);
-                            var newCartItem = new CartItemDto
-                            {
-                                CartId = cart.Id,
-                                ProductId = cartAjax.ProductId,
-                                Quantity = cartAjax.Quantity
-                            };
-                            var result = await ApiClient.Post<CartItemDto>(url, newCartItem);
-                            if (result.Errors != null){ return Json(new { response = "KO" }); }
-                        }
+                    }
+                    if (!itemInCart){
+                        url = string.Format(ApiEndPoints.PostCartsItems, cart.Id);
+                        var newCartItem = new CartItemDto
+                        {
+                            CartId = cart.Id,
+                            ProductId = cartAjax.ProductId,
+                            Quantity = cartAjax.Quantity
+                        };
+                        var result = await ApiClient.Post<CartItemDto>(url, newCartItem);
+                        if (result.Errors != null){ return Json(new { response = "KO" }); }
                     }
                 }
                 else{
