@@ -1,6 +1,5 @@
 ﻿namespace NovaFinds.IFR.Configuration
 {
-    using Docker;
     using Microsoft.Extensions.Configuration;
 
     public class Configuration
@@ -11,8 +10,8 @@
         {
             var path = Directory.GetCurrentDirectory() + "/bin/Debug/net8.0/Configuration";
             var filename = "appsettings.json";
-            var isRunningInDocker = DockerCheck.IsRunningInDocker();
-            if (isRunningInDocker){
+            var runningContainer = Environment.GetEnvironmentVariable("DOTNET_RUNNING_IN_CONTAINER");
+            if (runningContainer != null && bool.Parse(runningContainer)){
                 path = "/app/Configuration";
                 filename = "appsettings.docker.json";
             }
