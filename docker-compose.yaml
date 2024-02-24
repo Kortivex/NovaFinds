@@ -35,6 +35,8 @@ services:
       ASPNET_VERSION: 8.0.2
     ports:
       - "8080:8080"
+    depends_on:
+      - mssql
 
   novafinds-mvc:
     container_name: novafinds-mvc
@@ -52,6 +54,8 @@ services:
       ASPNET_VERSION: 8.0.2
     ports:
       - "8081:8080"
+    depends_on:
+      - novafinds-api
 
 volumes:
   db_data:
