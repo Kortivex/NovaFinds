@@ -111,9 +111,11 @@ namespace NovaFinds.MVC.Areas.Identity.Pages.Account
             var url = string.Format(ApiEndPoints.GetUsersEmailFilter, this.Input.Email);
             var users = await this.ApiClient.Get<List<UserDto>>(url);
 
-            if (!users![0].IsActive){
-                ModelState.AddModelError(string.Empty, "Not Allowed to Login");
-                return Page();
+            if (users != null && users.Count != 0){
+                if (!users[0].IsActive){
+                    ModelState.AddModelError(string.Empty, "Not Allowed to Login");
+                    return Page();
+                }
             }
 
             var result = await _signInManager.PasswordSignInAsync(
@@ -142,12 +144,14 @@ namespace NovaFinds.MVC.Areas.Identity.Pages.Account
                         HttpContext.Session.Remove("tempUser");
                     }
                 }
-                // API call to get cart info.
-                url = string.Format(ApiEndPoints.GetCart, users[0].UserName);
-                var userCart = await this.ApiClient.Get<List<CartDto>>(url);
-                if (userCart!.Count == 0) return LocalRedirect(returnUrl);
-                // Cart items are restored if the set date has not been exempted.
-                if (!(DateTime.Now.Subtract(userCart[0].Date!.Value).Days / (365.25 / 12) <= 1)){ this.ApiClient.Delete(string.Format(ApiEndPoints.DeleteCarts, userCart[0].Id)); }
+                if (users != null && users.Count != 0){
+                    // API call to get cart info.
+                    url = string.Format(ApiEndPoints.GetCart, users[0].UserName);
+                    var userCart = await this.ApiClient.Get<List<CartDto>>(url);
+                    if (userCart!.Count == 0) return LocalRedirect(returnUrl);
+                    // Cart items are restored if the set date has not been exempted.
+                    if (!(DateTime.Now.Subtract(userCart[0].Date!.Value).Days / (365.25 / 12) <= 1)){ this.ApiClient.Delete(string.Format(ApiEndPoints.DeleteCarts, userCart[0].Id)); }
+                }
 
                 return LocalRedirect(returnUrl);
             }

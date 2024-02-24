@@ -18,7 +18,41 @@ services:
       - "1433:1433"
     volumes:
       - db_data:/var/opt/mssql
-        
+  
+  novafinds-api:
+    container_name: novafinds-api
+    hostname: novafinds-api
+    build:
+      context: .
+      dockerfile: Dockerfile_API
+    restart: always
+    environment:
+      ASPNETCORE_ENVIRONMENT: Development
+      DOTNET_USE_POLLING_FILE_WATCHER: true
+      ASPNETCORE_HTTP_PORTS: 8080
+      DOTNET_RUNNING_IN_CONTAINER: true
+      DOTNET_VERSION: 8.0.2
+      ASPNET_VERSION: 8.0.2
+    ports:
+      - "8080:8080"
+
+  novafinds-mvc:
+    container_name: novafinds-mvc
+    hostname: novafinds-mvc
+    build:
+      context: .
+      dockerfile: Dockerfile_MVC
+    restart: always
+    environment:
+      ASPNETCORE_ENVIRONMENT: Development
+      DOTNET_USE_POLLING_FILE_WATCHER: true
+      ASPNETCORE_HTTP_PORTS: 8080
+      DOTNET_RUNNING_IN_CONTAINER: true
+      DOTNET_VERSION: 8.0.2
+      ASPNET_VERSION: 8.0.2
+    ports:
+      - "8081:8080"
+
 volumes:
   db_data:
     driver: local
