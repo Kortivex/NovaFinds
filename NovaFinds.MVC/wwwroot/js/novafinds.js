@@ -2,20 +2,19 @@
 $(document).ready(function () {
     // Elements to zoom product photos
     $('.xzoom, .xzoom-gallery').xzoom({zoomWidth: 280, title: true, tint: '#333', Xoffset: 15, scroll: true});
-    var isTouchSupported = 'ontouchstart' in window;
+    let isTouchSupported = 'ontouchstart' in window;
     if (isTouchSupported) {
         // If is an touch device
         $('.xzoom').each(function () {
-            var xzoom = $(this).data('xzoom');
+            let xzoom = $(this).data('xzoom');
             xzoom.eventunbind();
         });
 
         $('.xzoom').each(function () {
-            var xzoom = $(this).data('xzoom');
+            let xzoom = $(this).data('xzoom');
             $(this).hammer().on("tap", function (event) {
                 event.pageX = event.gesture.center.pageX;
                 event.pageY = event.gesture.center.pageY;
-                var s = 1, ls;
 
                 xzoom.eventmove = function (element) {
                     element.hammer().on('drag', function (event) {
@@ -53,13 +52,13 @@ $(document).ready(function () {
         window.location = $(this).val();
     });
 
-    // Elements to controll the add and remove products to cart
-    var quantity = $('#quantity');
-    var productId = $('#productId');
-    var productAvailability = $('#productAvailability');
+    // Elements to control the add and remove products to cart
+    let quantity = $('#quantity');
+    let productId = $('#productId');
+    let productAvailability = $('#productAvailability');
 
     $('#button-plus').click(function () {
-        var availability = parseInt(productAvailability.val());
+        let availability = parseInt(productAvailability.val());
         if (availability > 0) {
             quantity.val(parseInt(quantity.val()) + 1);
             $('#productAvailability').val(--availability);
@@ -67,7 +66,7 @@ $(document).ready(function () {
     });
 
     $('#button-minus').click(function () {
-        var availability = parseInt(productAvailability.val());
+        let availability = parseInt(productAvailability.val());
         if (availability >= 0 && parseInt(quantity.val()) > 0) {
             quantity.val(parseInt(quantity.val()) - 1);
             $('#productAvailability').val(++availability);
@@ -118,7 +117,7 @@ $(document).ready(function () {
 
     // To Remove a Product from Cart
     $('.removed').click(function () {
-        var id = $(this).attr('id').split("_");
+        let id = $(this).attr('id').split("_");
         $.ajax({
             url: '/Cart/RemoveItem',
             type: 'POST',
@@ -140,7 +139,7 @@ $(document).ready(function () {
 
     // To Buy Products
     $('#buyProducts').click(function () {
-        var id = $(this).attr('id').split("_");
+        let id = $(this).attr('id').split("_");
         $.ajax({
             url: '/Tpv/Buy',
             type: 'POST',
@@ -202,8 +201,8 @@ $(document).ready(function () {
 
 // Function to Search a Product
 function productSearch(ths) {
-    var suggestionBox = $("#suggestion-box");
-    var searchBox = $("#search-box");
+    let suggestionBox = $("#suggestion-box");
+    let searchBox = $("#search-box");
     $.ajax({
         type: "GET",
         url: "/Search/Product",
@@ -214,7 +213,7 @@ function productSearch(ths) {
         success: function (data) {
             if (data.length > 0) {
                 showSuggestionBox();
-                var list = "";
+                let list = "";
                 data.forEach(function (product) {
                     list += "<div class=\"autocomplete-suggestion\" onClick='selectProduct(\"" +
                         product.name +
@@ -239,14 +238,14 @@ function selectProduct(name, id) {
 
 // To Hide/Show Suggestion Box
 function hideSuggestionBox() {
-    var suggestionBox = $("#suggestion-box");
+    let suggestionBox = $("#suggestion-box");
     suggestionBox.fadeOut();
     suggestionBox.css("border", "none");
 }
 
 // To Hide/Show Suggestion Box
 function showSuggestionBox() {
-    var suggestionBox = $("#suggestion-box");
+    let suggestionBox = $("#suggestion-box");
     suggestionBox.fadeIn();
     suggestionBox.css("border", "1px solid #999");
 }
