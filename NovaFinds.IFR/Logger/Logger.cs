@@ -25,6 +25,7 @@ namespace NovaFinds.IFR.Logger
         {
             get
             {
+                var path = Directory.GetCurrentDirectory() + "/bin/Debug/net8.0";
                 if (_log != null) return _log;
                 var config = new LoggingConfiguration();
 
@@ -32,13 +33,17 @@ namespace NovaFinds.IFR.Logger
                 var fileTarget = new FileTarget
                 {
                     Name = "DefaultFileTarget",
-                    FileName = "${basedir}/logs/logfile.log",
+                    FileName = path + "/logs/logfile.log",
                     Layout = "${longdate}|${level}|${message}|${exception}",
                     ConcurrentWrites = true,
                     Encoding = Encoding.UTF8
                 };
                 config.AddTarget("file", fileTarget);
                 config.AddRuleForOneLevel(LogLevel.Error, fileTarget);
+                config.AddRuleForOneLevel(LogLevel.Info, fileTarget);
+                config.AddRuleForOneLevel(LogLevel.Warn, fileTarget);
+                config.AddRuleForOneLevel(LogLevel.Fatal, fileTarget);
+                config.AddRuleForOneLevel(LogLevel.Trace, fileTarget);
 
                 // Console output.
                 var consoleTarget = new ConsoleTarget
